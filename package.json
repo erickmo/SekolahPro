@@ -1,0 +1,12 @@
+{
+  "name": "eds-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["api", "apps-web", "apps-mobile"],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=api",
+    "dev:web": "npm run dev --workspace=apps-web",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces --if-present"
+  }
+}
