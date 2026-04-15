@@ -1,0 +1,28 @@
+.root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6);
+  overflow-y: auto;
+  width: 100%;
+  min-height: 0;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: var(--space-3);
+  }
+}

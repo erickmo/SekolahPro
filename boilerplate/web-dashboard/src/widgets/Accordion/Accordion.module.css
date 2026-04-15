@@ -1,0 +1,129 @@
+/* ─── Root ───────────────────────────────────────────────────────────────────── */
+.root {
+  width: 100%;
+}
+
+/* ─── Item ───────────────────────────────────────────────────────────────────── */
+.item {
+  width: 100%;
+}
+
+.itemDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Trigger ────────────────────────────────────────────────────────────────── */
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  width: 100%;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--color-text);
+  font-size: var(--font-base, 0.875rem);
+  font-weight: 500;
+  transition: background var(--duration-fast);
+}
+
+.trigger:not(:disabled):hover {
+  background: var(--color-hover);
+}
+
+.trigger:disabled {
+  cursor: not-allowed;
+}
+
+/* ─── Icon ───────────────────────────────────────────────────────────────────── */
+.icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+/* ─── Label ──────────────────────────────────────────────────────────────────── */
+.label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ─── Chevron ────────────────────────────────────────────────────────────────── */
+.chevron {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  transition: transform var(--duration-normal);
+}
+
+.chevron[data-open='true'] {
+  transform: rotate(180deg);
+}
+
+/* ─── Content ────────────────────────────────────────────────────────────────── */
+.contentWrapper {
+  /* height animated by framer-motion */
+}
+
+.content {
+  padding: var(--space-1, 4px) var(--space-4, 16px) var(--space-4, 16px);
+  color: var(--color-text-secondary);
+  font-size: var(--font-base, 0.875rem);
+  line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Variant: default — border-bottom separator, no outer border
+─────────────────────────────────────────────────────────────────────────────── */
+.default .item {
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.default .item:last-child {
+  border-bottom: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Variant: bordered — outer border + border-radius, divider between items
+─────────────────────────────────────────────────────────────────────────────── */
+.bordered {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.bordered .item + .item {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.bordered .trigger {
+  border-radius: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Variant: filled — background on header, border-radius per item
+─────────────────────────────────────────────────────────────────────────────── */
+.filled {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.filled .item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.filled .trigger {
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+}
+
+.filled .trigger:not(:disabled):hover {
+  background: var(--color-hover);
+}

@@ -1,0 +1,161 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+}
+
+.label {
+  font-size: var(--font-xs, 11px);
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Display Mode ───────────────────────────────────────────────────────────── */
+.display {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: border-color var(--duration-fast), background var(--duration-fast);
+  min-height: var(--input-height-sm, 30px);
+}
+
+.display:hover:not(.disabled) {
+  border-color: var(--color-border);
+  background: var(--color-hover);
+}
+
+.display:hover:not(.disabled) .pencilIcon {
+  opacity: 1;
+}
+
+.disabled {
+  cursor: default;
+}
+
+.displayText {
+  flex: 1;
+  font-size: var(--font-base, 14px);
+  color: var(--color-text);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.empty .displayText {
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+
+.pencilIcon {
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+}
+
+/* ─── Edit Mode ──────────────────────────────────────────────────────────────── */
+.editBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+}
+
+.input {
+  flex: 1;
+  height: var(--input-height, 36px);
+  padding: 0 var(--space-3, 12px);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  font-size: var(--font-base, 14px);
+  font-family: var(--font-body);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+  width: 100%;
+}
+
+.textarea {
+  height: auto;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  resize: vertical;
+}
+
+.inputError {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px var(--color-danger-light);
+}
+
+.input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ─── Action Buttons ─────────────────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  gap: var(--space-1, 4px);
+  justify-content: flex-end;
+}
+
+.btnSave,
+.btnCancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  flex-shrink: 0;
+}
+
+.btnSave {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btnSave:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.btnCancel {
+  background: var(--color-surface-alt);
+  color: var(--color-text-secondary);
+}
+
+.btnCancel:hover:not(:disabled) {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.btnSave:disabled,
+.btnCancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Error ──────────────────────────────────────────────────────────────────── */
+.error {
+  font-size: var(--font-xs, 11px);
+  color: var(--color-danger);
+  margin: 0;
+}

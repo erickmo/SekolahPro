@@ -1,0 +1,132 @@
+/* ─── Panel container ────────────────────────────────────────────────────────── */
+.panel {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-alt);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ─── Panel header ───────────────────────────────────────────────────────────── */
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-1);
+}
+
+.panelTitle {
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.clearAllBtn {
+  font-size: var(--font-xs);
+  color: var(--color-danger);
+  font-weight: 500;
+  transition: opacity var(--duration-fast);
+}
+.clearAllBtn:hover { opacity: 0.75; }
+
+/* ─── Filter row ─────────────────────────────────────────────────────────────── */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: nowrap;
+}
+
+.rowInputs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ─── Shared input styles ────────────────────────────────────────────────────── */
+.fieldSelect,
+.operatorSelect,
+.select,
+.input {
+  height: var(--input-height-sm);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.fieldSelect:focus,
+.operatorSelect:focus,
+.select:focus,
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+.fieldSelect  { min-width: 140px; }
+.operatorSelect { min-width: 100px; }
+.select  { min-width: 160px; }
+.input { min-width: 160px; }
+
+/* ─── Between / date-range ───────────────────────────────────────────────────── */
+.betweenWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.betweenSep {
+  font-size: var(--font-sm);
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ─── select-async wrapper ───────────────────────────────────────────────────── */
+.asyncSelectWrap {
+  min-width: 200px;
+  max-width: 300px;
+  flex: 1;
+}
+
+/* ─── Remove row button ──────────────────────────────────────────────────────── */
+.removeBtn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+  align-self: flex-start;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+.removeBtn:hover {
+  background: var(--color-danger-light, #fef2f2);
+  color: var(--color-danger);
+}
+
+/* ─── Add filter button ──────────────────────────────────────────────────────── */
+.addBtn {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-weight: 500;
+  padding: var(--space-1) 0;
+  margin-top: var(--space-1);
+  transition: opacity var(--duration-fast);
+}
+.addBtn:hover { opacity: 0.75; }

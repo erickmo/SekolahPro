@@ -1,0 +1,404 @@
+/* ─── Panel Shell ─────────────────────────────────────────────────────────── */
+
+.panel {
+  position: fixed;
+  bottom: calc(var(--space-6) + 56px + var(--space-3));
+  right: var(--space-6);
+  z-index: var(--z-chat);
+
+  width: 600px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl), 0 0 0 1px var(--color-border);
+  overflow: hidden;
+}
+
+/* ─── Top Header ─────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, #6E33B3 0%, #4D2975 100%);
+  flex-shrink: 0;
+  height: 44px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.headerIcon {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.headerTitle {
+  font-size: var(--font-sm);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+
+.headerBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--duration-fast);
+  flex-shrink: 0;
+}
+
+.headerBtn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+/* ─── Body (two-column) ──────────────────────────────────────────────────── */
+
+.body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+
+.sidebar {
+  width: 192px;
+  flex-shrink: 0;
+  background: var(--color-surface-alt);
+  border-right: 1px solid var(--color-border-subtle);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── Sidebar Header ────────────────────────────────────────────────────── */
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-1) var(--space-2);
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+
+.addChannelBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.addChannelBtn:hover {
+  background: var(--color-hover);
+  color: var(--color-text);
+}
+
+.sidebarLoading {
+  padding: var(--space-3);
+  font-size: var(--font-xs);
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+.sidebarScroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-2) 0 var(--space-3);
+}
+
+.sidebarScroll::-webkit-scrollbar {
+  width: 3px;
+}
+.sidebarScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebarScroll::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+/* ─── Category ───────────────────────────────────────────────────────────── */
+
+.category {
+  margin-bottom: var(--space-1);
+}
+
+.categoryHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color var(--duration-fast);
+}
+
+.categoryHeader:hover .categoryLabel {
+  color: var(--color-text-secondary);
+}
+
+.categoryChevron {
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.categoryLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─── Channel Item ───────────────────────────────────────────────────────── */
+
+.channelList {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 2px 0;
+}
+
+.channelItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 5px var(--space-2) 5px var(--space-4);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  border-radius: var(--radius-md);
+  margin: 0 var(--space-2);
+  width: calc(100% - var(--space-4));
+  transition: background var(--duration-fast);
+}
+
+.channelItem:hover {
+  background: var(--color-hover);
+}
+
+.channelItemActive {
+  background: var(--color-primary-subtle) !important;
+}
+
+.channelItemActive .channelHash,
+.channelItemActive .channelName {
+  color: var(--color-primary);
+}
+
+.channelHash {
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.channelName {
+  flex: 1;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+}
+
+.channelItem:hover .channelName {
+  color: var(--color-text);
+}
+
+.channelItem:hover .channelHash {
+  color: var(--color-text-secondary);
+}
+
+.channelBadge {
+  flex-shrink: 0;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  line-height: 16px;
+  text-align: center;
+}
+
+/* ─── Content Area ───────────────────────────────────────────────────────── */
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.contentEmpty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.contentEmptyIcon {
+  color: var(--color-text-disabled);
+}
+
+.contentEmptyText {
+  font-size: var(--font-sm);
+  color: var(--color-text-tertiary);
+}
+
+/* ─── Content Header ─────────────────────────────────────────────────────── */
+
+.contentHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-elevated);
+  flex-shrink: 0;
+  height: 40px;
+  gap: var(--space-2);
+}
+
+.contentHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  flex: 1;
+}
+
+.contentHeaderHash {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.contentHeaderName {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.contentHeaderDivider {
+  color: var(--color-border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.contentHeaderDesc {
+  font-size: var(--font-xs);
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contentHeaderRight {
+  flex-shrink: 0;
+}
+
+.memberCount {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-xs);
+  color: var(--color-text-tertiary);
+}
+
+.settingsBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--duration-fast), color var(--duration-fast);
+  margin-left: 4px;
+}
+
+.settingsBtn:hover {
+  background: var(--color-hover);
+  color: var(--color-text);
+}
+
+/* ─── Messages ───────────────────────────────────────────────────────────── */
+
+.messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .panel {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+  }
+
+  .sidebar {
+    width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .panel {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+  }
+
+  .sidebar {
+    width: 140px;
+  }
+}

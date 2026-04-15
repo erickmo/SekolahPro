@@ -1,0 +1,40 @@
+/* ─── Track ──────────────────────────────────────────────────────────────────── */
+.track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ─── Bar ────────────────────────────────────────────────────────────────────── */
+.bar {
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+}
+
+/* ─── Running animation ──────────────────────────────────────────────────────── */
+/* Indeterminate progress: eases from 0% to ~70% over ~2.5s */
+.barRunning {
+  animation: loadingRun 2.5s var(--ease-default) forwards;
+}
+
+@keyframes loadingRun {
+  0%   { transform: scaleX(0);    opacity: 1; }
+  20%  { transform: scaleX(0.3);  opacity: 1; }
+  60%  { transform: scaleX(0.65); opacity: 1; }
+  100% { transform: scaleX(0.75); opacity: 1; }
+}
+
+/* ─── Completing animation ───────────────────────────────────────────────────── */
+/* Snaps to 100% then the wrapper fades out via framer-motion */
+.barCompleting {
+  animation: loadingComplete 0.25s var(--ease-default) forwards;
+}
+
+@keyframes loadingComplete {
+  0%   { transform: scaleX(0.75); opacity: 1; }
+  100% { transform: scaleX(1);    opacity: 1; }
+}

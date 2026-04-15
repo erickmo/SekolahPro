@@ -1,0 +1,114 @@
+.fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.legend {
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  color: var(--color-text);
+  float: none;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: var(--space-1, 4px);
+}
+
+/* ─── Group ──────────────────────────────────────────────────────────────────── */
+.group {
+  display: flex;
+}
+
+.vertical  { flex-direction: column; gap: var(--space-2, 8px); }
+.horizontal { flex-direction: row; flex-wrap: wrap; gap: var(--space-3, 12px); }
+
+.indented {
+  padding-left: var(--space-5, 20px);
+}
+
+/* ─── Item ───────────────────────────────────────────────────────────────────── */
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2, 8px);
+  cursor: pointer;
+  user-select: none;
+}
+
+.itemDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Hidden Input ───────────────────────────────────────────────────────────── */
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* ─── Checkbox Control ───────────────────────────────────────────────────────── */
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  background: var(--color-surface-elevated);
+  transition: all var(--duration-fast);
+  color: #fff;
+}
+
+.checkboxOn {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.item:hover:not(.itemDisabled) .checkbox {
+  border-color: var(--color-primary);
+}
+
+/* Focus ring */
+.item:focus-within .checkbox {
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+/* ─── Labels ─────────────────────────────────────────────────────────────────── */
+.labelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemLabel {
+  font-size: var(--font-base, 14px);
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.bold { font-weight: 700; }
+
+.itemDescription {
+  font-size: var(--font-sm, 12px);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+/* ─── Error ──────────────────────────────────────────────────────────────────── */
+.error {
+  font-size: var(--font-xs, 11px);
+  color: var(--color-danger);
+  margin: 0;
+}

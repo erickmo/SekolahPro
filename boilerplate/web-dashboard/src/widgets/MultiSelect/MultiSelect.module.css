@@ -1,0 +1,222 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+}
+
+.label {
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ─── Trigger ────────────────────────────────────────────────────────────────── */
+.trigger {
+  display: flex;
+  align-items: center;
+  min-height: var(--input-height, 36px);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  cursor: pointer;
+  gap: var(--space-2, 8px);
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+  outline: none;
+}
+
+.trigger:focus-visible, .triggerOpen {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+.hasError { border-color: var(--color-danger); }
+.hasError:focus-visible { box-shadow: 0 0 0 3px var(--color-danger-light); }
+
+.disabled { opacity: 0.55; background: var(--color-surface-alt); cursor: not-allowed; }
+
+/* ─── Selected ───────────────────────────────────────────────────────────────── */
+.selectedWrap {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-width: 0;
+}
+
+.placeholder {
+  font-size: var(--font-sm, 12px);
+  color: var(--color-text-tertiary);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-xs, 11px);
+  font-weight: 600;
+}
+
+.chipRemove {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  color: currentColor;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.7;
+}
+
+.chipRemove:hover { opacity: 1; }
+
+/* ─── Actions ────────────────────────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.clearBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.clearBtn:hover { background: var(--color-hover); color: var(--color-text); }
+
+.chevron {
+  color: var(--color-text-tertiary);
+  transition: transform var(--duration-fast);
+}
+
+.chevronUp { transform: rotate(180deg); }
+
+/* ─── Dropdown ───────────────────────────────────────────────────────────────── */
+.dropdown {
+  position: absolute;
+  z-index: var(--z-dropdown);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: dropIn 0.12s var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Search ─────────────────────────────────────────────────────────────────── */
+.searchWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.searchIcon { color: var(--color-text-tertiary); flex-shrink: 0; }
+
+.searchInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: var(--font-sm, 12px);
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
+
+.searchInput::placeholder { color: var(--color-text-tertiary); }
+
+/* ─── List ───────────────────────────────────────────────────────────────────── */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-1, 4px);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.empty {
+  padding: var(--space-4, 16px);
+  text-align: center;
+  font-size: var(--font-sm, 12px);
+  color: var(--color-text-tertiary);
+}
+
+/* ─── Option ─────────────────────────────────────────────────────────────────── */
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+
+.option:hover:not(.optionDisabled) { background: var(--color-hover); }
+.selected { background: var(--color-primary-subtle); }
+.optionDisabled { opacity: 0.45; cursor: not-allowed; }
+
+.checkmark {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast);
+}
+
+.checkmarkOn {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.optionLabel {
+  flex: 1;
+  font-size: var(--font-sm, 12px);
+  color: var(--color-text);
+}
+
+.optionMeta {
+  font-size: var(--font-xs, 11px);
+  color: var(--color-text-tertiary);
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────────── */
+.footer {
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-top: 1px solid var(--color-border-subtle);
+  font-size: var(--font-xs, 11px);
+  color: var(--color-text-tertiary);
+  text-align: right;
+}
+
+/* ─── Error ──────────────────────────────────────────────────────────────────── */
+.error {
+  font-size: var(--font-xs, 11px);
+  color: var(--color-danger);
+  margin: 0;
+}

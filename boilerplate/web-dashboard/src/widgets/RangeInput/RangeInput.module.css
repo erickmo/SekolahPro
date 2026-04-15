@@ -1,0 +1,114 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  user-select: none;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ─── Label ──────────────────────────────────────────────────────────────────── */
+.label {
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ─── Value Display ──────────────────────────────────────────────────────────── */
+.values {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+}
+
+.value {
+  font-size: var(--font-sm, 12px);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.valueSep {
+  font-size: var(--font-sm, 12px);
+  color: var(--color-text-tertiary);
+}
+
+/* ─── Track ──────────────────────────────────────────────────────────────────── */
+.track {
+  position: relative;
+  height: 6px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  margin: var(--space-1, 4px) 0;
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  pointer-events: none;
+}
+
+/* ─── Thumbs ─────────────────────────────────────────────────────────────────── */
+.thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+  outline: none;
+  margin: 0;
+}
+
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-surface-elevated);
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  pointer-events: all;
+  transition: transform var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.thumb::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px var(--color-primary-subtle);
+}
+
+.thumb:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px var(--color-primary-subtle);
+}
+
+.thumb::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-surface-elevated);
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.thumbLow  { z-index: 3; }
+.thumbHigh { z-index: 4; }
+
+/* ─── Limits ─────────────────────────────────────────────────────────────────── */
+.limits {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-xs, 11px);
+  color: var(--color-text-tertiary);
+}

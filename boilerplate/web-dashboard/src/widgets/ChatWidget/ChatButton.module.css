@@ -1,0 +1,75 @@
+.fab {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: var(--z-chat-fab);
+
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #6E33B3 0%, #4D2975 100%);
+  box-shadow: 0 4px 16px rgba(77, 41, 117, 0.45), 0 2px 4px rgba(77, 41, 117, 0.3);
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    transform var(--duration-normal) var(--ease-spring),
+    box-shadow var(--duration-normal) var(--ease-default);
+}
+
+.fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(77, 41, 117, 0.55), 0 4px 8px rgba(77, 41, 117, 0.35);
+}
+
+.fab:active {
+  transform: scale(0.96);
+}
+
+.fab.open {
+  background: linear-gradient(135deg, #5B5269 0%, #403849 100%);
+  box-shadow: 0 4px 12px rgba(21, 16, 26, 0.35);
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-secondary);
+  color: #15101A;
+  font-size: var(--font-xs);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  line-height: 20px;
+  text-align: center;
+  border: 2px solid var(--color-surface-elevated);
+  animation: badgePop 0.25s var(--ease-spring);
+}
+
+@keyframes badgePop {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

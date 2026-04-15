@@ -1,0 +1,87 @@
+.wrapper {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-3, 12px);
+  cursor: pointer;
+  user-select: none;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Hidden Input ───────────────────────────────────────────────────────────── */
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ─── Track ──────────────────────────────────────────────────────────────────── */
+.track {
+  position: relative;
+  border-radius: var(--radius-full);
+  transition: background var(--duration-normal) var(--ease-default);
+  flex-shrink: 0;
+}
+
+.sm  { width: 28px; height: 16px; }
+.md  { width: 36px; height: 20px; }
+.lg  { width: 44px; height: 24px; }
+
+.off { background: var(--color-border); }
+.on  { background: var(--color-primary); }
+
+.wrapper:hover .off  { background: var(--color-text-tertiary); }
+.wrapper:hover .on   { background: var(--color-primary-hover); }
+
+/* Focus ring via hidden input */
+.hiddenInput:focus-visible + .track,
+.wrapper:focus-within .track {
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+/* ─── Thumb ──────────────────────────────────────────────────────────────────── */
+.thumb {
+  position: absolute;
+  top: 2px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-normal) var(--ease-spring, cubic-bezier(0.16,1,0.3,1));
+}
+
+.sm .thumb  { width: 12px; height: 12px; left: 2px; }
+.md .thumb  { width: 16px; height: 16px; left: 2px; }
+.lg .thumb  { width: 20px; height: 20px; left: 2px; }
+
+.sm.on  .thumb { transform: translateX(12px); }
+.md.on  .thumb { transform: translateX(16px); }
+.lg.on  .thumb { transform: translateX(20px); }
+
+/* ─── Label Group ────────────────────────────────────────────────────────────── */
+.labelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 1px;
+}
+
+.label {
+  font-size: var(--font-base, 14px);
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.sm ~ .labelGroup .label { font-size: var(--font-sm, 12px); }
+
+.description {
+  font-size: var(--font-sm, 12px);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}

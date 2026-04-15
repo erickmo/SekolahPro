@@ -1,0 +1,159 @@
+/* ─── Root ─────────────────────────────────────────────────────────────────── */
+
+.root {
+  display: flex;
+  align-items: flex-start;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: var(--space-2) 0;
+}
+
+.root::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Step slot ────────────────────────────────────────────────────────────── */
+
+.stepSlot {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ─── Node + label ─────────────────────────────────────────────────────────── */
+
+.nodeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 64px;
+  max-width: 80px;
+}
+
+/* Circle */
+.node {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--duration-normal), border-color var(--duration-normal),
+    box-shadow var(--duration-normal);
+}
+
+/* Selesai — lingkaran penuh warna primary */
+.node_completed {
+  background: var(--color-primary);
+  color: white;
+  border: 2px solid var(--color-primary);
+}
+
+/* Saat ini — lingkaran primary dengan cincin luar */
+.node_current {
+  background: var(--color-primary);
+  color: white;
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(77, 41, 117, 0.18);
+}
+
+/* Mendatang — lingkaran kosong abu-abu */
+.node_pending {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-disabled);
+  border: 2px solid var(--color-border);
+}
+
+/* Terminal bahaya (dibatalkan/ditolak) */
+.node_terminal {
+  border: 2px solid;
+}
+
+.node_terminal_danger {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.node_terminal_warning {
+  background: var(--color-warning-light);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+/* Label */
+.label {
+  font-size: var(--font-xs);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 72px;
+}
+
+.label_completed {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.label_current {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.label_pending {
+  color: var(--color-text-disabled);
+}
+
+.label_terminal_danger {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.label_terminal_warning {
+  color: var(--color-warning);
+  font-weight: 600;
+}
+
+/* ─── Connector line ────────────────────────────────────────────────────────── */
+
+.connector {
+  flex: 1;
+  min-width: 20px;
+  height: 2px;
+  background: var(--color-border);
+  margin-bottom: 18px; /* offset ke tengah node — (label height / 2) */
+  border-radius: var(--radius-full);
+  transition: background var(--duration-slow);
+}
+
+.connectorFilled {
+  background: var(--color-primary);
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .nodeWrapper {
+    min-width: 52px;
+    max-width: 64px;
+  }
+
+  .node {
+    width: 24px;
+    height: 24px;
+  }
+
+  .label {
+    font-size: var(--font-min);
+    max-width: 56px;
+  }
+
+  .connector {
+    min-width: 12px;
+    margin-bottom: 16px;
+  }
+}

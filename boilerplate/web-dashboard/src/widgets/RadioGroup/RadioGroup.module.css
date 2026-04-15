@@ -1,0 +1,139 @@
+.fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+}
+
+.legend {
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-2, 8px);
+  float: none;
+  width: 100%;
+}
+
+/* ─── Group Layout ───────────────────────────────────────────────────────────── */
+.group {
+  display: flex;
+}
+
+.vertical  { flex-direction: column; gap: var(--space-2, 8px); }
+.horizontal { flex-direction: row; flex-wrap: wrap; gap: var(--space-3, 12px); }
+
+/* ─── Default Variant ────────────────────────────────────────────────────────── */
+.variant_default .option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2, 8px);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ─── Card Variant ───────────────────────────────────────────────────────────── */
+.variant_card .option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3, 12px);
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  user-select: none;
+  background: var(--color-surface-elevated);
+  transition: border-color var(--duration-fast), background var(--duration-fast);
+  flex: 1;
+}
+
+.variant_card .option:hover:not(.optionDisabled) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-subtle);
+}
+
+.variant_card .checked {
+  border-color: var(--color-primary);
+  background: var(--color-primary-subtle);
+}
+
+/* ─── Hidden Input ───────────────────────────────────────────────────────────── */
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* ─── Radio Control ──────────────────────────────────────────────────────────── */
+.radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: border-color var(--duration-fast);
+  background: var(--color-surface-elevated);
+}
+
+.radioChecked {
+  border-color: var(--color-primary);
+  background: var(--color-surface-elevated);
+}
+
+.radioDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  animation: dotIn 0.15s var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+@keyframes dotIn {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+
+/* ─── Label ──────────────────────────────────────────────────────────────────── */
+.labelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.optionLabel {
+  font-size: var(--font-base, 14px);
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.optionDescription {
+  font-size: var(--font-sm, 12px);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+/* ─── Disabled ───────────────────────────────────────────────────────────────── */
+.optionDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Focus ring ─────────────────────────────────────────────────────────────── */
+.option:focus-within .radio {
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+/* ─── Error ──────────────────────────────────────────────────────────────────── */
+.error {
+  font-size: var(--font-xs, 11px);
+  color: var(--color-danger);
+  margin: 0;
+}

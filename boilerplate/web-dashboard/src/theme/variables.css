@@ -1,0 +1,141 @@
+:root {
+  /* === Brand Colors === */
+  --color-primary: #4D2975;
+  --color-primary-hover: #3D1F5E;
+  --color-primary-subtle: rgba(77, 41, 117, 0.08);
+  --color-primary-text: #ffffff;
+
+  --color-secondary: #E9A800;
+  --color-secondary-hover: #C78F00;
+  --color-secondary-text: #15101A;
+
+  --color-accent: #26B8B0;
+  --color-accent-hover: #00968D;
+  --color-accent-text: #ffffff;
+
+  /* === Semantic Colors === */
+  --color-success: #16A34A;
+  --color-success-light: #DCFCE7;
+  --color-success-dark: #14532D;
+
+  --color-warning: #D97706;
+  --color-warning-light: #FEF9C3;
+  --color-warning-dark: #78350F;
+
+  --color-danger: #DC2626;
+  --color-danger-light: #FEE2E2;
+  --color-danger-dark: #7F1D1D;
+
+  --color-info: #2563EB;
+  --color-info-light: #DBEAFE;
+  --color-info-dark: #1E3A8A;
+
+  /* === Surfaces === */
+  --color-surface: #F8F5FC;
+  --color-surface-elevated: #ffffff;
+  --color-surface-alt: #F0E8FA;
+  --color-navbar-bg: rgba(77, 41, 117, 0.95);
+  --color-overlay: rgba(30, 13, 48, 0.5);
+
+  /* === Neutral (purple-tinted gray) === */
+  --color-border: #E3DFEA;
+  --color-border-subtle: #F1EFF5;
+  --color-hover: rgba(77, 41, 117, 0.06);
+
+  /* === Text === */
+  --color-text: #15101A;
+  --color-text-secondary: #7A7089;
+  --color-text-tertiary: #9E96AE;
+  --color-text-disabled: #C8C2D4;
+  --color-text-on-primary: #ffffff;
+  --color-text-link: #6E33B3;
+
+  /* === Typography === */
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --font-min: 0.625rem;    /* 10px — badges only */
+  --font-xs: 0.6875rem;    /* 11px */
+  --font-sm: 0.75rem;      /* 12px */
+  --font-base: 0.875rem;   /* 14px */
+  --font-lg: 1rem;         /* 16px */
+  --font-xl: 1.125rem;     /* 18px — headings only */
+  --font-2xl: 1.25rem;     /* 20px */
+  --font-3xl: 1.5rem;      /* 24px */
+  --font-4xl: 2rem;        /* 32px */
+
+  /* === Spacing (4px grid) === */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 48px;
+  --space-10: 64px;
+
+  /* === Layout === */
+  --navbar-height: 56px;
+  --secondary-nav-height: 44px;
+  --sidebar-width: 240px;
+  --content-max-width: 1280px;
+
+  /* === Input Heights === */
+  --input-height: 36px;
+  --input-height-sm: 30px;
+  --input-height-lg: 42px;
+
+  /* === Border Radius === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* === Shadows === */
+  --shadow-sm: 0 1px 2px rgba(21, 16, 26, 0.06);
+  --shadow-md: 0 4px 6px rgba(21, 16, 26, 0.08), 0 1px 3px rgba(21, 16, 26, 0.06);
+  --shadow-lg: 0 10px 15px rgba(21, 16, 26, 0.1), 0 4px 6px rgba(21, 16, 26, 0.06);
+  --shadow-xl: 0 20px 25px rgba(21, 16, 26, 0.12), 0 8px 10px rgba(21, 16, 26, 0.06);
+
+  /* === Z-index === */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-navbar: 300;
+  --z-modal: 400;
+  --z-tooltip: 500;
+  --z-toast: 600;
+
+  /* === Transitions === */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 0.1s;
+  --duration-normal: 0.2s;
+  --duration-slow: 0.3s;
+}
+
+[data-theme='dark'] {
+  --color-surface: #0F0A15;
+  --color-surface-elevated: #1C1428;
+  --color-surface-alt: #261A33;
+  --color-navbar-bg: rgba(28, 20, 40, 0.98);
+  --color-overlay: rgba(0, 0, 0, 0.6);
+
+  --color-border: #3D2E52;
+  --color-border-subtle: #2A1E3A;
+  --color-hover: rgba(255, 255, 255, 0.06);
+
+  --color-text: #EDE8F5;
+  --color-text-secondary: #A89CBD;
+  --color-text-tertiary: #6B5E7D;
+  --color-text-disabled: #4A3E5E;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.45), 0 8px 10px rgba(0, 0, 0, 0.35);
+}

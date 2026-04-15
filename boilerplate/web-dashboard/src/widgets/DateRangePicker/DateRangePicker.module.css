@@ -1,0 +1,249 @@
+/* ─── Wrapper ────────────────────────────────────────────────────────────────── */
+.wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* ─── Label ──────────────────────────────────────────────────────────────────── */
+.label {
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+/* ─── Trigger ────────────────────────────────────────────────────────────────── */
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  height: var(--input-height);
+  padding: 0 var(--space-3);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  color: var(--color-text);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.trigger:hover:not(:disabled) {
+  border-color: var(--color-text-tertiary);
+}
+
+.trigger:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+.triggerError {
+  border-color: var(--color-danger) !important;
+}
+
+.triggerDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.displayText {
+  color: var(--color-text);
+  font-size: var(--font-sm);
+}
+
+.placeholder {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-sm);
+}
+
+.calIcon {
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ─── Error message ──────────────────────────────────────────────────────────── */
+.errorMsg {
+  font-size: var(--font-sm);
+  color: var(--color-danger);
+}
+
+/* ─── Dropdown portal ────────────────────────────────────────────────────────── */
+.dropdown {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-4);
+  user-select: none;
+  min-width: 568px;
+}
+
+/* ─── Navigation row ─────────────────────────────────────────────────────────── */
+.navRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.monthHeaders {
+  display: flex;
+  gap: var(--space-6);
+  flex: 1;
+  justify-content: center;
+}
+
+.monthTitle {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 140px;
+  text-align: center;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.navBtn:hover {
+  background: var(--color-hover);
+  color: var(--color-primary);
+}
+
+/* ─── Two calendars side by side ─────────────────────────────────────────────── */
+.calendarsRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.calendarDivider {
+  width: 1px;
+  background: var(--color-border-subtle);
+  align-self: stretch;
+  margin: 0 var(--space-4);
+}
+
+/* ─── Single calendar ────────────────────────────────────────────────────────── */
+.calendar {
+  flex: 1;
+}
+
+/* ─── Week row ───────────────────────────────────────────────────────────────── */
+.weekRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: var(--space-1);
+}
+
+.weekDay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  padding: var(--space-1) 0;
+}
+
+/* ─── Day grid ───────────────────────────────────────────────────────────────── */
+.dayGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  font-size: 0.6875rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast);
+  position: relative;
+}
+
+.day:hover:not(:disabled):not(.daySelected) {
+  background: var(--color-hover);
+}
+
+.dayOther {
+  color: var(--color-text-disabled);
+}
+
+.dayToday {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.dayInRange {
+  background: var(--color-primary-subtle);
+  border-radius: 0;
+}
+
+.daySelected {
+  background: var(--color-primary) !important;
+  color: var(--color-primary-text) !important;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  z-index: 1;
+}
+
+.dayStart {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.dayEnd {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.dayDisabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ─── Quick actions ──────────────────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.actionBtn {
+  font-size: var(--font-sm);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.actionBtn:hover {
+  background: var(--color-hover);
+  color: var(--color-text);
+}
+
+.actionBtnDanger:hover {
+  background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+  color: var(--color-danger);
+}

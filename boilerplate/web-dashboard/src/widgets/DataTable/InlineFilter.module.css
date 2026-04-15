@@ -1,0 +1,66 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-alt);
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.fieldSelect,
+.opSelect {
+  height: var(--input-height-sm);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.fieldSelect:focus,
+.opSelect:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+.fieldSelect { min-width: 130px; }
+.opSelect    { min-width: 140px; }
+
+.valueWrap {
+  display: flex;
+  flex: 1;
+  min-width: 140px;
+  max-width: 260px;
+}
+
+.applyBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: var(--input-height-sm);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: var(--font-sm);
+  font-weight: 500;
+  flex-shrink: 0;
+  transition: opacity var(--duration-fast);
+}
+
+.applyBtn:hover { opacity: 0.85; }

@@ -1,0 +1,154 @@
+/* ─── Wrapper ────────────────────────────────────────────────────────────────── */
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ─── Trigger (looks like a text input) ─────────────────────────────────────── */
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  height: var(--input-height);
+  padding: 0 var(--space-3);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.trigger:hover:not(:disabled) {
+  border-color: var(--color-text-tertiary);
+}
+
+.trigger:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(77, 41, 117, 0.12);
+}
+
+.trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.placeholderText {
+  color: var(--color-text-tertiary);
+}
+
+.calIcon {
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ─── Popover calendar ───────────────────────────────────────────────────────── */
+.popover {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: var(--z-dropdown);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-3);
+  width: 272px;
+  user-select: none;
+}
+
+/* ─── Month/year navigation ──────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.monthYear {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.navBtn:hover {
+  background: var(--color-hover);
+  color: var(--color-primary);
+}
+
+/* ─── Weekday header row ──────────────────────────────────────────────────────── */
+.weekRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: var(--space-1);
+}
+
+.weekDay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  padding: var(--space-1) 0;
+}
+
+/* ─── Day grid ───────────────────────────────────────────────────────────────── */
+.dayGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-xs);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.day:hover:not(:disabled) {
+  background: var(--color-hover);
+}
+
+.dayOther {
+  color: var(--color-text-disabled);
+}
+
+.dayToday {
+  color: var(--color-primary);
+  font-weight: 700;
+  background: var(--color-primary-subtle);
+}
+
+.daySelected {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+.dayDisabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

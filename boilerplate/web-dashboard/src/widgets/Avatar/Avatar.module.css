@@ -1,0 +1,59 @@
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ─── Shapes ─────────────────────────────────────────────────────────────────── */
+.circle { border-radius: 50%; }
+.square { border-radius: var(--radius-md); }
+
+/* ─── Sizes (font) ───────────────────────────────────────────────────────────── */
+.xs  .initials, .xs  { font-size: 8px; }
+.sm  .initials, .sm  { font-size: 10px; }
+.md  .initials, .md  { font-size: 13px; }
+.lg  .initials, .lg  { font-size: 17px; }
+.xl  .initials, .xl  { font-size: 22px; }
+
+/* ─── Image ──────────────────────────────────────────────────────────────────── */
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ─── Initials ───────────────────────────────────────────────────────────────── */
+.initials {
+  line-height: 1;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+/* ─── Group ──────────────────────────────────────────────────────────────────── */
+.group {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.groupItem {
+  border: 2px solid var(--color-surface-elevated);
+  margin-right: -6px;
+  transition: transform var(--duration-fast);
+}
+
+.groupItem:hover {
+  transform: translateY(-2px);
+  z-index: 1;
+}
+
+.overflow {
+  background: var(--color-surface-alt);
+  color: var(--color-text-secondary);
+}

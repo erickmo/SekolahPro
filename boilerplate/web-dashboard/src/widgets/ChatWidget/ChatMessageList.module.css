@@ -1,0 +1,276 @@
+.list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  scroll-behavior: smooth;
+}
+
+.list::-webkit-scrollbar {
+  width: 4px;
+}
+.list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.list::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+/* Row layout */
+.row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  max-width: 100%;
+}
+
+.rowMe {
+  flex-direction: row-reverse;
+}
+
+.rowOther {
+  flex-direction: row;
+}
+
+/* Avatar (other side only) */
+.avatar {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-size: var(--font-xs);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bubble */
+.bubble {
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.rowMe .bubble {
+  align-items: flex-end;
+}
+
+.rowOther .bubble {
+  align-items: flex-start;
+}
+
+.senderName {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.body {
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-sm);
+  font-size: var(--font-sm);
+  line-height: 1.5;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.rowMe .body {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.deleted {
+  color: var(--color-text-tertiary);
+  font-style: italic;
+  font-size: var(--font-xs);
+  padding: var(--space-2) var(--space-3);
+}
+
+/* Meta (time + status) */
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 var(--space-1);
+}
+
+.metaMe {
+  flex-direction: row-reverse;
+}
+
+.time {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+}
+
+.status {
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+}
+
+.statusError {
+  color: var(--color-danger);
+}
+
+/* Mention highlight */
+.mention {
+  color: var(--color-primary);
+  font-weight: 600;
+  background: var(--color-primary-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0 3px;
+}
+
+.rowMe .mention {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Attachments */
+.attachments {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-width: 220px;
+}
+
+.attachImage {
+  width: 100%;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  max-height: 180px;
+  display: block;
+}
+
+.attachVideo {
+  width: 100%;
+  border-radius: var(--radius-md);
+  max-height: 160px;
+  display: block;
+  background: #000;
+}
+
+/* Linked document cards */
+.docCards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: 2px;
+}
+
+.docCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  max-width: 220px;
+  transition:
+    background var(--duration-fast),
+    border-color var(--duration-fast);
+}
+
+.docCardClickable {
+  cursor: pointer;
+}
+
+.docCardClickable:hover {
+  background: var(--color-hover);
+  border-color: var(--color-primary);
+}
+
+.docCardClickable:hover .docCardIcon {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.docCardClickable:hover .docCardLink {
+  color: var(--color-primary);
+}
+
+.docCardIcon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.docCardInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.docCardCode {
+  font-size: var(--font-xs);
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.docCardParty {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.docCardRight {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.docCardTotal {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+}
+
+.docCardLink {
+  color: var(--color-text-disabled);
+  transition: color var(--duration-fast);
+}
+
+/* Empty state */
+.emptyThread {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyText {
+  font-size: var(--font-sm);
+  color: var(--color-text-tertiary);
+}

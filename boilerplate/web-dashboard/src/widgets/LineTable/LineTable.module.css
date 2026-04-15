@@ -1,0 +1,220 @@
+/* ─── Wrapper ────────────────────────────────────────────────────────────────── */
+.wrapper {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ─── Table ──────────────────────────────────────────────────────────────────── */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-sm);
+  table-layout: fixed;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────────── */
+.th {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-raised);
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.thNum {
+  width: 36px;
+  text-align: center;
+}
+
+.thActions {
+  width: 64px;
+}
+
+/* ─── Rows ───────────────────────────────────────────────────────────────────── */
+.tr {
+  border-bottom: 1px solid var(--color-border-subtle);
+  transition: background var(--duration-fast);
+}
+
+.tr:last-child {
+  border-bottom: none;
+}
+
+.tr:hover {
+  background: rgba(77, 41, 117, 0.02);
+}
+
+.td {
+  padding: var(--space-1) var(--space-2);
+  color: var(--color-text-primary);
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.tdNum {
+  text-align: center;
+  color: var(--color-text-tertiary);
+  font-size: var(--font-xs);
+  user-select: none;
+  padding: var(--space-1) var(--space-1);
+}
+
+.tdActions {
+  padding: var(--space-1) var(--space-2);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 100%;
+}
+
+/* ─── Empty ──────────────────────────────────────────────────────────────────── */
+.emptyCell {
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  color: var(--color-text-tertiary);
+  font-size: var(--font-sm);
+  font-style: italic;
+}
+
+/* ─── Row action buttons ─────────────────────────────────────────────────────── */
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+  transition: color var(--duration-fast), background var(--duration-fast);
+}
+
+.actionBtn:hover {
+  color: var(--color-text-secondary);
+  background: var(--color-surface-raised);
+}
+
+.actionBtnDelete:hover {
+  color: #DC2626;
+  background: #FEF2F2;
+}
+
+/* ─── Add row bar ────────────────────────────────────────────────────────────── */
+.addRow {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-raised);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--color-primary);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast), background var(--duration-fast);
+}
+
+.addBtn:hover {
+  background: var(--color-primary-light, #EDE7F6);
+}
+
+/* ─── Footer (totals, etc.) ──────────────────────────────────────────────────── */
+.footer {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-raised);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+/* ─── Inline cell inputs ─────────────────────────────────────────────────────── */
+
+/*
+  Ghost style: transparent until hover/focus so the cell looks like plain text.
+  On hover  → subtle border appears (editability hint)
+  On focus  → primary border + soft purple glow
+*/
+.cellInput,
+.cellSelect {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 3px var(--space-2);
+  font-size: var(--font-sm);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--duration-fast), background var(--duration-fast),
+    box-shadow var(--duration-fast);
+}
+
+.cellInput:hover,
+.cellSelect:hover {
+  border-color: var(--color-border);
+}
+
+.cellInput:focus,
+.cellSelect:focus {
+  border-color: var(--color-primary);
+  background: var(--color-surface-elevated);
+  box-shadow: 0 0 0 2px rgba(77, 41, 117, 0.08);
+}
+
+.cellInput:disabled,
+.cellSelect:disabled {
+  color: var(--color-text-tertiary);
+  cursor: default;
+}
+
+.cellInputMono {
+  font-family: var(--font-mono);
+}
+
+.cellInputRight {
+  text-align: right;
+}
+
+.cellInputCenter {
+  text-align: center;
+}
+
+.cellInputError {
+  border-color: #DC2626 !important;
+}
+.cellInputError:focus {
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
+
+/* ─── Cell read-only value ───────────────────────────────────────────────────── */
+.cellValue {
+  display: block;
+  padding: 3px var(--space-2);
+  font-size: var(--font-sm);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cellValueMono {
+  font-family: var(--font-mono);
+}
+
+.cellValueRight {
+  text-align: right;
+}
+
+.cellValueSecondary {
+  color: var(--color-text-secondary);
+}

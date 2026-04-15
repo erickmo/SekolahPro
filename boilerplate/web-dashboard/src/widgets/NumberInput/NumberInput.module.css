@@ -1,0 +1,111 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+}
+
+.label {
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ─── Input Row ──────────────────────────────────────────────────────────────── */
+.inputRow {
+  display: flex;
+  align-items: center;
+  height: var(--input-height, 36px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  overflow: hidden;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.inputRow:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+.hasError {
+  border-color: var(--color-danger);
+}
+
+.hasError:focus-within {
+  box-shadow: 0 0 0 3px var(--color-danger-light);
+}
+
+.disabled {
+  opacity: 0.55;
+  background: var(--color-surface-alt);
+}
+
+/* ─── Step Buttons ───────────────────────────────────────────────────────────── */
+.stepBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 100%;
+  border: none;
+  background: var(--color-surface-alt);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.stepBtn:hover:not(:disabled) {
+  background: var(--color-hover);
+  color: var(--color-text);
+}
+
+.stepBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── Native Input ───────────────────────────────────────────────────────────── */
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-base, 14px);
+  font-family: var(--font-body);
+  text-align: center;
+  outline: none;
+  padding: 0 var(--space-2, 8px);
+  -moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input::placeholder { color: var(--color-text-tertiary); }
+.input:disabled { cursor: not-allowed; }
+
+/* ─── Affix ──────────────────────────────────────────────────────────────────── */
+.affix {
+  font-size: var(--font-sm, 12px);
+  color: var(--color-text-secondary);
+  padding: 0 var(--space-2, 8px);
+  background: var(--color-surface-alt);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid var(--color-border-subtle);
+  white-space: nowrap;
+}
+
+/* ─── Error ──────────────────────────────────────────────────────────────────── */
+.error {
+  font-size: var(--font-xs, 11px);
+  color: var(--color-danger);
+  margin: 0;
+}

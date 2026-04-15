@@ -1,0 +1,93 @@
+/* ─── Trigger ────────────────────────────────────────────────────────────────── */
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast);
+  flex-shrink: 0;
+}
+
+.trigger:hover:not(:disabled) {
+  background: var(--color-hover);
+  color: var(--color-text);
+}
+
+.triggerActive {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+}
+
+.trigger:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── Menu ───────────────────────────────────────────────────────────────────── */
+.menu {
+  position: absolute;
+  z-index: var(--z-dropdown);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  min-width: 160px;
+  padding: var(--space-1, 4px);
+  animation: menuIn 0.12s var(--ease-spring, cubic-bezier(0.16, 1, 0.3, 1));
+  transform-origin: top right;
+}
+
+@keyframes menuIn {
+  from { opacity: 0; transform: scale(0.93) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ─── Item ───────────────────────────────────────────────────────────────────── */
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  width: 100%;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-sm, 12px);
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.item:hover:not(:disabled) {
+  background: var(--color-hover);
+}
+
+.item:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.itemDanger {
+  color: var(--color-danger);
+}
+
+.itemDanger:hover:not(:disabled) {
+  background: var(--color-danger-light);
+}
+
+.itemIcon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: inherit;
+  opacity: 0.8;
+}

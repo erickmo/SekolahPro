@@ -1,0 +1,112 @@
+/* ─── Container ──────────────────────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* ─── Line Variant ───────────────────────────────────────────────────────────── */
+.line {
+  border-bottom: 1px solid var(--color-border);
+  gap: 0;
+}
+
+.line .tab {
+  position: relative;
+  padding-bottom: var(--space-3, 12px);
+}
+
+.line .indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+/* ─── Pill Variant ───────────────────────────────────────────────────────────── */
+.pill {
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1, 4px);
+  gap: var(--space-1, 4px);
+}
+
+.pill .tab.active {
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-primary);
+}
+
+/* ─── Tab Button ─────────────────────────────────────────────────────────────── */
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--duration-fast) var(--ease-default),
+              background var(--duration-fast) var(--ease-default);
+  border-radius: var(--radius-md);
+  position: relative;
+}
+
+.tab:hover:not(:disabled):not(.active) {
+  color: var(--color-text);
+  background: var(--color-hover);
+}
+
+.tab.active {
+  color: var(--color-primary);
+}
+
+.tab:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ─── Sizes ──────────────────────────────────────────────────────────────────── */
+.sm .tab {
+  font-size: var(--font-sm, 12px);
+  padding: var(--space-1, 4px) var(--space-3, 12px);
+}
+
+.md .tab {
+  font-size: var(--font-base, 14px);
+}
+
+/* ─── Icon ───────────────────────────────────────────────────────────────────── */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ─── Badge ──────────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-size: var(--font-xs, 11px);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.active .badge {
+  background: var(--color-primary);
+  color: var(--color-primary-text, #fff);
+}

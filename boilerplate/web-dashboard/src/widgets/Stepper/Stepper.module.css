@@ -1,0 +1,191 @@
+/* ─── Container ──────────────────────────────────────────────────────────────── */
+.stepper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Horizontal ─────────────────────────────────────────────────────────────── */
+.horizontal {
+  display: flex;
+  align-items: flex-start;
+}
+
+.horizontal .step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.horizontal .stepHead {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.horizontal .circle {
+  flex-shrink: 0;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.horizontal .connector {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border);
+  transition: background var(--duration-slow);
+}
+
+.horizontal .completed .connector,
+.horizontal .active .connector {
+  background: var(--color-primary);
+}
+
+.horizontal .stepBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: var(--space-2, 8px);
+}
+
+/* ─── Vertical ───────────────────────────────────────────────────────────────── */
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical .step {
+  display: flex;
+  gap: var(--space-3, 12px);
+}
+
+.vertical .stepHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vertical .connector {
+  width: 2px;
+  flex: 1;
+  min-height: 24px;
+  background: var(--color-border);
+  margin: var(--space-1, 4px) 0;
+  transition: background var(--duration-slow);
+}
+
+.vertical .completed .connector,
+.vertical .active .connector {
+  background: var(--color-primary);
+}
+
+.vertical .stepBody {
+  padding-bottom: var(--space-5, 20px);
+  padding-top: 2px;
+}
+
+/* ─── Circle ─────────────────────────────────────────────────────────────────── */
+.circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-tertiary);
+  transition: all var(--duration-normal) var(--ease-default);
+  flex-shrink: 0;
+}
+
+.completed .circle {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.active .circle {
+  border-color: var(--color-primary);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-subtle);
+}
+
+.number {
+  font-size: var(--font-xs, 11px);
+  font-weight: 700;
+}
+
+/* ─── Labels ─────────────────────────────────────────────────────────────────── */
+.label {
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  display: block;
+}
+
+.active .label {
+  color: var(--color-primary);
+}
+
+.completed .label {
+  color: var(--color-text);
+}
+
+.description {
+  font-size: var(--font-xs, 11px);
+  color: var(--color-text-tertiary);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ─── Actions ────────────────────────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2, 8px);
+  padding-top: var(--space-4, 16px);
+  border-top: 1px solid var(--color-border-subtle);
+  margin-top: var(--space-4, 16px);
+}
+
+.btnBack {
+  height: var(--input-height, 36px);
+  padding: 0 var(--space-4, 16px);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-secondary);
+  font-size: var(--font-sm, 12px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.btnBack:hover:not(:disabled) {
+  background: var(--color-hover);
+  color: var(--color-text);
+}
+
+.btnBack:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btnNext {
+  height: var(--input-height, 36px);
+  padding: 0 var(--space-5, 20px);
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--color-primary);
+  color: var(--color-primary-text, #fff);
+  font-size: var(--font-sm, 12px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--duration-fast);
+}
+
+.btnNext:hover:not(:disabled) { opacity: 0.88; }
+.btnNext:disabled { opacity: 0.5; cursor: not-allowed; }

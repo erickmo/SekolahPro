@@ -1,0 +1,355 @@
+/* ─── Settings Panel Shell ──────────────────────────────────────────────────── */
+
+.settingsPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────────── */
+
+.settingsHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+  height: 40px;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+  transition: color 0.15s;
+}
+
+.backBtn:hover {
+  color: var(--color-text);
+}
+
+.settingsTitle {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Tabs ─────────────────────────────────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+
+.tab {
+  flex: 1;
+  padding: var(--space-2);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  text-align: center;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab:hover {
+  color: var(--color-text-secondary);
+}
+
+.tabActive {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* ─── Content ──────────────────────────────────────────────────────────────── */
+
+.settingsContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-3);
+}
+
+.settingsContent::-webkit-scrollbar {
+  width: 3px;
+}
+
+.settingsContent::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+/* ─── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  margin-bottom: var(--space-3);
+}
+
+.sectionTitle {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2);
+}
+
+/* ─── Member Item ──────────────────────────────────────────────────────────── */
+
+.memberItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 0;
+}
+
+.memberAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.memberInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.memberName {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.memberRole {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+}
+
+.roleBadge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.roleModerator {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.roleMember {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.roleReadonly {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.memberActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.permSelect {
+  padding: 2px 4px;
+  font-size: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+  transition: color 0.15s;
+}
+
+.removeBtn:hover {
+  color: var(--color-error, #dc3545);
+}
+
+/* ─── Rule Item ────────────────────────────────────────────────────────────── */
+
+.ruleItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  margin-bottom: 6px;
+}
+
+.ruleInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.ruleType {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ruleDetail {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+}
+
+.rulePerm {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ─── Add Rule Form ────────────────────────────────────────────────────────── */
+
+.addRuleForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+}
+
+.addRuleRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.addRuleField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.addRuleLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.addRuleInput,
+.addRuleSelect {
+  padding: 4px 8px;
+  font-size: 11px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.addRuleBtn {
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+.addRuleBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ─── Empty State ──────────────────────────────────────────────────────────── */
+
+.empty {
+  text-align: center;
+  padding: var(--space-4);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-xs);
+}
+
+/* ─── Channel Info ─────────────────────────────────────────────────────────── */
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.infoLabel {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.infoValue {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* ─── Action Buttons ───────────────────────────────────────────────────────── */
+
+.syncBtn {
+  width: 100%;
+  padding: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  margin-top: var(--space-2);
+  transition: background 0.15s;
+}
+
+.syncBtn:hover:not(:disabled) {
+  background: var(--color-hover);
+}
+
+.syncBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
