@@ -448,6 +448,44 @@ Orang tua / siswa lapor kartu hilang
 
 E-wallet bersifat **non-interest-bearing** — sama di kedua mode. Tidak ada perbedaan substansial.
 
+## Regulatory Compliance — Analisis Regulasi BI/OJK
+
+> **C-Suite CFO Review Note (2026-04-15):**
+> E-wallet ini secara arsitektural dirancang sebagai "spending interface" di atas rekening tabungan
+> koperasi, **bukan** e-money terpisah. Namun perlu analisis regulasi yang cermat:
+
+### Analisis Klasifikasi Regulasi
+
+| Kriteria BI (PBI 20/6/PBI/2018) | E-Wallet SekolahPro | Keterangan |
+|----------------------------------|---------------------|------------|
+| Saldo tersimpan di server penerbit? | **Tidak** — saldo ada di rekening tabungan koperasi | Bukan e-money |
+| Ada penerbitan instrumen pembayaran? | Kartu NFC/QR = **identifier**, bukan instrumen nilai | Bukan e-money |
+| Top-up menghasilkan saldo terpisah? | **Tidak** — top-up = setoran tabungan (K011) | Bukan e-money |
+| Bisa transfer antar pengguna? | **Tidak** — hanya belanja di POS internal | Bukan e-money |
+
+**Kesimpulan awal:** E-wallet ini **kemungkinan tidak terklasifikasi sebagai uang elektronik** karena:
+1. Saldo tetap berada di rekening tabungan koperasi (bukan di instrumen terpisah)
+2. Kartu hanya berfungsi sebagai identifier (seperti kartu debit co-branding internal)
+3. Hanya bisa digunakan di merchant internal (kantin, toko koperasi sekolah)
+
+### Risiko Regulasi yang Harus Dimitigasi
+
+1. **Top-up dari luar rekening koperasi**: Jika orang tua bisa top-up via transfer bank langsung ke "saldo e-wallet" (bukan ke rekening tabungan), ini bisa masuk kategori e-money. **Mitigasi:** Semua top-up HARUS tercatat sebagai setoran tabungan standar (K011). Tidak ada jalur top-up yang bypass rekening.
+
+2. **QR Payment bisa disalahpahami**: Jika QR code digunakan untuk pembayaran di luar lingkungan sekolah, ini melanggar batasan internal. **Mitigasi:** QR code hanya bisa di-scan oleh POS yang terdaftar di tenant yang sama. Reject semua transaksi dari POS tidak dikenal.
+
+3. **Scaling ke luar sekolah**: Jika di masa depan e-wallet diperluas ke merchant di luar sekolah (warung sekitar, dll), **wajib konsultasi legal dan kemungkinan butuh lisensi BI**. **Mitigasi:** ADR ini secara eksplisit membatasi scope ke lingkungan internal sekolah saja.
+
+### Action Items Regulasi
+
+| No | Action | Deadline | Status |
+|----|--------|----------|--------|
+| 1 | Konsultasi legal advisor tentang klasifikasi BI | Sebelum development Phase 2 | Pending |
+| 2 | Pastikan semua top-up channel tercatat sebagai setoran tabungan | Saat implementasi K021 | Pending |
+| 3 | Block QR/NFC dari device di luar tenant scope | Saat implementasi K021 | Pending |
+| 4 | Dokumentasikan batasan scope di Terms of Service koperasi | Sebelum launch | Pending |
+| 5 | Review ulang jika ada perubahan PBI tentang uang elektronik | Setiap 6 bulan | Ongoing |
+
 ## Consequences
 
 ### Positif

@@ -31,8 +31,24 @@ Keputusan arsitektur yang berlaku untuk **seluruh subproject** (Management Sekol
 | [ADR-012](./ADR-012-teachers-staff.md) | Teachers & Staff (Guru & Tenaga Kependidikan) | Approved | 2026-04-15 |
 | [ADR-013](./ADR-013-users-roles.md) | Users & Roles (Pengguna & Hak Akses) | Approved | 2026-04-15 |
 
+### Infrastructure & Operations
+
+| No. | Judul | Status | Tanggal |
+|-----|-------|--------|---------|
+| [ADR-014](./ADR-014-vernon-sync-engine-strategy.md) | Vernon Sync Engine Strategy | Proposed | 2026-04-15 |
+| [ADR-015](./ADR-015-frontend-architecture-multi-app.md) | Frontend Architecture — Multi-App Strategy | Proposed | 2026-04-15 |
+| [ADR-016](./ADR-016-deployment-cicd-pipeline.md) | Deployment & CI/CD Pipeline | Proposed | 2026-04-15 |
+| [ADR-017](./ADR-017-data-migration-import-strategy.md) | Data Migration & Import Strategy | Proposed | 2026-04-15 |
+
 ### Cross-Cutting
 
 | No. | Judul | Status | Tanggal |
 |-----|-------|--------|---------|
 | [ADR-009](./ADR-009-dual-mode-institution-type.md) | Dual-Mode Institution Type (General / Islamic) | Accepted | 2026-04-15 |
+| [ADR-018](./ADR-018-regulatory-compliance.md) | Regulatory Compliance (UU PDP, OJK, BI, Pajak) | Proposed | 2026-04-15 |
+
+### Business
+
+| No. | Judul | Status | Tanggal |
+|-----|-------|--------|---------|
+| [ADR-BIZ-001](./ADR-BIZ-001-business-model-pricing.md) | Business Model, Pricing & Unit Economics | Proposed | 2026-04-15 |

@@ -33,6 +33,25 @@ Masalah operator Dapodik saat ini:
 
 Menggunakan **Vernon Pattern** untuk 3 tabel: `dapodik_field_mappings` (mapping field SekolahPro ↔ Dapodik), `dapodik_sync_batches` (batch sync per semester), dan `dapodik_sync_records` (status per entity yang di-sync).
 
+> **C-Suite CTO Review Note (2026-04-15):**
+> Dapodik **tidak memiliki public REST API yang stabil.** Aplikasi Dapodik berjalan sebagai
+> aplikasi desktop lokal (Django-based) yang konek ke server sekolah dan sync ke server pusat
+> Kemendikbud via mekanisme internal. Integrasi realistis per 2026:
+>
+> **Mode utama (v1.0): `manual_export`**
+> - SekolahPro menghasilkan file export (CSV/Excel/JSON) dalam format yang siap diimport ke Dapodik
+> - Operator Dapodik memvalidasi data di SekolahPro, download file, lalu import manual ke Dapodik
+> - Ini menghilangkan **double entry** (masalah utama operator) tanpa butuh API integration
+>
+> **Mode aspirational (v2.0+): `api_sync`**
+> - Jika Kemendikbud membuka API atau ada solusi community (scraping/automation Dapodik lokal)
+> - Ini bersifat **deferred** — jangan investasi engineering time sebelum ada API yang stabil
+>
+> **Rekomendasi:** Ubah `sync_mode` default ke `manual_export`. Arsitektur sudah mendukung
+> kedua mode (`sync_mode IN ('manual_export', 'api_sync')`), tapi v1.0 harus fokus pada
+> export yang akurat, validasi pre-export yang ketat, dan field mapping yang lengkap.
+> Fitur `api_sync` tetap ada di schema tapi **tidak diimplementasikan di Phase 1**.
+
 ### Table Schema
 
 ```sql

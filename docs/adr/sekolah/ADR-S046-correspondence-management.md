@@ -34,13 +34,21 @@ Domain ini berinteraksi dengan:
 - **ADR-013** (Users & Roles): role-based access (admin_tu, kepsek, wakasek).
 - **S043** (Communication): notifikasi disposisi baru ke penerima.
 
-### Mengapa Vernon Pattern?
+### Mengapa Vernon Pattern (dengan catatan)?
 
 - Read-heavy: arsip surat dibaca jauh lebih sering daripada ditulis.
 - Relasi ke users, teachers, academic_year.
 - Search & filter intensif: cari surat berdasarkan nomor, tanggal, pengirim, klasifikasi.
 - Template rendering memerlukan denormalisasi data sekolah dan penerima.
 - Disposition chain = nested read — cocok untuk _data cache.
+
+> **C-Suite CTO Review Note (2026-04-15):**
+> Tabel `correspondences` dan `correspondence_templates` tepat menggunakan Vernon (read-heavy, arsip).
+> Namun `correspondence_dispositions` bersifat **write-heavy** (state transitions: pending → read → in_progress → completed → forwarded).
+> Setiap perubahan status memicu Vernon sync yang overhead-nya mungkin tidak justified.
+> **Rekomendasi:** Evaluasi saat implementasi — jika write frequency disposisi > 10x read, pertimbangkan
+> migrasi `correspondence_dispositions` ke CQRS murni dan hapus `_rels`/`_data` dari tabel tersebut.
+> Tabel utama `correspondences` tetap Vernon.
 
 ## Decision
 

@@ -319,6 +319,62 @@ GET    /api/v1/payments/by-channel                      — Breakdown per channe
 GET    /api/v1/payments/by-type                          — Breakdown per payment type
 ```
 
+## Fee Absorption Model
+
+> **C-Suite CFO Review Note (2026-04-15):**
+> ADR ini mendefinisikan `fee_bearer` (parent/school/split) per channel tapi belum menganalisis
+> dampak finansial. Berikut analisis lengkap:
+
+### Fee Structure per Provider (Estimasi 2026)
+
+| Channel | Provider | Fee per Transaksi | Contoh (SPP Rp 500.000) |
+|---------|----------|-------------------|--------------------------|
+| Virtual Account | Midtrans | Rp 4.000 flat | Rp 4.000 |
+| Virtual Account | Xendit | Rp 4.500 flat | Rp 4.500 |
+| QRIS | Midtrans | 0.7% (MDR) | Rp 3.500 |
+| QRIS | Xendit | 0.7% (MDR) | Rp 3.500 |
+| Bank Transfer | Manual verify | Rp 0 (tapi butuh staff) | Rp 0 + labor cost |
+| E-wallet (GoPay/OVO) | Midtrans | 2.0% | Rp 10.000 |
+| Retail (Alfamart/Indomaret) | Xendit | Rp 5.000 flat | Rp 5.000 |
+
+### Simulasi Biaya Bulanan
+
+Asumsi: 500 siswa, SPP Rp 500.000/bulan, 80% bayar online:
+
+| Skenario | Fee/bulan | Ditanggung |
+|----------|-----------|------------|
+| **100% VA (flat Rp 4.000)** | 400 tx × Rp 4.000 = **Rp 1.600.000** | Sekolah atau orang tua |
+| **70% VA + 30% QRIS** | 280 × Rp 4.000 + 120 × Rp 3.500 = **Rp 1.540.000** | Campuran |
+| **100% QRIS (0.7%)** | 400 × Rp 3.500 = **Rp 1.400.000** | Sekolah (MDR regulation) |
+
+### Rekomendasi Model per Segmen Sekolah
+
+| Segmen | Model | Alasan |
+|--------|-------|--------|
+| **Pesantren besar** (SPP tinggi) | `fee_bearer = school` | Absorb fee sebagai service cost, include di SPP |
+| **Sekolah swasta menengah** | `fee_bearer = parent` + transparansi | Orang tua terbiasa bayar biaya admin ATM/transfer |
+| **Sekolah dengan budget ketat** | `fee_bearer = split` (50:50) | Kompromi — orang tua bayar sebagian, sekolah subsidize |
+
+### Konfigurasi Default
+
+```json
+{
+  "fee_model": {
+    "default_bearer": "parent",
+    "show_fee_to_parent": true,
+    "max_surcharge_percent": 2.0,
+    "channels": {
+      "virtual_account": { "bearer": "parent", "flat_fee": 4000 },
+      "qris": { "bearer": "school", "note": "MDR regulation: merchant bears QRIS fee" },
+      "bank_transfer": { "bearer": "school", "flat_fee": 0 }
+    }
+  }
+}
+```
+
+> **Catatan regulasi QRIS:** Per regulasi BI, biaya MDR QRIS **ditanggung merchant** (sekolah),
+> tidak boleh dibebankan ke konsumen (orang tua). Jadi untuk channel QRIS, `fee_bearer` harus selalu `school`.
+
 ## Consequences
 
 ### Positive

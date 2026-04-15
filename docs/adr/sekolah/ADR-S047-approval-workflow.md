@@ -28,13 +28,23 @@ Masalah tanpa engine terpusat:
 4. **Tidak ada SLA tracking**: Tidak tahu apakah suatu permintaan sudah menunggu terlalu lama.
 5. **Audit trail tersebar**: History approval tersebar di banyak tabel — sulit di-audit.
 
-### Mengapa Vernon Pattern?
+### Mengapa Vernon Pattern (dengan catatan)?
 
 - Read-heavy: dashboard approval, inbox pending items, audit trail.
 - Generic entity: approval_requests dan approval_steps adalah entity tersendiri yang di-query lintas domain.
 - Relasi ke requestor, approver, dan entity asal — cocok untuk _data denormalisasi.
 - Write terjadi saat submit/approve/reject — bukan transaksional tinggi.
 - Eventually consistent acceptable — domain asal bisa diupdate async via event.
+
+> **C-Suite CTO Review Note (2026-04-15):**
+> Vernon `_data` memberikan benefit untuk inbox display (denormalisasi requestor, entity title,
+> current approver) tanpa JOIN. Namun `approval_steps` mengalami **state transition yang cepat**
+> (waiting → active → approved/rejected/delegated), dan setiap transisi memicu Vernon sync ke `_data`.
+> Jika volume approval tinggi (>100 requests/hari), sync overhead bisa menjadi bottleneck.
+> **Rekomendasi:** Gunakan Vernon untuk `approval_requests` (inbox read-heavy, benefit `_data` jelas).
+> Untuk `approval_steps`, evaluasi saat implementasi — jika bottleneck terjadi, migrasi ke CQRS murni
+> dengan JOIN saat read (steps per request selalu sedikit, JOIN murah).
+> `approval_chains` (config, rarely written) tetap Vernon.
 
 ## Decision
 

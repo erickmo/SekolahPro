@@ -96,6 +96,28 @@ IslamicCalculator implements ProfitCalculator
 
 Service layer memilih strategy berdasarkan `coop_type` dari tenant context.
 
+## C-Suite Strategic Review (2026-04-15)
+
+> **CEO + CMO Review:**
+> ADR ini memperlakukan `general` dan `islamic` sebagai pilihan yang equal. Secara teknis
+> ini benar — kedua mode memiliki bobot implementasi yang sama. Namun secara **strategi bisnis**,
+> **pesantren/Islamic adalah primary market** SekolahPro, bukan equal alternative:
+>
+> 1. **Pesantren membutuhkan ALL-IN-ONE** (akademik + koperasi/BMT + asrama + kantin) —
+>    sekolah umum biasanya hanya butuh sebagian. Pesantren = higher ARPU.
+> 2. **Fitur Islamic bukan "tambahan"** — tahfidz, diniyah, kitab tracking, akad syariah
+>    adalah **core differentiator** yang tidak dimiliki kompetitor manapun.
+> 3. **Sekolah umum sudah punya banyak opsi** (Jibas, AdminSekolah, Pijar) — pesantren underserved.
+>
+> **Implikasi implementasi:**
+> - Default onboarding flow harus **optimize untuk pesantren** (`islamic` sebagai preset pertama)
+> - Demo/marketing materials harus lead dengan pesantren use case
+> - Feature flag untuk Islamic mode harus dikembangkan **di Phase 1**, bukan ditunda
+> - `general` mode tetap tersedia tetapi sebagai **simplified variant**, bukan primary focus
+>
+> **Ini TIDAK mengubah arsitektur teknis ADR ini** — keputusan dual-mode dan strategy pattern
+> tetap benar. Yang berubah adalah **prioritas implementasi dan go-to-market strategy**.
+
 ## Consequences
 
 ### Positif
