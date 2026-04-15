@@ -6,6 +6,7 @@
 .vscode/
 *.suo
 *.sw?
+docs/.obsidian/workspace.json
 
 # Claude Code
 .claude/settings.local.json
