@@ -1,0 +1,218 @@
+{
+  "main": {
+    "id": "af362b9a8b94c143",
+    "type": "split",
+    "children": [
+      {
+        "id": "52a5d3dec6a44ffe",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "461d8c0160e9cf3b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "adr/koperasi/ADR-K001-nasabah.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ADR-K001-nasabah"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8bd70ca6dc400d5b",
+    "type": "split",
+    "children": [
+      {
+        "id": "d13bfbd7443eeced",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "84f498f61949be38",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "15bf257441960ed9",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "2e261779a429f66a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "0fe54587985f5cc3",
+    "type": "split",
+    "children": [
+      {
+        "id": "a62e3a05d964821b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c3cb9a0c529eec38",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "adr/koperasi/ADR-K001-nasabah.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for ADR-K001-nasabah"
+            }
+          },
+          {
+            "id": "542e67f1562dea3e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "adr/koperasi/ADR-K001-nasabah.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from ADR-K001-nasabah"
+            }
+          },
+          {
+            "id": "eb620ce7e36d9925",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "dc48902e743702f6",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "bb4bb3db086f70b0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "adr/koperasi/ADR-K001-nasabah.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of ADR-K001-nasabah"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "461d8c0160e9cf3b",
+  "lastOpenFiles": [
+    "adr/koperasi/ADR-K002-rekening.md.tmp.22280.1776238094545",
+    "adr/core/ADR-013-users-roles.md",
+    "adr/core/ADR-012-teachers-staff.md",
+    "adr/core/ADR-011-class-rooms.md",
+    "adr/core/ADR-010-academic-years.md",
+    "adr/sekolah/ADR-S018-rapor-generation.md",
+    "adr/sekolah/ADR-S017-student-counseling-bk.md",
+    "adr/sekolah/ADR-S016-student-admission-ppdb.md",
+    "adr/koperasi/ADR-K002-rekening.md",
+    "adr/core/ADR-009-dual-mode-institution-type.md",
+    "adr/koperasi/ADR-K001-nasabah.md",
+    "adr/sekolah/ADR-S001-student-core-data-model.md",
+    "adr/sekolah/ADR-S006-student-dashboard-menu.md",
+    "adr/sekolah/ADR-S015-student-extracurricular.md",
+    "adr/sekolah/ADR-S014-student-class-placement.md",
+    "adr/sekolah/ADR-S013-student-achievement.md",
+    "adr/sekolah/ADR-S012-student-discipline.md",
+    "adr/sekolah/ADR-S011-subject-grade-detail.md",
+    "adr/sekolah/ADR-S010-student-document-management.md",
+    "adr/sekolah/ADR-S009-student-finance-spp.md",
+    "adr/sekolah/ADR-S008-daily-attendance.md",
+    "adr/sekolah/ADR-S007-student-address-previous-school.md",
+    "adr/sekolah/ADR-S005-student-health-record.md",
+    "adr/sekolah/ADR-S004-student-academic-record.md",
+    "adr/sekolah/ADR-S003-student-guardian.md",
+    "adr/sekolah/ADR-S002-student-relationships-autoload.md",
+    "adr/koperasi",
+    "adr/sekolah",
+    "adr/core"
+  ]
+}
