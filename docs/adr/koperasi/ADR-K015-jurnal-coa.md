@@ -510,6 +510,18 @@ Arus Kas dari Aktivitas Pendanaan:
 - Format output: PDF (formal), Excel (analisis), on-screen (dashboard)
 - Neraca harus selalu **balance** (Aset = Kewajiban + Ekuitas) — jika tidak, sistem menampilkan warning
 
+**Islamic Mode — Neraca Tambahan Section:**
+
+Untuk `coop_type = "islamic"`, Neraca memiliki section tambahan per PSAK 109:
+
+```
+ASET = KEWAJIBAN + EKUITAS + DANA ZIS
+```
+
+Dana ZIS (Zakat, Infaq, Shadaqah) & Dana Ta'zir disajikan sebagai section terpisah di Neraca, bukan sebagai kewajiban maupun ekuitas. Akun 6xxx-8xxx yang memiliki saldo disajikan di section ini.
+
+General mode: Neraca standar (Aset = Kewajiban + Ekuitas), tanpa section Dana ZIS.
+
 ### 10. Islamic Accounting Specifics — Laporan Tambahan Syariah
 
 BMT mode memiliki **laporan tambahan** yang terpisah dari laporan laba rugi koperasi, sesuai PSAK Syariah:
@@ -539,7 +551,7 @@ C. Laporan Dana Ta'zir (Social Fund)
 **Aturan:**
 - Dana zakat, kebajikan, dan ta'zir adalah **dana titipan** — bukan pendapatan koperasi
 - Akun 6xxx, 7xxx, 8xxx **tidak masuk** ke Laporan Laba Rugi koperasi — terpisah di laporan khusus
-- Saldo dana ini tercatat di Neraca sebagai **Kewajiban** (dana yang harus disalurkan) atau di **off-balance sheet notes**
+- Saldo dana ini disajikan di Neraca sebagai **section terpisah (Dana ZIS)** — bukan kewajiban, bukan ekuitas (per PSAK 109 paragraf 35-36)
 - Setiap penerimaan dan penyaluran dana syariah menghasilkan jurnal entry yang sama ketatnya dengan transaksi biasa (double-entry, posting, dll)
 - Laporan ini **wajib** untuk BMT — merupakan bagian dari compliance PSAK Syariah
 

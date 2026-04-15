@@ -212,6 +212,24 @@ BEGIN TRANSACTION
     └── COMMIT (atau ROLLBACK keduanya)
 ```
 
+**Deadlock Prevention — Consistent Lock Ordering:**
+
+Transfer antar rekening melibatkan locking dua row secara bersamaan. Untuk mencegah deadlock (A→B dan B→A bersamaan):
+
+1. **WAJIB lock rekening dengan UUID lebih kecil terlebih dahulu**
+2. Kemudian lock rekening dengan UUID lebih besar
+3. Setelah kedua row terkunci, proses debit dan kredit
+
+Pseudocode:
+```
+  if source_rekening_id < dest_rekening_id:
+      LOCK source FIRST, then dest
+  else:
+      LOCK dest FIRST, then source
+```
+
+Aturan ini berlaku untuk SEMUA operasi yang melibatkan locking lebih dari satu rekening dalam satu database transaction.
+
 **Aturan:**
 - Kedua rekening **harus dalam tenant yang sama** — cross-tenant transfer tidak diizinkan
 - Kedua rekening bisa di branch berbeda (intra-tenant)
@@ -417,6 +435,20 @@ Output:
 
 ### 11. Data Model — Transaksi Rekening
 
+**Idempotency Key — Pencegahan Transaksi Duplikat:**
+
+Setiap request pembuatan transaksi WAJIB menyertakan `idempotency_key`:
+
+- `idempotency_key` UUID — di-generate oleh client (frontend/API caller)
+- UNIQUE constraint: `(tenant_id, idempotency_key)` di tabel transaksi
+- Jika key sudah ada: return transaksi existing (bukan error), HTTP 200
+- Deduplication window: key valid selama 24 jam, setelah itu bisa di-reuse
+
+Use case:
+- Teller double-click tombol "Proses" — request kedua return transaksi pertama
+- Network timeout + retry — retry idempotent, tidak membuat duplikat
+- Batch processing retry — item yang sudah berhasil di-skip
+
 ```
 transaksi
 ├── id                    UUID v7 (PK)
@@ -426,6 +458,7 @@ transaksi
 ├── nasabah_id            UUID (FK → nasabah) NOT NULL
 │
 ├── ── Identitas ──
+├── idempotency_key       UUID NOT NULL
 ├── reference_number      VARCHAR UNIQUE per tenant
 ├── transaction_type      ENUM (setoran, penarikan, angsuran, pencairan,
 │                               biaya_admin, denda, koreksi)
@@ -476,6 +509,7 @@ transaksi
 **Database constraints:**
 - `CHECK (balance_after = balance_before + amount)` — integrity check
 - `UNIQUE (tenant_id, reference_number)` — no duplicate reference
+- `UNIQUE (tenant_id, idempotency_key)` — idempotency deduplication
 - Trigger: reject UPDATE except on `is_reversed` field
 - Trigger: reject DELETE
 - Index: `(tenant_id, rekening_id, created_at DESC)` — query per rekening

@@ -1,4 +1,4 @@
-# ADR-K021: E-Wallet / Uang Saku Digital
+# ADR-K021: Uang Saku Digital (Kartu Belanja Siswa)
 
 Status:     Accepted
 Date:       2026-04-15
@@ -15,15 +15,26 @@ Siswa/santri di lingkungan sekolah membutuhkan cara pembayaran yang aman, terkon
 
 Sistem ini merupakan **spending interface** di atas rekening tabungan yang sudah ada ([ADR-K002](./ADR-K002-rekening.md), [ADR-K005](./ADR-K005-tabungan.md)), bukan balance terpisah. Ini menghindari kompleksitas mengelola dua saldo berbeda untuk satu nasabah.
 
+### Compliance Note — Bukan Uang Elektronik
+
+Module ini BUKAN uang elektronik (e-money) sebagaimana diatur dalam PBI 20/6/PBI/2018. Alasan:
+- **Tidak ada saldo terpisah** — seluruh transaksi langsung mendebit rekening tabungan (K002/K005)
+- **Tidak ada stored value** — kartu/QR hanya berfungsi sebagai alat identifikasi dan otorisasi
+- **Tabungan sebagai underlying** — produk keuangan yang digunakan adalah tabungan yang sudah terdaftar di bawah izin koperasi/BMT
+
+Kartu Belanja Siswa adalah **antarmuka pengeluaran (spending interface)** di atas rekening tabungan yang sah, bukan instrumen pembayaran terpisah.
+
+Terminologi "E-Wallet" TIDAK digunakan dalam UI atau dokumentasi publik. Gunakan: "Uang Saku Digital" atau "Kartu Belanja Siswa".
+
 ## Decision
 
 ### 1. Arsitektur — Spending Interface, Bukan Balance Terpisah
 
-E-wallet **bukan** saldo terpisah. E-wallet adalah **layer kontrol belanja** yang berada di atas rekening tabungan nasabah.
+Uang Saku Digital **bukan** saldo terpisah. Uang Saku Digital adalah **layer kontrol belanja** yang berada di atas rekening tabungan nasabah.
 
 ```
 ┌─────────────────────────────────────┐
-│         E-Wallet Layer              │  ← Spending controls, kartu, QR
+│     Uang Saku Digital Layer         │  ← Spending controls, kartu, QR
 │  (daily limit, category restrict)   │
 ├─────────────────────────────────────┤
 │      Rekening Tabungan (K002/K005)  │  ← Saldo aktual
@@ -33,47 +44,48 @@ E-wallet **bukan** saldo terpisah. E-wallet adalah **layer kontrol belanja** yan
 ```
 
 **Keputusan ini berarti:**
-- Saldo yang dibelanjakan melalui e-wallet **langsung mengurangi saldo tabungan**
-- Tidak ada saldo e-wallet terpisah yang perlu di-reconcile
-- Top-up e-wallet = setoran ke tabungan (transaksi standar K011)
+- Saldo yang dibelanjakan melalui Kartu Belanja **langsung mengurangi saldo tabungan**
+- Tidak ada saldo terpisah yang perlu di-reconcile
+- Top-up Uang Saku Digital = setoran ke tabungan (transaksi standar K011)
 - Semua aturan tabungan tetap berlaku (minimum balance, freeze, dll)
 
 **Alasan memilih pendekatan ini:**
 - Menghindari double-balance problem (dua saldo yang harus dijaga konsisten)
 - Reuse semua infrastructure tabungan yang sudah ada (K002, K005, K011)
-- Nasabah yang belanja via e-wallet atau via teller menggunakan saldo yang sama
+- Nasabah yang belanja via Kartu Belanja atau via teller menggunakan saldo yang sama
 - Laporan keuangan tetap sederhana — satu saldo per rekening
 
-### 2. Parent Controls — Konfigurasi Belanja Anak
+### 2. Spending Control — Single Source of Truth
 
-Orang tua mengontrol spending anak melalui konfigurasi:
+Konfigurasi pengendalian belanja nasabah disimpan di SATU entity: `spending_control`. Direferensikan oleh:
+- K019 (Toko/Kantin POS) — enforce limit saat checkout
+- K021 (Uang Saku Digital) — enforce limit saat transaksi kartu
+- K023 (Parent Portal) — UI untuk parent mengatur limit
 
 ```
-ewallet_config
+spending_control
 ├── id                    UUID v7 (PK)
 ├── tenant_id             UUID (FK → tenant)
-├── nasabah_id            UUID (FK → nasabah, siswa)
+├── nasabah_id            UUID (FK → nasabah) NOT NULL — nasabah yang dikontrol
+├── controlled_by_id      UUID (FK → nasabah) nullable — parent yang mengatur (null = self-managed)
 ├── rekening_id           UUID (FK → rekening, tabungan yang digunakan)
 │
 ├── ── Spending Limits ──
-├── daily_limit           NUMERIC(15,2) NOT NULL (maks belanja per hari)
-├── per_transaction_limit NUMERIC(15,2) (nullable, maks per transaksi)
-├── weekly_limit          NUMERIC(15,2) (nullable, maks per minggu)
-├── monthly_limit         NUMERIC(15,2) (nullable, maks per bulan)
+├── daily_limit           NUMERIC(15,2) nullable (null = unlimited)
+├── per_transaction_limit NUMERIC(15,2) nullable (null = unlimited)
+├── weekly_limit          NUMERIC(15,2) nullable (null = unlimited)
+├── monthly_limit         NUMERIC(15,2) nullable (null = unlimited)
 │
 ├── ── Category Restrictions ──
-├── allowed_categories    JSONB (nullable, daftar category_id yang dibolehkan)
-├── blocked_categories    JSONB (nullable, daftar category_id yang diblokir)
+├── category_restrictions JSONB nullable (null = semua kategori diizinkan)
+│   contoh: ["canteen", "toko_atk"] — hanya kategori ini yang diizinkan
 │
 ├── ── Time Restrictions ──
-├── allowed_hours_start   TIME (nullable, jam mulai boleh belanja)
-├── allowed_hours_end     TIME (nullable, jam akhir boleh belanja)
-├── allowed_days          JSONB (nullable, hari yang dibolehkan: ["mon","tue",...])
+├── time_restrictions     JSONB nullable
+│   contoh: {"start": "07:00", "end": "15:00"} — hanya jam sekolah
 │
 ├── ── Pengaturan ──
 ├── is_active             BOOLEAN DEFAULT true
-├── managed_by            ENUM (parent, admin, teacher)
-├── parent_nasabah_id     UUID (nullable, FK → nasabah, orang tua)
 │
 ├── ── PIN ──
 ├── pin_hash              VARCHAR (nullable, PIN untuk transaksi di atas threshold)
@@ -90,11 +102,12 @@ ewallet_config
     └── updated_by        UUID
 ```
 
-**Aturan parent controls:**
+**Aturan spending control:**
 - Orang tua bisa set limit via teller atau self-service portal ([ADR-K023](./ADR-K023-dashboard-portal.md))
 - Semua limit bersifat **opsional** — jika tidak di-set, menggunakan default tenant config
-- `allowed_categories` dan `blocked_categories` bersifat **mutually exclusive** — gunakan salah satu
-- Time restriction untuk membatasi belanja hanya di jam sekolah
+- Jika `spending_control` tidak ada untuk nasabah: tidak ada limit (unlimited)
+- `category_restrictions` berisi daftar kategori yang **diizinkan** — null berarti semua diizinkan
+- `time_restrictions` membatasi belanja hanya di jam tertentu (misal jam sekolah)
 - PIN diperlukan untuk transaksi di atas `pin_threshold` — melindungi dari penyalahgunaan
 
 ### 3. Kartu & Identifikasi
@@ -106,7 +119,7 @@ ewallet_card
 ├── id                    UUID v7 (PK)
 ├── tenant_id             UUID (FK → tenant)
 ├── nasabah_id            UUID (FK → nasabah)
-├── ewallet_config_id     UUID (FK → ewallet_config)
+├── spending_control_id   UUID (FK → spending_control)
 │
 ├── ── Card Info ──
 ├── card_type             ENUM (nfc, qr_static, qr_dynamic, barcode)
@@ -150,7 +163,7 @@ ewallet_card
 - Kartu yang di-deactivate tidak bisa di-reactivate — terbitkan kartu baru
 - **Tidak ada saldo di kartu** — kartu hanya identifier, saldo di tabungan
 
-### 4. Payment Flow via E-Wallet
+### 4. Payment Flow via Kartu Belanja
 
 ```
 Siswa tap kartu / scan QR di POS kantin
@@ -164,8 +177,8 @@ Siswa tap kartu / scan QR di POS kantin
          │
          v
 ┌─────────────────────────────┐
-│ STEP 2: Validasi E-Wallet    │
-│ Cek ewallet_config aktif     │
+│ STEP 2: Validasi Spending     │
+│ Cek spending_control aktif    │
 │ Cek daily_limit              │
 │ Cek per_transaction_limit    │
 │ Cek time restriction         │
@@ -204,7 +217,7 @@ Siswa tap kartu / scan QR di POS kantin
 |-------|-------------|
 | Card not found | "Kartu tidak terdaftar" |
 | Card frozen/deactivated | "Kartu dibekukan/nonaktif" |
-| E-wallet config inactive | "E-wallet tidak aktif" |
+| Spending control inactive | "Kartu Belanja tidak aktif" |
 | Daily limit exceeded | "Batas belanja harian tercapai" |
 | Per-transaction limit exceeded | "Melebihi batas per transaksi" |
 | Outside allowed hours | "Di luar jam belanja yang diizinkan" |
@@ -260,10 +273,10 @@ Spending data derived from:
 
 ### 7. Konteks Asrama (Boarding)
 
-Untuk siswa boarding/asrama, e-wallet menjadi **satu-satunya** cara belanja karena tidak ada akses ke uang tunai:
+Untuk siswa boarding/asrama, Uang Saku Digital menjadi **satu-satunya** cara belanja karena tidak ada akses ke uang tunai:
 
 **Aturan khusus boarding:**
-- Admin bisa set flag `is_boarding = true` di ewallet_config — mengaktifkan fitur boarding-specific
+- Admin bisa set flag `is_boarding = true` di spending_control — mengaktifkan fitur boarding-specific
 - Meal plan integration ([ADR-K019](./ADR-K019-toko-kantin.md) Section 9) — makan otomatis dari tabungan
 - Semua pengeluaran siswa boarding terlacak 100% — transparency penuh untuk orang tua
 - Emergency spending bisa di-approve oleh wali kelas/wali asrama tanpa limit check
@@ -327,15 +340,15 @@ Orang tua / siswa lapor kartu hilang
 ┌─────────────────────────────┐
 │ STEP 3: Issue new card       │
 │ Create ewallet_card baru     │
-│ Link ke nasabah & config     │
-│ yang sama                    │
+│ Link ke nasabah &             │
+│ spending_control yang sama   │
 └─────────────────────────────┘
 ```
 
 **Aturan:**
 - **Tidak ada saldo yang hilang** — saldo ada di tabungan, bukan di kartu
 - Kartu lama langsung di-freeze (mencegah penyalahgunaan) → kemudian di-deactivate
-- Kartu baru bisa langsung diterbitkan — menggunakan ewallet_config yang sama
+- Kartu baru bisa langsung diterbitkan — menggunakan spending_control yang sama
 - Fee penggantian kartu configurable per tenant (default: Rp 10.000)
 - Fee penggantian bisa dipotong dari tabungan atau bayar cash
 
@@ -343,7 +356,7 @@ Orang tua / siswa lapor kartu hilang
 
 **PIN management:**
 - PIN 6 digit, di-hash (bcrypt/argon2) — tidak disimpan plain
-- PIN di-set oleh orang tua saat aktivasi e-wallet
+- PIN di-set oleh orang tua saat aktivasi Uang Saku Digital
 - Reset PIN oleh orang tua via teller atau self-service portal
 - 3x salah PIN → kartu di-freeze otomatis selama 30 menit
 - 5x salah PIN dalam 24 jam → kartu di-freeze hingga manual unfreeze oleh admin
@@ -359,15 +372,15 @@ Orang tua / siswa lapor kartu hilang
 
 ### 11. Vernon _rels dan _data Structure
 
-**ewallet_config _rels/_data:**
+**spending_control _rels/_data:**
 
 ```json
 // _rels
 {
   "tenant_id": "018f...",
   "nasabah_id": "018f...",
-  "rekening_id": "018f...",
-  "parent_nasabah_id": "018f..."
+  "controlled_by_id": "018f...",
+  "rekening_id": "018f..."
 }
 
 // _data
@@ -382,7 +395,7 @@ Orang tua / siswa lapor kartu hilang
     "account_number": "TB-2026-JKT-00000150",
     "category": "tabungan"
   },
-  "parent": {
+  "controlled_by": {
     "id": "018f...",
     "full_name": "Haji Fauzi",
     "member_number": "KOP-2026-JKT-000042"
@@ -397,7 +410,7 @@ Orang tua / siswa lapor kartu hilang
 {
   "tenant_id": "018f...",
   "nasabah_id": "018f...",
-  "ewallet_config_id": "018f..."
+  "spending_control_id": "018f..."
 }
 
 // _data
@@ -411,8 +424,8 @@ Orang tua / siswa lapor kartu hilang
 ```
 
 **SyncEngine triggers:**
-- `NasabahUpdatedEvent` → update `_data.nasabah` di ewallet_config dan ewallet_card
-- `RekeningUpdatedEvent` → update `_data.rekening` di ewallet_config
+- `NasabahUpdatedEvent` → update `_data.nasabah` di spending_control dan ewallet_card
+- `RekeningUpdatedEvent` → update `_data.rekening` di spending_control
 
 ### 12. Authorization — RBAC
 
@@ -426,16 +439,16 @@ Orang tua / siswa lapor kartu hilang
 | View child spending | - | - | - | - | v |
 | Set PIN | - | - | - | - | v |
 | Reset PIN | v | v | v | v | v |
-| Configure ewallet | - | v | v | v | - |
+| Configure spending control | - | v | v | v | - |
 | Assign proxy | - | - | - | v | v* |
-| View all e-wallet data | - | v | v | v | - |
+| View all Uang Saku Digital data | - | v | v | v | - |
 | System config (defaults) | - | - | - | v | - |
 
 *Parent bisa request proxy assignment via teller — bukan self-service langsung.
 
 **Catatan:**
 - **Parent** memiliki akses khusus ke data anak — ini satu-satunya konteks di mana nasabah bisa mengelola data nasabah lain
-- Parent access di-enforce berdasarkan `parent_nasabah_id` di ewallet_config — bukan akses bebas ke semua siswa
+- Parent access di-enforce berdasarkan `controlled_by_id` di spending_control — bukan akses bebas ke semua siswa
 - Teller bisa issue dan deactivate card, tapi **tidak bisa set limits** — itu hak orang tua
 
 ### 13. Dual-Mode Terminology
@@ -446,35 +459,35 @@ Orang tua / siswa lapor kartu hilang
 | Balance label | Saldo Tabungan | Saldo Tabungan |
 | Top-up label | Setoran | Setoran |
 
-E-wallet bersifat **non-interest-bearing** — sama di kedua mode. Tidak ada perbedaan substansial.
+Uang Saku Digital bersifat **non-interest-bearing** — sama di kedua mode. Tidak ada perbedaan substansial.
 
 ## Regulatory Compliance — Analisis Regulasi BI/OJK
 
 > **C-Suite CFO Review Note (2026-04-15):**
-> E-wallet ini secara arsitektural dirancang sebagai "spending interface" di atas rekening tabungan
+> Uang Saku Digital ini secara arsitektural dirancang sebagai "spending interface" di atas rekening tabungan
 > koperasi, **bukan** e-money terpisah. Namun perlu analisis regulasi yang cermat:
 
 ### Analisis Klasifikasi Regulasi
 
-| Kriteria BI (PBI 20/6/PBI/2018) | E-Wallet SekolahPro | Keterangan |
+| Kriteria BI (PBI 20/6/PBI/2018) | Uang Saku Digital SekolahPro | Keterangan |
 |----------------------------------|---------------------|------------|
 | Saldo tersimpan di server penerbit? | **Tidak** — saldo ada di rekening tabungan koperasi | Bukan e-money |
 | Ada penerbitan instrumen pembayaran? | Kartu NFC/QR = **identifier**, bukan instrumen nilai | Bukan e-money |
 | Top-up menghasilkan saldo terpisah? | **Tidak** — top-up = setoran tabungan (K011) | Bukan e-money |
 | Bisa transfer antar pengguna? | **Tidak** — hanya belanja di POS internal | Bukan e-money |
 
-**Kesimpulan awal:** E-wallet ini **kemungkinan tidak terklasifikasi sebagai uang elektronik** karena:
+**Kesimpulan awal:** Uang Saku Digital ini **kemungkinan tidak terklasifikasi sebagai uang elektronik** karena:
 1. Saldo tetap berada di rekening tabungan koperasi (bukan di instrumen terpisah)
 2. Kartu hanya berfungsi sebagai identifier (seperti kartu debit co-branding internal)
 3. Hanya bisa digunakan di merchant internal (kantin, toko koperasi sekolah)
 
 ### Risiko Regulasi yang Harus Dimitigasi
 
-1. **Top-up dari luar rekening koperasi**: Jika orang tua bisa top-up via transfer bank langsung ke "saldo e-wallet" (bukan ke rekening tabungan), ini bisa masuk kategori e-money. **Mitigasi:** Semua top-up HARUS tercatat sebagai setoran tabungan standar (K011). Tidak ada jalur top-up yang bypass rekening.
+1. **Top-up dari luar rekening koperasi**: Jika orang tua bisa top-up via transfer bank langsung ke "saldo Uang Saku Digital" (bukan ke rekening tabungan), ini bisa masuk kategori e-money. **Mitigasi:** Semua top-up HARUS tercatat sebagai setoran tabungan standar (K011). Tidak ada jalur top-up yang bypass rekening.
 
 2. **QR Payment bisa disalahpahami**: Jika QR code digunakan untuk pembayaran di luar lingkungan sekolah, ini melanggar batasan internal. **Mitigasi:** QR code hanya bisa di-scan oleh POS yang terdaftar di tenant yang sama. Reject semua transaksi dari POS tidak dikenal.
 
-3. **Scaling ke luar sekolah**: Jika di masa depan e-wallet diperluas ke merchant di luar sekolah (warung sekitar, dll), **wajib konsultasi legal dan kemungkinan butuh lisensi BI**. **Mitigasi:** ADR ini secara eksplisit membatasi scope ke lingkungan internal sekolah saja.
+3. **Scaling ke luar sekolah**: Jika di masa depan Uang Saku Digital diperluas ke merchant di luar sekolah (warung sekitar, dll), **wajib konsultasi legal dan kemungkinan butuh lisensi BI**. **Mitigasi:** ADR ini secara eksplisit membatasi scope ke lingkungan internal sekolah saja.
 
 ### Action Items Regulasi
 
@@ -513,11 +526,11 @@ E-wallet bersifat **non-interest-bearing** — sama di kedua mode. Tidak ada per
 
 ## Alternatives Considered
 
-### A. Saldo E-Wallet Terpisah (Separate Balance)
+### A. Saldo Terpisah (Separate Balance)
 
-E-wallet memiliki saldo sendiri, terpisah dari tabungan.
+Uang Saku Digital memiliki saldo sendiri, terpisah dari tabungan.
 
-**Ditolak** karena: menambah kompleksitas — dua saldo per nasabah yang harus di-reconcile, dua set transaksi, dan bingung bagi nasabah ("saldo tabungan saya berapa?" vs "saldo e-wallet saya berapa?"). Top-up juga menjadi transaksi internal yang tidak perlu.
+**Ditolak** karena: menambah kompleksitas — dua saldo per nasabah yang harus di-reconcile, dua set transaksi, dan bingung bagi nasabah ("saldo tabungan saya berapa?" vs "saldo uang saku saya berapa?"). Top-up juga menjadi transaksi internal yang tidak perlu.
 
 ### B. Physical Cash Card (Stored Value Card)
 

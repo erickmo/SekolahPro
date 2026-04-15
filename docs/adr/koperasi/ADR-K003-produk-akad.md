@@ -88,6 +88,22 @@ interest_config (JSONB):
     └── MONTHLY_BALANCE  # Bunga bulanan berdasarkan saldo rata-rata (tabungan)
   compounding:           ENUM (none, monthly, quarterly, yearly)
   tax_rate:              NUMERIC(5,2)    # PPh atas bunga (default: 10% sesuai regulasi)
+  tax_exemption_threshold: NUMERIC(15,2) # Threshold pembebasan PPh per tahun per nasabah (default: 240000)
+  tax_tracking:          VARCHAR         # Metode tracking PPh: "annual_cumulative" (default)
+```
+
+**PPh (Pajak Penghasilan) Handling:**
+
+Bunga/bagi hasil simpanan koperasi dikenakan PPh Pasal 4(2) dengan ketentuan khusus:
+- Bunga simpanan anggota koperasi **di bawah Rp 240.000/tahun** dibebaskan dari PPh (PP 23/2018)
+- Di atas threshold: dikenakan PPh final 10%
+- Tracking dilakukan secara **kumulatif per tahun** per nasabah, bukan per transaksi
+
+Konfigurasi di `interest_config`:
+```
+  tax_rate: 10                    # Persentase PPh (default 10%)
+  tax_exemption_threshold: 240000 # Threshold pembebasan per tahun per nasabah
+  tax_tracking: "annual_cumulative" # Track kumulatif, bukan per-transaksi
 ```
 
 **Contoh perhitungan tabungan (DAILY_BALANCE):**
@@ -454,12 +470,13 @@ produk_version_history
 ├── version                 INTEGER NOT NULL
 │
 ├── ── Snapshot Config ──
-├── interest_config         JSONB (nullable)
-├── islamic_config          JSONB (nullable)
-├── fee_config              JSONB (nullable)
-├── min_balance             NUMERIC(15,2)
-├── max_balance             NUMERIC(15,2) (nullable)
-│   # ... semua field config lainnya yang bisa berubah
+├── interest_config         JSONB (snapshot suku bunga/nisbah)
+├── islamic_config          JSONB (snapshot konfigurasi syariah)
+├── fee_config              JSONB (snapshot konfigurasi biaya)
+├── min_amount              NUMERIC(15,2)
+├── max_amount              NUMERIC(15,2)
+├── tenor_options           JSONB (snapshot opsi tenor, untuk deposito/pinjaman)
+├── eligibility_rules       JSONB (snapshot aturan eligibility)
 │
 ├── ── Periode Berlaku ──
 ├── effective_since         DATE NOT NULL

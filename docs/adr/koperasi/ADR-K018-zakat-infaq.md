@@ -161,6 +161,25 @@ Opt-in Flow:
 - Pinjaman/pembiayaan outstanding (ini hutang, bukan aset)
 - Bunga/profit yang belum dicairkan
 
+**Pengurangan Hutang dalam Perhitungan Zakat Mal:**
+
+Hutang yang boleh dikurangkan dari harta zakat-able:
+
+```
+harta_neto = total_harta_qualifying - hutang_jatuh_tempo
+```
+
+- `hutang_jatuh_tempo`: Hanya angsuran yang **jatuh tempo dalam periode haul** (12 bulan ke depan), BUKAN total sisa pokok pinjaman
+- Contoh: Nasabah punya pinjaman sisa pokok Rp 50.000.000, angsuran Rp 1.000.000/bulan
+  → Hutang yang dikurangkan = 12 × Rp 1.000.000 = Rp 12.000.000 (bukan Rp 50.000.000)
+- Dasar: pendapat mayoritas ulama fiqh bahwa hutang jangka panjang hanya dikurangkan sebesar porsi yang jatuh tempo
+
+Konfigurasi per tenant:
+```
+debts_calculation_method: "due_installments_only" | "total_outstanding"
+Default: "due_installments_only" (recommended)
+```
+
 **Aturan:**
 - Opt-in **bersifat sukarela** — anggota tidak dipaksa menggunakan layanan ini
 - Kalkulasi hanya mencakup **aset di koperasi** — aset di luar koperasi menjadi tanggung jawab pribadi
@@ -440,10 +459,34 @@ JURNAL PENERIMAAN TA'ZIR (dari K009):
   Credit: 8101 Denda Keterlambatan   Rp 5.000
 ```
 
+**Penyajian di Neraca per PSAK 109:**
+
+Dana zakat, infaq, dan ta'zir BUKAN murni off-balance sheet. Per PSAK 109 paragraf 35-36, saldo dana ini disajikan sebagai **bagian terpisah di Neraca** (Laporan Posisi Keuangan):
+
+```
+Neraca BMT:
+  ASET
+  ├── 1xxx Aset Lancar & Tetap
+  │
+  KEWAJIBAN
+  ├── 2xxx Simpanan Nasabah, Hutang
+  │
+  EKUITAS
+  ├── 3xxx Simpanan Pokok, Cadangan, SHU
+  │
+  DANA ZAKAT, INFAQ & TA'ZIR (section terpisah — bukan kewajiban, bukan ekuitas)
+  ├── 6xxx Dana Zakat (saldo belum disalurkan)
+  ├── 6xxx Dana Infaq/Shadaqah (saldo belum disalurkan)
+  └── 8xxx Dana Ta'zir (saldo belum disalurkan)
+
+- Total Neraca = Aset = Kewajiban + Ekuitas + Dana ZIS
+- Dana ZIS adalah amanah yang dititipkan, bukan milik koperasi
+- General mode: section ini TIDAK ditampilkan (tidak ada dana ZIS)
+```
+
 **Aturan:**
-- Dana zakat = **off-balance sheet** — tidak masuk laporan laba rugi koperasi
-- Dana infaq = **off-balance sheet** — sama seperti zakat
-- Dana ta'zir = **off-balance sheet** — COA 8xxx terpisah
+- Dana zakat, infaq, ta'zir **tidak masuk** laporan laba rugi koperasi — terpisah dari P&L
+- Dana ZIS disajikan sebagai **section terpisah di Neraca** per PSAK 109 (bukan kewajiban, bukan ekuitas)
 - Laporan terpisah: **Laporan Sumber & Penyaluran Dana Zakat** (PSAK 109)
 - Laporan terpisah: **Laporan Sumber & Penggunaan Dana Kebajikan** (termasuk infaq & ta'zir)
 - Auto-journal: setiap collection/distribution otomatis generate jurnal — operator tidak perlu input manual

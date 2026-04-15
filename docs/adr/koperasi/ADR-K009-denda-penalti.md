@@ -187,6 +187,23 @@ Supervisor/Manager mengajukan waiver
 - Waiver tidak mengubah riwayat keterlambatan — DPD dan aging tetap tercatat
 - Max total waiver per pinjaman configurable (default: unlimited, tapi setiap waiver di-audit)
 
+### 4b. Penanganan Denda saat Restrukturisasi (K007)
+
+Saat pinjaman direstrukturisasi, denda outstanding ditangani sesuai kesepakatan:
+
+| Opsi | Deskripsi | Persetujuan |
+|------|-----------|-------------|
+| **Waive penuh** | Seluruh denda outstanding dihapuskan | Manager+ |
+| **Waive sebagian** | Sebagian denda dihapuskan, sisanya tetap | Manager+ |
+| **Freeze** | Denda tidak bertambah selama restrukturisasi, saldo existing tetap | Supervisor+ |
+| **Carry forward** | Denda ditambahkan ke saldo pinjaman baru (di-capitalize) | Manager+ |
+
+**Aturan:**
+- Opsi yang dipilih WAJIB tercatat di dokumen restrukturisasi (audit trail)
+- Untuk mode Islamic: ta'zir yang sudah masuk social fund TIDAK bisa di-reverse — waive hanya berlaku untuk ta'zir yang belum terkumpul
+- Setelah restrukturisasi: perhitungan denda dimulai dari nol (grace period baru sesuai jadwal baru)
+- Status denda yang di-waive: `waived` dengan `waiver_reason = "restructuring"`
+
 ### 5. Early Withdrawal Penalty — Deposito
 
 Penalti untuk penarikan deposito sebelum jatuh tempo:

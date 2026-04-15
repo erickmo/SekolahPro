@@ -405,6 +405,8 @@ shu_periode
 ├── amount_dana_pendidikan NUMERIC(15,2) DEFAULT 0
 ├── amount_dana_sosial    NUMERIC(15,2) DEFAULT 0
 ├── amount_dana_pembangunan NUMERIC(15,2) DEFAULT 0
+├── rounding_difference    NUMERIC(15,2) NOT NULL DEFAULT 0
+│                         (selisih pembulatan, dialokasikan ke cadangan)
 │
 ├── ── Status & Workflow ──
 ├── status                ENUM (calculated, reviewed, approved, distributed)
@@ -605,7 +607,33 @@ Laporan SHU:
 - Perhitungan daily weighted average menggunakan **pre-aggregated data** — snapshot saldo harian sudah tersedia dari reconciliation K015
 - Year-end closing memiliki checklist dan pre-check yang jelas — meminimalkan delay
 - SHU yang belum didistribusikan (siswa keluar, rekening tutup) dicatat sebagai **kewajiban** — tidak hilang, bisa diklaim kapan saja
-- **Pembulatan**: selisih pembulatan dialokasikan ke **cadangan** — documented, auditable, dan nilainya negligible (< Rp 100 per periode)
+- **Pembulatan**: selisih pembulatan dialokasikan ke **cadangan** — documented, auditable (lihat algoritma pembulatan di bawah)
+
+**Algoritma Pembulatan SHU:**
+
+Distribusi proporsional ke ratusan anggota menghasilkan selisih pembulatan. Aturan:
+
+1. Hitung SHU per anggota dengan presisi penuh (NUMERIC(15,2))
+2. **Floor** (bulatkan ke bawah) ke Rp 1 terdekat per anggota
+3. Hitung remainder: `pool_amount - SUM(individual_floored)`
+4. Remainder dialokasikan ke **Cadangan** (bukan ke anggota tertentu)
+5. Simpan `rounding_difference` di `shu_periode` untuk audit
+
+Contoh:
+```
+Pool Jasa Modal = Rp 10.000.000
+Anggota A: proporsi 33.333...% → Rp 3.333.333 (floor)
+Anggota B: proporsi 33.333...% → Rp 3.333.333 (floor)  
+Anggota C: proporsi 33.333...% → Rp 3.333.333 (floor)
+SUM = Rp 9.999.999
+Remainder = Rp 1 → masuk Cadangan
+rounding_difference = Rp 1
+```
+
+Tambahkan field di data model `shu_periode`:
+```
+rounding_difference   NUMERIC(15,2) NOT NULL DEFAULT 0
+```
 - Simulasi membantu mempercepat keputusan RAT — pengurus datang dengan data, bukan diskusi tanpa angka
 
 ## Alternatives Considered

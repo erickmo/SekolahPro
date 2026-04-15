@@ -235,7 +235,7 @@ Parent-Child Linking:
 **Aturan:**
 - Parent hanya bisa melihat data anak yang **terhubung** — tidak bisa lihat anak nasabah lain
 - Remote top-up menghasilkan **transaksi setoran** di rekening tabungan anak (flow K011)
-- Spending limit disimpan di `parent_child_config` — di-enforce di transaction layer (K011, K019, K021)
+- Spending limit disimpan di `spending_control` ([ADR-K021](./ADR-K021-ewallet.md)) — di-enforce di transaction layer (K011, K019, K021)
 - Link parent-child bisa **1-to-many** — satu orang tua bisa punya beberapa anak
 - Link juga bisa **many-to-1** — satu anak bisa punya ayah dan ibu sebagai wali
 - Analytics menggunakan data dari transaksi anak — aggregation di backend, bukan di client
@@ -478,7 +478,18 @@ portal_session
     └── created_by        UUID
 ```
 
-**parent_child_config (Spending Limit & Linking):**
+**Parent Portal — Spending Control:**
+
+Parent mengatur spending limit anak melalui `spending_control` (K021):
+- View dan edit daily_limit, per_transaction_limit, weekly_limit, monthly_limit
+- Set category_restrictions (canteen only, toko only, semua)
+- Set time_restrictions (jam sekolah saja)
+- Changes berlaku real-time (POS K019 selalu query latest config)
+- Audit trail: setiap perubahan tercatat (updated_by = parent nasabah_id)
+
+Spending limits TIDAK diduplikasi di sini — gunakan `spending_control` dari [ADR-K021](./ADR-K021-ewallet.md).
+
+**parent_child_config (simplified — hanya link dan notifikasi):**
 
 ```
 parent_child_config
@@ -487,25 +498,14 @@ parent_child_config
 ├── parent_nasabah_id     UUID (FK → nasabah) NOT NULL
 ├── child_nasabah_id      UUID (FK → nasabah) NOT NULL
 │
-├── ── Spending Limits ──
-├── daily_limit           NUMERIC(15,2) (nullable, null = no limit)
-├── per_transaction_limit NUMERIC(15,2) (nullable, null = no limit)
-├── weekly_limit          NUMERIC(15,2) (nullable, null = no limit)
-├── monthly_limit         NUMERIC(15,2) (nullable, null = no limit)
-│
-├── ── Category Restrictions ──
-├── restricted_categories JSONB DEFAULT '[]'
-│   │   Array of category codes: ["toko", "transfer"]
-│
 ├── ── Savings Goal ──
 ├── savings_goal_amount   NUMERIC(15,2) (nullable)
 ├── savings_goal_label    VARCHAR (nullable, misal: "Tabungan Liburan")
 ├── savings_goal_deadline DATE (nullable)
 │
 ├── ── Notification Config ──
-├── notify_every_transaction  BOOLEAN DEFAULT false
-├── notify_daily_summary      BOOLEAN DEFAULT true
-├── notify_limit_exceeded     BOOLEAN DEFAULT true
+├── notification_config   JSONB (preferensi notifikasi: daily_summary, per_transaction, dll)
+├── is_active             BOOLEAN DEFAULT true
 │
 ├── ── Vernon Fields ──
 ├── _rels                 JSONB NOT NULL DEFAULT '{}'

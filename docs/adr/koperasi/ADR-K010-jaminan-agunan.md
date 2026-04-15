@@ -70,18 +70,33 @@ collateral_valuation_config:
       revaluation: "none"            # Tidak ada revaluasi
 ```
 
-**Dua nilai yang dicatat:**
+**Formula Nilai Jaminan (Satu Haircut, Bukan Dua):**
+
+Nilai jaminan yang diakui untuk penjaminan pinjaman:
 
 ```
-appraised_value     = Nilai taksasi oleh penilai (market value estimate)
-collateral_value    = Nilai yang diakui koperasi setelah haircut
-                    = appraised_value x acceptance_rate
+collateral_value = appraised_value × acceptance_rate
+```
 
-Contoh:
-  BPKB Motor: appraised_value = 15.000.000
-  acceptance_rate = 70% (haircut 30%)
-  collateral_value = 15.000.000 x 0.70 = 10.500.000
-  Max pinjaman dengan LTV 80% = 10.500.000 x 0.80 = 8.400.000
+- `appraised_value`: Nilai taksasi/appraisal dari penilai
+- `acceptance_rate`: Haircut berdasarkan jenis jaminan (sudah memperhitungkan LTV)
+- `collateral_value`: Nilai yang diakui untuk coverage
+
+LTV ratio di produk (K003) digunakan untuk MENENTUKAN acceptance_rate default per jenis jaminan, BUKAN sebagai pengali tambahan.
+
+| Jenis Jaminan | Default Acceptance Rate | Penjelasan |
+|--------------|------------------------|------------|
+| INTERNAL_BALANCE (tabungan/deposito) | 100% | Likuid, tidak ada risiko penurunan nilai |
+| SURAT_BERHARGA (BPKB, sertifikat) | 70-80% | LTV standar untuk surat berharga |
+| BARANG_BERGERAK (kendaraan, elektronik) | 50-70% | Risiko depresiasi |
+| PERSONAL_GUARANTEE | 0% (moral) | Tidak memiliki nilai moneter yang diakui |
+
+```
+Contoh: BPKB motor appraised Rp 15.000.000, acceptance_rate 70%
+→ collateral_value = 15.000.000 × 70% = Rp 10.500.000
+→ Pinjaman maksimal yang bisa dijamin: Rp 10.500.000 (TANPA pengali LTV tambahan)
+
+Eligibility check: total_outstanding_loan ≤ SUM(collateral_value) dari semua jaminan yang di-pledge
 ```
 
 **Revaluasi:**

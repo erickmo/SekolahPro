@@ -41,8 +41,23 @@ tenor_options (dari produk K003):
 - Tenor tersimpan di produk sebagai array: `tenor_options: [1, 3, 6, 12, 24]`
 - Tenant bisa membatasi pilihan tenor per produk — misal hanya `[3, 6, 12]`
 - Nasabah memilih tenor saat pengajuan deposito (K002 Section 3)
-- `maturity_date` dihitung otomatis: `placement_date + tenor_months`
+- `maturity_date` dihitung otomatis: `placement_date + tenor_months` (lihat aturan edge case di bawah)
 - Tenor minimum dan maksimum di-enforce dari produk (K003 Section 8)
+
+**Maturity Date Edge Cases:**
+
+Perhitungan maturity_date menggunakan aturan berikut:
+
+| Placement Date | Tenor | Maturity Date | Aturan |
+|---------------|-------|---------------|--------|
+| 2026-01-31    | 1 bulan | 2026-02-28  | Akhir bulan jika hari tidak ada |
+| 2026-01-30    | 1 bulan | 2026-02-28  | Akhir bulan jika hari tidak ada |
+| 2026-01-29    | 1 bulan | 2026-02-28  | Akhir bulan (non-leap) / 2026-02-29 (leap) |
+| 2026-01-15    | 1 bulan | 2026-02-15  | Normal -- hari sama |
+| 2026-03-31    | 1 bulan | 2026-04-30  | Akhir bulan jika hari tidak ada |
+| 2026-01-31    | 12 bulan | 2027-01-31 | Normal -- tahun berikutnya |
+
+Implementasi: Gunakan Go `time.AddDate(0, tenor_months, 0)` yang secara otomatis handle overflow (Jan 31 + 1 month = Mar 3 di Go, tapi kita override ke akhir bulan). Rule: jika hari hasil > jumlah hari di bulan target, gunakan hari terakhir bulan target.
 - Satu produk deposito bisa mencakup **beberapa tenor** — atau tenant bisa buat produk terpisah per tenor
 
 ### 2. Rate Tiers — Higher Rate for Longer Tenor & Larger Amount
@@ -151,6 +166,21 @@ interest_payment_method:
 ├── at_maturity         Bunga dibayar sekaligus saat jatuh tempo
 └── capitalize          Bunga ditambahkan ke pokok (compound) — dibayar saat jatuh tempo
 ```
+
+**Effective Annual Rate (EAR) untuk Capitalize:**
+
+Metode capitalize menghasilkan bunga majemuk (compound interest). Koperasi WAJIB menghitung dan menampilkan effective annual rate:
+
+```
+  EAR = (1 + r/n)^n - 1
+
+  Contoh: nominal rate 8% p.a., compounding bulanan (n=12):
+  EAR = (1 + 0.08/12)^12 - 1 = 8.30%
+```
+
+- EAR wajib ditampilkan di bilyet deposito dan formulir pengajuan
+- Laporan ke OJK menggunakan EAR, bukan nominal rate
+- Field `effective_rate` ditambahkan di `deposito_interest_schedule` untuk tracking
 
 #### 4b. Islamic Mode — Bagi Hasil Deposito Mudharabah
 
@@ -543,6 +573,7 @@ deposito_interest_schedule
 ├── gross_interest        NUMERIC(15,2) NOT NULL
 ├── tax_amount            NUMERIC(15,2) NOT NULL
 ├── net_interest          NUMERIC(15,2) NOT NULL
+├── effective_rate        NUMERIC(7,4) (nullable, EAR untuk metode capitalize)
 │
 ├── ── Payment ──
 ├── paid_to_rekening_id   UUID (nullable, FK → rekening tabungan, jika monthly payment)

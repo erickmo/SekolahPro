@@ -127,10 +127,29 @@ Credit Pre-check (auto, saat submit):
 +-- 5. Plafon dalam range produk (min/max loan amount)     v
 +-- 6. Tenor dalam range produk (min/max tenor)            v
 +-- 7. Kolektibilitas existing loans semua Lancar (Kol-1)  v
++-- 8. BMPK check (lihat di bawah)                        v
     |
     ALL PASS -> Submit allowed
     ANY FAIL -> Submit blocked, return error list
 ```
+
+**BMPK (Batas Maksimum Pemberian Kredit):**
+
+Per POJK untuk LKM/koperasi, eksposur maksimum ke satu peminjam dibatasi berdasarkan modal koperasi:
+
+| Jenis | Batas | Keterangan |
+|-------|-------|------------|
+| Single borrower | 20% modal sendiri | Satu nasabah individual |
+| Group borrower | 25% modal sendiri | Nasabah terkait (keluarga, satu entitas) |
+
+Modal sendiri = Simpanan Pokok + Simpanan Wajib + Cadangan + SHU Ditahan (lihat K017 CAR definition)
+
+**Validasi saat pengajuan:**
+- Total eksposur nasabah (existing outstanding + new loan) ≤ 20% modal sendiri
+- Jika grup: total eksposur grup ≤ 25% modal sendiri
+- Grup didefinisikan oleh: hubungan keluarga (spouse, parent, child via K001 ahli waris), atau penjamin/guarantor linkage
+- BMPK check dilakukan SEBELUM credit scoring — jika gagal BMPK, tidak perlu lanjut analisis kredit
+- Threshold configurable per tenant (default: 20% single, 25% group)
 
 **Credit analysis (manual, oleh Supervisor):**
 
@@ -420,29 +439,31 @@ Early Settlement Request
 | Status: ACTIVE    |  Pinjaman dicairkan, angsuran berjalan
 +--------+----------+
          |
-    +----+------------+----------------+
-    v                 v                v
-+------------+ +--------------+ +------------+
-| COMPLETED  | | RESTRUCTURED | | WRITTEN_OFF|
-| Lunas      | | Di-restruktur| | Dihapusbuku|
-+------------+ +--------------+ +------------+
+    +----+---+----------+
+    v        v          v
++--------+ +--------+ +------------+
+|COMPLETED| |ACTIVE  | | WRITTEN_OFF|
+| Lunas  | |(restru-| | Dihapusbuku|
+|        | | ktur)  | |            |
++--------+ +--------+ +------------+
 ```
+
+> **Catatan:** RESTRUCTURED bukan status — restrukturisasi adalah proses. Loan kembali ke ACTIVE dengan flag `is_restructured = true` dan jadwal angsuran baru.
 
 **Status definitions:**
 
 | Status | Deskripsi | Trigger |
 |--------|-----------|---------|
-| ACTIVE | Pinjaman berjalan, angsuran belum lunas | Saat pencairan |
+| ACTIVE | Pinjaman berjalan, angsuran belum lunas. Termasuk pinjaman yang sudah direstrukturisasi (`is_restructured = true`) | Saat pencairan, atau setelah restrukturisasi selesai |
 | COMPLETED | Pinjaman lunas (semua angsuran terbayar atau early settlement) | Balance = 0 |
-| RESTRUCTURED | Pinjaman lama diganti jadwal baru | Approval restrukturisasi |
 | WRITTEN_OFF | Pinjaman dihapusbukukan (macet, tidak tertagih) | Approval write-off |
 
 **Aturan:**
 - `ACTIVE -> COMPLETED`: otomatis saat balance rekening = 0
-- `ACTIVE -> RESTRUCTURED`: saat restrukturisasi di-approve — pinjaman ini di-flag, jadwal baru dimulai
+- `ACTIVE -> ACTIVE (restructured)`: saat restrukturisasi di-approve — status tetap ACTIVE, flag `is_restructured = true`, `restructure_count++`, jadwal baru di-generate
 - `ACTIVE -> WRITTEN_OFF`: saat write-off di-approve (Section 12)
 - Status terminal (COMPLETED, WRITTEN_OFF) **tidak bisa di-revert**
-- RESTRUCTURED bukan terminal — pinjaman tetap berjalan dengan jadwal baru, status kembali ke ACTIVE setelah restrukturisasi
+- Restrukturisasi **bukan status** melainkan proses — pinjaman tetap ACTIVE dengan jadwal angsuran baru dan flag `is_restructured = true`
 
 ### 11. NPL Classification (Kolektibilitas)
 
@@ -585,7 +606,7 @@ pinjaman
 +-- collectibility_updated_at TIMESTAMPTZ
 |
 +-- -- Status --
-+-- status                  ENUM (active, completed, restructured, written_off)
++-- status                  ENUM (active, completed, written_off)
 +-- completed_at            TIMESTAMPTZ (nullable)
 +-- written_off_at          TIMESTAMPTZ (nullable)
 +-- written_off_by          UUID (nullable)

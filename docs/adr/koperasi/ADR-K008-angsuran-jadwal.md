@@ -213,7 +213,8 @@ angsuran
 +-- total_paid            NUMERIC(15,2) DEFAULT 0
 |
 +-- -- Status Pembayaran --
-+-- payment_status        ENUM (scheduled, partial, paid, overdue, waived)
++-- payment_status        ENUM (scheduled, partial, paid, overdue, waived, voided)
+|   # Status `voided` digunakan saat restrukturisasi (K007) — jadwal lama di-void, jadwal baru di-generate
 +-- paid_date             DATE (nullable, tanggal pembayaran aktual)
 +-- paid_via              ENUM (teller_cash, auto_debit, payroll) (nullable)
 +-- transaction_id        UUID (nullable, FK -> transaksi, link ke transaksi pembayaran)
@@ -295,6 +296,20 @@ Nasabah bayar angsuran
 4. **Bunga/margin berjalan** — bunga/margin angsuran saat ini
 5. **Pokok berjalan** — pokok angsuran saat ini
 6. **Sisa** -> overpayment (lihat Section 6)
+
+**Concurrency Control — Mandatory Locking:**
+
+Pembayaran angsuran WAJIB menggunakan row-level locking untuk mencegah race condition antara:
+- Auto-debit scheduled job dan pembayaran manual teller secara bersamaan
+- Dua teller memproses pembayaran nasabah yang sama
+
+Mekanisme:
+1. `SELECT ... FOR UPDATE` pada row angsuran yang akan dibayar
+2. Jika row sudah di-lock oleh proses lain, tunggu (dengan timeout configurable, default 5 detik)
+3. Jika timeout, return error "Pembayaran sedang diproses, coba lagi"
+4. Setelah lock acquired: validasi status (masih SCHEDULED/OVERDUE/PARTIAL?), proses pembayaran, update status, release lock
+
+Auto-debit job: proses secara sequential per nasabah, bukan parallel, untuk menghindari self-deadlock.
 
 **Aturan:**
 - Pembayaran selalu di-match ke angsuran **paling lama yang belum lunas** (FIFO) — kecuali Teller override manual

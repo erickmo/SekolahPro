@@ -163,7 +163,7 @@ Sistem menghitung rasio keuangan secara **otomatis** dari data akuntansi dan ope
 | Kategori | Rasio | Formula | Sumber | Threshold |
 |----------|-------|---------|--------|-----------|
 | Kualitas Aset | NPL Ratio | Total NPL (kol 3+4+5) / Total Outstanding Loans | K007 | > 5% |
-| Permodalan | CAR | Modal (3xxx) / ATMR | K015 | < 8% |
+| Permodalan | CAR | Modal Inti (Tier 1) / ATMR × 100% | K015 | < 8% |
 | Permodalan | BMPK | Max Single Borrower Exposure / Modal | K007, K015 | > 20% |
 | Profitabilitas | ROA | Net Income / Total Assets | K015 | - |
 | Profitabilitas | ROE | Net Income / Equity | K015 | - |
@@ -175,7 +175,48 @@ Sistem menghitung rasio keuangan secara **otomatis** dari data akuntansi dan ope
 - Threshold warning **configurable per tenant** — default mengikuti standar regulasi
 - Dual-mode: koperasi konvensional menggunakan **LDR**, BMT menggunakan **FDR** — formula sama, terminologi berbeda
 - Tren rasio disimpan **historis** — ditampilkan di dashboard eksekutif secara real-time
-- ATMR dihitung dengan bobot standar OJK: Kas & SBI 0%, Antar bank 20%, Pinjaman anggota 100%, Aktiva tetap 100%
+
+**CAR (Capital Adequacy Ratio):**
+
+```
+CAR = Modal Inti (Tier 1) / ATMR × 100%
+
+Modal Inti (Tier 1) untuk koperasi:
+  + 3100 Simpanan Pokok
+  + 3200 Simpanan Wajib
+  + 3300 Cadangan Umum
+  + 3400 Cadangan Risiko
+  + 3600 Donasi/Hibah (jika ada)
+  ─────────────────────────
+  EXCLUDE: 3500 SHU Tahun Berjalan (belum disetujui RAT)
+  
+  Modal Inti = SUM(3100 + 3200 + 3300 + 3400 + 3600)
+
+Threshold: < 8% → DANGER, 8-12% → WARNING, > 12% → OK
+```
+
+**ATMR (Aktiva Tertimbang Menurut Risiko):**
+
+| Kode COA | Akun | Bobot Risiko | Keterangan |
+|----------|------|-------------|------------|
+| 1101 | Kas | 0% | Zero risk |
+| 1102 | Bank — Giro | 0% | Dijamin LPS |
+| 1103 | Bank — Tabungan | 20% | Antar bank |
+| 1200 | Penempatan pada bank lain | 20% | Antar bank |
+| 1301 | Piutang Pinjaman/Pembiayaan | 100% | Kredit anggota |
+| 1302 | Piutang Bunga/Margin | 100% | Pendapatan accrued |
+| 1303 | Piutang Lainnya | 100% | Risiko penuh |
+| 1309 | Cadangan Kerugian (kontra) | 0% | Pengurang, bukan aset |
+| 1400 | Penyertaan/Investasi | 100% | Risiko penuh |
+| 1500 | Aktiva Tetap | 100% | Risiko penuh |
+| 1509 | Akumulasi Penyusutan (kontra) | 0% | Pengurang |
+| 1600 | Aktiva Lain-lain | 100% | Risiko penuh |
+
+```
+ATMR = SUM(saldo_akun × bobot_risiko) untuk semua akun aset
+```
+
+ATMR weight configurable per tenant untuk mengakomodasi perubahan regulasi
 
 ### 6. Multi-Branch Consolidation
 

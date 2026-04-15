@@ -271,28 +271,28 @@ kas_minimum_config:
 
 Kas harian harus reconcilable dengan total dari teller sessions:
 
+**Formula Rekonsiliasi Kas Harian:**
+
+Rekonsiliasi membandingkan kas harian (K014) dengan data teller (K012):
+
 ```
-Reconciliation Check:
-┌─────────────────────────────────────────────────┐
-│ Source 1: Kas Harian (K014)                     │
-│ closing_balance = opening_balance               │
-│                 + total_inflow                   │
-│                 - total_outflow                  │
-│                                                 │
-│ Source 2: Teller Sessions (K012)                │
-│ total_actual_cash = SUM(actual_cash)            │
-│                     semua teller sessions        │
-│                     + vault_end_of_day           │
-│                                                 │
-│ Reconciliation:                                 │
-│ closing_balance = total_actual_cash             │
-│                 + non_cash_balance (bank, dll)   │
-│                 + selisih_teller                 │
-│                                                 │
-│ Match     → reconciled                          │
-│ Not match → investigation required              │
-└─────────────────────────────────────────────────┘
+  expected_kas_closing = SUM(teller_actual_cash pada saat close) 
+                       + vault_end_of_day_balance
+                       + kas_operasional_di_luar_teller
 ```
+
+Komponen:
+- `SUM(teller_actual_cash)`: Total kas fisik dari semua sesi teller yang sudah CLOSED hari itu
+- `vault_end_of_day_balance`: Saldo brankas/vault setelah semua serah terima kas teller
+- `kas_operasional_di_luar_teller`: Kas untuk operasional yang tidak melalui sesi teller (petty cash, dll) — biasanya Rp 0 jika semua kas melalui teller
+
+```
+Selisih = kas_harian.closing_balance - expected_kas_closing
+- Selisih = 0: Rekonsiliasi OK
+- Selisih ≠ 0: Investigasi diperlukan, alert ke Supervisor
+```
+
+Catatan: Transaksi non-tunai (transfer antar rekening, auto-debit) TIDAK mempengaruhi kas fisik dan TIDAK masuk dalam rekonsiliasi kas. Rekonsiliasi kas hanya untuk uang tunai fisik.
 
 **Reconciliation schedule:**
 - **Harian**: otomatis setelah semua teller session closed — bandingkan kas harian vs sum teller sessions

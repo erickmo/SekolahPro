@@ -463,8 +463,7 @@ Rekening menggunakan Vernon pattern karena listing rekening membutuhkan data nas
   "nasabah": {
     "id":            "018f...",
     "full_name":     "Ahmad Fauzi",
-    "member_number": "KOP-2026-JKT-000001",
-    "identity_number": "3201..."
+    "member_number": "KOP-2026-JKT-000001"
   },
   "product": {
     "id":            "018f...",
@@ -479,6 +478,8 @@ Rekening menggunakan Vernon pattern karena listing rekening membutuhkan data nas
   }
 }
 ```
+
+**Catatan:** `identity_number` tidak disertakan di `_data` — data sensitif hanya diakses via query detail nasabah. Konsisten dengan prinsip K001: "Tidak ada data sensitif di _data".
 
 **SyncEngine triggers:**
 - `NasabahUpdatedEvent` → update `_data.nasabah` di semua rekening nasabah tersebut

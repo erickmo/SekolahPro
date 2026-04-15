@@ -145,7 +145,7 @@ Kasir scan/pilih item
 ┌─────────────────┐
 │  PAYMENT         │  Pilih metode bayar
 │  Cash / Tabungan │
-│  / E-Wallet      │
+│  / Kartu Belanja │
 │  / Mixed         │
 └────────┬────────┘
          │ confirm
@@ -172,7 +172,7 @@ POS mendukung beberapa metode pembayaran:
 payment_method:
 ├── CASH                  Uang tunai (kasir terima & kembalikan)
 ├── TABUNGAN_DEBIT        Potong saldo tabungan nasabah (cashless)
-├── EWALLET_DEBIT         Potong saldo e-wallet (K021, jika diaktifkan)
+├── EWALLET_DEBIT         Potong via Kartu Belanja (K021, jika diaktifkan)
 └── MIXED                 Kombinasi di atas (misal: sebagian tunai, sebagian tabungan)
 ```
 
@@ -320,52 +320,28 @@ toko_opname_item
     └── created_by        UUID
 ```
 
-### 7. Student Daily Spending Limit
+### 7. Spending Limit di POS
 
-Batas belanja harian untuk siswa — dikonfigurasi oleh orang tua atau admin:
+Saat checkout dengan metode TABUNGAN_DEBIT, POS memeriksa `spending_control` (lihat [ADR-K021](./ADR-K021-ewallet.md)):
+- Check daily_limit: total belanja hari ini + keranjang saat ini <= daily_limit
+- Check per_transaction_limit: total keranjang <= per_transaction_limit
+- Check category_restrictions: semua item dalam kategori yang diizinkan
+- Check time_restrictions: waktu transaksi dalam window yang diizinkan
+- Jika spending_control tidak ada untuk nasabah ini: tidak ada limit (unlimited)
+- Jika ada violation: tampilkan pesan error spesifik ("Melebihi batas harian", dll)
 
+Data model `spending_control` didefinisikan di K021 sebagai single source of truth.
+
+**Default spending limit** bisa di-set per **school_relation_type** di tenant config:
 ```
-spending_limit_config
-├── id                    UUID v7 (PK)
-├── tenant_id             UUID (FK → tenant)
-├── nasabah_id            UUID (FK → nasabah)
-│
-├── ── Limit ──
-├── daily_limit           NUMERIC(15,2) NOT NULL (maksimal belanja per hari)
-├── per_transaction_limit NUMERIC(15,2) (nullable, maksimal per transaksi)
-├── allowed_categories    JSONB (nullable, restrict ke kategori tertentu)
-│
-├── ── Pengaturan ──
-├── is_active             BOOLEAN DEFAULT true
-├── set_by                ENUM (parent, admin)
-├── parent_nasabah_id     UUID (nullable, FK → nasabah, orang tua yang set)
-│
-└── ── Audit ──
-    ├── created_at        TIMESTAMPTZ
-    ├── created_by        UUID
-    ├── updated_at        TIMESTAMPTZ
-    └── updated_by        UUID
+default_spending_limit:
+  student: 30000         # Rp 30.000/hari
+  teacher: null          # Tidak ada limit
+  staff: null            # Tidak ada limit
+  parent: null           # Tidak ada limit
 ```
 
-**Aturan spending limit:**
-- Default spending limit bisa di-set per **school_relation_type** di tenant config:
-  ```
-  default_spending_limit:
-    student: 30000         # Rp 30.000/hari
-    teacher: null          # Tidak ada limit
-    staff: null            # Tidak ada limit
-    parent: null           # Tidak ada limit
-  ```
 - Orang tua bisa meng-override default limit untuk anaknya — via teller atau self-service portal ([ADR-K023](./ADR-K023-dashboard-portal.md))
-- Limit di-enforce saat checkout POS:
-  ```
-  Pre-checkout check (jika bayar dari tabungan):
-  ├── SUM belanja hari ini + transaksi ini <= daily_limit    ✓
-  ├── Transaksi ini <= per_transaction_limit                 ✓
-  ├── Kategori item dalam allowed_categories (jika di-set)   ✓
-  └── available_balance >= total_amount                      ✓
-  ```
-- Jika limit terlampaui, transaksi **ditolak** dengan pesan jelas ("Batas belanja harian tercapai")
 - Attempt yang ditolak dicatat di log untuk visibility orang tua
 
 ### 8. Supplier Management

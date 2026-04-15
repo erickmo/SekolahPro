@@ -206,6 +206,26 @@ Perhitungan bagi hasil (Mudharabah):
 - Bagi hasil diposting sebagai transaksi `PROFIT_SHARE_CREDIT`
 - Untuk akad **Wadiah**: tidak ada bagi hasil wajib — koperasi bisa memberikan bonus (athaya) atas kebijakan sendiri
 
+**Fallback & Negative Profit Handling:**
+
+Bagi hasil Mudharabah bergantung pada profit pool dari K015 (Akuntansi). Penanganan kasus khusus:
+
+1. **Profit pool belum final**: Jika perhitungan profit bulan ini dari K015 belum selesai saat jadwal posting bagi hasil:
+   - Gunakan **indicative rate** dari produk sebagai estimasi sementara
+   - Posting bagi hasil berdasarkan indicative rate
+   - Saat profit pool final, hitung **adjustment** (selisih estimasi vs aktual)
+   - Adjustment di-posting di bulan berikutnya sebagai koreksi
+
+2. **Profit pool negatif** (koperasi rugi): Per prinsip Mudharabah, nasabah ikut menanggung kerugian:
+   - Bagi hasil bulan tersebut = Rp 0 (tidak ada distribusi)
+   - Kerugian **tidak mengurangi saldo pokok** nasabah (kerugian ditanggung dari potensi keuntungan, bukan modal)
+   - Nasabah diinformasikan via notifikasi bahwa bagi hasil bulan ini nihil
+   - Jika rugi berturut-turut > 3 bulan, Manager wajib evaluasi dan informasikan ke nasabah
+
+3. **Profit pool sangat kecil**: Jika bagi hasil per nasabah < Rp 1 setelah perhitungan:
+   - Dibulatkan ke Rp 0 untuk nasabah tersebut
+   - Akumulasi pembulatan dialokasikan ke cadangan koperasi
+
 ### 5. Tabungan Berencana / Goal-Based Savings
 
 Tabungan dengan target nominal dan/atau tanggal:
