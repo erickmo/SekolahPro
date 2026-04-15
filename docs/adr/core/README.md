@@ -22,6 +22,15 @@ Keputusan arsitektur yang berlaku untuk **seluruh subproject** (Management Sekol
 |-----|-------|--------|---------|
 | [ADR-008](./ADR-008-react-vite-css-modules.md) | React 18 + Vite + CSS Modules | Accepted | 2026-04-14 |
 
+### Foundation Domains (Shared Master Data)
+
+| No. | Judul | Status | Tanggal |
+|-----|-------|--------|---------|
+| [ADR-010](./ADR-010-academic-years.md) | Academic Years (Tahun Ajaran) | Approved | 2026-04-15 |
+| [ADR-011](./ADR-011-class-rooms.md) | Class Rooms (Kelas & Rombel) | Approved | 2026-04-15 |
+| [ADR-012](./ADR-012-teachers-staff.md) | Teachers & Staff (Guru & Tenaga Kependidikan) | Approved | 2026-04-15 |
+| [ADR-013](./ADR-013-users-roles.md) | Users & Roles (Pengguna & Hak Akses) | Approved | 2026-04-15 |
+
 ### Cross-Cutting
 
 | No. | Judul | Status | Tanggal |
