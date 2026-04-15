@@ -54,8 +54,11 @@ import (
 	"github.com/yourorg/boilerplate/pkg/vernon"
 	"github.com/yourorg/boilerplate/pkg/vernonsync"
 
+	"github.com/yourorg/boilerplate/internal/domain/academic_year"
+	"github.com/yourorg/boilerplate/internal/domain/class_room"
 	"github.com/yourorg/boilerplate/internal/domain/product"
 	"github.com/yourorg/boilerplate/internal/domain/product_category"
+	"github.com/yourorg/boilerplate/internal/domain/teacher"
 )
 
 func main() {
@@ -264,8 +267,14 @@ func registerVernonDomains(
 	eb eventbus.EventBus,
 	logger zerolog.Logger,
 ) {
+	// Contoh domain (bisa dihapus di production)
 	registerVernonDomain(db, registry, eb, logger, &product_category.Descriptor{})
 	registerVernonDomain(db, registry, eb, logger, &product.Descriptor{})
+
+	// Foundation domains (ADR-010, 012, 011) — urutan: sumber dulu, consumer terakhir
+	registerVernonDomain(db, registry, eb, logger, &academic_year.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &teacher.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &class_room.Descriptor{}) // autoloads academic_year + teacher
 }
 
 // registerVernonDomain adalah helper DRY untuk mendaftarkan satu domain Vernon.
