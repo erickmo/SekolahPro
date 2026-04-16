@@ -90,6 +90,7 @@ func (s *BaseService) Update(ctx context.Context, sc scope.Scope, id uuid.UUID, 
 }
 
 // Patch melakukan partial update pada _data.
+// Field-level validation diterapkan pada patched data untuk mencegah bypass invariant.
 func (s *BaseService) Patch(ctx context.Context, sc scope.Scope, id uuid.UUID, partial map[string]any) (*BaseDomain, error) {
 	tx, err := s.db.BeginTxx(ctx, nil)
 	if err != nil {
@@ -101,6 +102,12 @@ func (s *BaseService) Patch(ctx context.Context, sc scope.Scope, id uuid.UUID, p
 	if err != nil {
 		return nil, fmt.Errorf("patch %s %s: %w", s.desc.TableName(), id, err)
 	}
+
+	// Validate patched result to prevent invariant bypass (e.g., negative balance).
+	if err := s.desc.Validate(entity.Data); err != nil {
+		return nil, fmt.Errorf("validation after patch: %w", err)
+	}
+
 	if err := tx.Commit(); err != nil {
 		return nil, fmt.Errorf("commit: %w", err)
 	}

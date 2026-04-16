@@ -19,6 +19,10 @@ const ChooseCompanyPage  = lazy(() => import('@/pages/ChooseCompany/ChooseCompan
 const AcademicYearsPage  = lazy(() => import('@/pages/AcademicYears/AcademicYearsPage'))
 const TeachersPage       = lazy(() => import('@/pages/Teachers/TeachersPage'))
 const ClassRoomsPage     = lazy(() => import('@/pages/ClassRooms/ClassRoomsPage'))
+const UsersPage          = lazy(() => import('@/pages/Users/UsersPage'))
+const ProdukAkadPage     = lazy(() => import('@/pages/Koperasi/ProdukAkadPage'))
+const NasabahPage        = lazy(() => import('@/pages/Koperasi/NasabahPage'))
+const RekeningPage       = lazy(() => import('@/pages/Koperasi/RekeningPage'))
 const NotFoundPage       = lazy(() => import('@/pages/errors/NotFoundPage'))
 const ForbiddenPage      = lazy(() => import('@/pages/errors/ForbiddenPage'))
 
@@ -35,9 +39,13 @@ const singleTenantRoutes = [
     element: <AuthRoute><AppShell /></AuthRoute>,
     children: [
       { path: 'dashboard', element: <S><DashboardPage /></S> },
+      { path: 'users', element: <S><UsersPage /></S> },
       { path: 'academic-years', element: <S><AcademicYearsPage /></S> },
       { path: 'teachers', element: <S><TeachersPage /></S> },
       { path: 'class-rooms', element: <S><ClassRoomsPage /></S> },
+      { path: 'koperasi/produk-akad', element: <S><ProdukAkadPage /></S> },
+      { path: 'koperasi/nasabah', element: <S><NasabahPage /></S> },
+      { path: 'koperasi/rekening', element: <S><RekeningPage /></S> },
     ],
   },
 ]
@@ -58,6 +66,7 @@ const multiTenantRoutes = [
     element: <SuperuserRoute><AppShell context="superuser" /></SuperuserRoute>,
     children: [
       { path: 'dashboard', element: <S><DashboardPage /></S> },
+      { path: 'users', element: <S><UsersPage /></S> },
       // { path: 'tenants',   element: <S><TenantsListPage /></S> },
       // { path: 'companies', element: <S><CompaniesListPage /></S> },
     ],
@@ -79,9 +88,16 @@ const multiTenantRoutes = [
     element: <CompanyRoute><AppShell context="company" /></CompanyRoute>,
     children: [
       { path: 'dashboard', element: <S><DashboardPage /></S> },
+      { path: 'users', element: <S><UsersPage /></S> },
       { path: 'academic-years', element: <S><AcademicYearsPage /></S> },
       { path: 'teachers', element: <S><TeachersPage /></S> },
       { path: 'class-rooms', element: <S><ClassRoomsPage /></S> },
+      { path: 'koperasi/produk-akad', element: <S><ProdukAkadPage /></S> },
+      { path: 'koperasi/nasabah', element: <S><NasabahPage /></S> },
+      { path: 'koperasi/rekening', element: <S><RekeningPage /></S> },
+    ],
+  },
+]
 
 // ─── Router ───────────────────────────────────────────────────────────────────
 

@@ -3,9 +3,14 @@ package vernon
 import (
 	"fmt"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 )
+
+// fieldNameRe ensures only alphanumeric, underscore, and dot characters in JSONB field paths.
+// Prevents SQL injection via fmt.Sprintf in toJSONBPath and BuildOrderClause.
+var fieldNameRe = regexp.MustCompile(`^[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*$`)
 
 const (
 	defaultLimit = 20
@@ -78,7 +83,11 @@ func buildCondition(field, value string, argIdx int) (string, any) {
 // toJSONBPath mengubah field name menjadi PostgreSQL JSONB path expression.
 // "status"         → `_data->>'status'`
 // "customer.name"  → `_data->'customer'->>'name'`
+// Rejects field names containing special characters to prevent SQL injection.
 func toJSONBPath(field string) string {
+	if !fieldNameRe.MatchString(field) {
+		return "_data->>'id'" // fallback to safe default for invalid field names
+	}
 	parts := strings.Split(field, ".")
 	if len(parts) == 1 {
 		return fmt.Sprintf("_data->>'%s'", parts[0])
@@ -104,10 +113,16 @@ func BuildOrderClause(sort string) string {
 		return "created_at DESC"
 	}
 	if field, ok := strings.CutPrefix(sort, "-"); ok {
+		if !fieldNameRe.MatchString(field) {
+			return "created_at DESC"
+		}
 		if isTopLevelField(field) {
 			return fmt.Sprintf("%s DESC", field)
 		}
 		return fmt.Sprintf("_data->>'%s' DESC", field)
+	}
+	if !fieldNameRe.MatchString(sort) {
+		return "created_at DESC"
 	}
 	if isTopLevelField(sort) {
 		return fmt.Sprintf("%s ASC", sort)

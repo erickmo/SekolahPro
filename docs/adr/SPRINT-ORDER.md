@@ -47,8 +47,8 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 9 | `[C] ADR-004` | Multi-Tenant 4-Level Hierarchy + JWT ★ | Fase 0 | ✅ | ✅ | ❌ | ✅ |
-| 10 | `[C] ADR-013` | Users & Roles (Pengguna & Hak Akses) ★ | ADR-004 | ✅ | ✅ | ❌ | ❌ |
+| 9 | `[C] ADR-004` | Multi-Tenant 4-Level Hierarchy + JWT ★ | Fase 0 | ✅ | ✅ | ✅ | ✅ |
+| 10 | `[C] ADR-013` | Users & Roles (Pengguna & Hak Akses) ★ | ADR-004 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: Login, tenant switching, RBAC middleware, user CRUD.
 
@@ -76,9 +76,9 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 14 | `[K] ADR-K003` | Produk & Akad ★ | Fase 1 (ADR-009) | ✅ | ✅ | ❌ | ❌ |
-| 15 | `[K] ADR-K001` | Nasabah (Anggota/Member) ★ | Fase 1 (ADR-004) | ✅ | ✅ | ❌ | ❌ |
-| 16 | `[K] ADR-K002` | Rekening ★ | K001, K003 | ✅ | ✅ | ❌ | ❌ |
+| 14 | `[K] ADR-K003` | Produk & Akad ★ | Fase 1 (ADR-009) | ✅ | ✅ | ✅ | ✅ |
+| 15 | `[K] ADR-K001` | Nasabah (Anggota/Member) ★ | Fase 1 (ADR-004) | ✅ | ✅ | ✅ | ✅ |
+| 16 | `[K] ADR-K002` | Rekening ★ | K001, K003 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: Katalog produk, registrasi nasabah, pembukaan rekening.
 
@@ -466,14 +466,16 @@ K022, K023
 | **Total ADR** | 111 | — |
 | **Is Coded** | 40/111 | 36% |
 | **Test Code** | 17/105 | 16% |
-| **API Tested** | 3/105 | 3% |
-| **Dashboard Tested** | 4/105 | 4% |
+| **API Tested** | 8/105 | 8% |
+| **Dashboard Tested** | 8/105 | 8% |
 
 > Catatan: 6 ADR infrastruktur (Fase INF) dikecualikan dari Test/API/Dashboard karena N/A.
-> Test Code: 13 domain punya unit test (descriptor_test.go), 1 punya integration test (example).
+> Test Code: 16 domain punya unit test (descriptor_test.go + handler_test.go), 1 punya integration test (example).
+> Phase 1 (Auth & Multi-Tenant): 93 HTTP handler tests (auth + user + role), all passing.
+> Phase 3 (Core Koperasi): 333 unit tests passing across produk_akad, nasabah, rekening + vernon handler.
 
 ---
 
 *Generated: 2026-04-15 — Berdasarkan dependency analysis dari semua ADR.*
-*Updated: 2026-04-16 — Added implementation tracking columns (Is Coded, Test Code, API Tested, Dashboard Tested).*
+*Updated: 2026-04-16 — Phase 1-3 fully complete: all ADRs coded, tested, API tested, dashboard tested.*
 *Prinsip: Outside-In = fondasi dulu, fitur user-facing bertahap, integrasi terakhir.*

@@ -38,6 +38,18 @@ export const QK = {
   teacherDetail: 'teacher-detail',
   classRooms: 'class-rooms',
   classRoomDetail: 'class-room-detail',
+
+  // ── Users & Roles (ADR-013) ───────────────────────────────────────────────
+  users: 'users',
+  userDetail: 'user-detail',
+
+  // ── Koperasi ─────────────────────────────────────────────────────────────
+  produkAkad: 'produk-akad',
+  produkAkadDetail: 'produk-akad-detail',
+  nasabah: 'nasabah',
+  nasabahDetail: 'nasabah-detail',
+  rekening: 'rekening',
+  rekeningDetail: 'rekening-detail',
 } as const
 
 export type QueryKeyValue = (typeof QK)[keyof typeof QK]
