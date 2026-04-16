@@ -4,6 +4,8 @@ Keputusan arsitektur yang spesifik untuk subproject **Management Sekolah**. Menc
 
 > ADR di sini hanya berlaku untuk subproject ini. Untuk keputusan yang berlaku lintas subproject, lihat [core/](../core/).
 
+> **Sprint Order**: Sekolah ADR tercakup di **Fase 4A — 14** — lihat [SPRINT-ORDER.md](../SPRINT-ORDER.md)
+
 ## Index
 
 ### Siswa (Student Domain)

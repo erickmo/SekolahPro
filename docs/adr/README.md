@@ -4,6 +4,13 @@ Direktori ini berisi Architecture Decision Records untuk project **SekolahPro Bo
 
 ADR adalah dokumen yang merekam keputusan arsitektur penting beserta konteks, alasan, dan konsekuensinya. Tujuannya adalah memberikan historical context bagi anggota tim yang bergabung di kemudian hari, dan mencegah re-debating keputusan yang sudah dibuat.
 
+## 🏃 Sprint Planning
+
+Untuk urutan implementasi berdasarkan dependency (outside-in), lihat:
+**→ [SPRINT-ORDER.md](./SPRINT-ORDER.md)**
+
+---
+
 ## Subprojects
 
 Project ini terdiri dari **dua subproject** yang bisa digunakan secara independen atau bersamaan:

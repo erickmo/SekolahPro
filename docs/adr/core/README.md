@@ -2,6 +2,8 @@
 
 Keputusan arsitektur yang berlaku untuk **seluruh subproject** (Management Sekolah & Management Koperasi Sekolah). ADR di sini mencakup stack, pattern, dan infrastruktur dasar.
 
+> **Sprint Order**: Core ADR tercakup di **Fase 0, 1, 2, dan INF** — lihat [SPRINT-ORDER.md](../SPRINT-ORDER.md)
+
 ## Index
 
 ### Backend (Go)

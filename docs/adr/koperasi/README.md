@@ -5,6 +5,8 @@ Mendukung dual-mode: **Koperasi Konvensional** dan **BMT (Baitul Maal wat Tamwil
 
 > ADR di sini hanya berlaku untuk subproject ini. Untuk keputusan yang berlaku lintas subproject, lihat [core/](../core/).
 
+> **Sprint Order**: Koperasi ADR tercakup di **Fase 3, 4B, 5B, 6B, 7B, 10** — lihat [SPRINT-ORDER.md](../SPRINT-ORDER.md)
+
 ## Index & Implementation Status
 
 ### Legend
@@ -77,6 +79,42 @@ Mendukung dual-mode: **Koperasi Konvensional** dan **BMT (Baitul Maal wat Tamwil
 | K023 | [Dashboard & Self-Service Portal](./ADR-K023-dashboard-portal.md) | v | - | - | - | Role-based dashboards, nasabah portal, parent portal, kepala sekolah oversight |
 | K024 | [Integrasi & API](./ADR-K024-integrasi-api.md) | v | - | - | - | School system sync, payment gateway, OJK reporting, webhooks, API design |
 
+### Governance & Compliance (CRITICAL)
+
+| No. | Judul | ADR | Code | Test API | Test UI | Notes |
+|-----|-------|-----|------|----------|---------|-------|
+| K025 | [Cooperative Governance & Internal Controls](./ADR-K025-governance-internal-controls.md) | v | - | - | - | Struktur pengurus/pengawas, authority matrix, segregation of duties, internal audit, CoI |
+| K026 | [RAT (Rapat Anggota Tahunan) Management](./ADR-K026-rat-management.md) | v | - | - | - | Meeting management, quorum, voting, elections, notulensi, follow-up actions |
+| K027 | [AML/CFT Compliance](./ADR-K027-aml-cft-compliance.md) | v | - | - | - | CDD/EDD, PEP screening, transaction monitoring, PPATK reporting, record retention |
+| K028 | [Data Privacy (UU PDP)](./ADR-K028-data-privacy-uupdp.md) | v | - | - | - | Consent management, data subject rights, breach notification, DPA, privacy by design |
+| K029 | [Business Continuity & Disaster Recovery](./ADR-K029-business-continuity-drp.md) | v | - | - | - | RTO/RPO, backup strategy, HA architecture, incident response, DR tiers |
+
+### Operational Excellence (HIGH)
+
+| No. | Judul | ADR | Code | Test API | Test UI | Notes |
+|-----|-------|-----|------|----------|---------|-------|
+| K030 | [Membership Lifecycle Management](./ADR-K030-membership-lifecycle.md) | v | - | - | - | Resignation, expulsion, death settlement, dormant management, transfer |
+| K031 | [Cooperative Health Indicators & Risk Management](./ADR-K031-cooperative-health-indicators.md) | v | - | - | - | KPI dashboard, early warning system, stress testing, composite health score |
+| K032 | [Biometric Authentication](./ADR-K032-biometric-authentication.md) | v | - | - | - | Fingerprint/face recognition, liveness detection, fallback chain |
+| K033 | [Loan Collection Management](./ADR-K033-loan-collection-management.md) | v | - | - | - | Aging buckets, collection workflow, restructuring, write-off, collector tracking |
+| K034 | [Reserve Fund Management](./ADR-K034-reserve-fund-management.md) | v | - | - | - | Statutory/general/investment reserve, auto SHU allocation, investment instruments |
+
+### Growth & Innovation (MEDIUM)
+
+| No. | Judul | ADR | Code | Test API | Test UI | Notes |
+|-----|-------|-----|------|----------|---------|-------|
+| K035 | [Insurance / Takaful Integration](./ADR-K035-insurance-takaful-integration.md) | v | - | - | - | Credit life insurance, takaful, claim processing, premium collection |
+| K036 | [Mobile App Strategy](./ADR-K036-mobile-app-strategy.md) | v | - | - | - | Flutter hybrid, offline-first, app variants, mobile security |
+| K037 | [Member Education Program](./ADR-K037-member-education-program.md) | v | - | - | - | Course management, mandatory training, quiz, certificates, KPI tracking |
+
+### Strategic (LOW)
+
+| No. | Judul | ADR | Code | Test API | Test UI | Notes |
+|-----|-------|-----|------|----------|---------|-------|
+| K038 | [Cooperative Dissolution Process](./ADR-K038-cooperative-dissolution.md) | v | - | - | - | Voluntary/government dissolution, liquidation, asset distribution |
+| K039 | [Multi-Branch Consolidation Reporting](./ADR-K039-multi-branch-consolidation.md) | v | - | - | - | Inter-branch elimination, consolidated financials, branch comparison |
+| K040 | [Digital Transformation Roadmap](./ADR-K040-digital-transformation-roadmap.md) | v | - | - | - | Technology evolution, AI/ML opportunities, API versioning, cloud strategy |
+
 ---
 
 ## Items per Domain
@@ -109,3 +147,19 @@ Ringkasan entity/item utama yang terlibat di setiap ADR:
 | K022 | notifikasi_template, notifikasi_log, preference, channel, WhatsApp_API, escalation |
 | K023 | dashboard_widget, dashboard_layout, portal_session, parent_child_config, export |
 | K024 | integrasi_config, integrasi_log, webhook_subscription, api_key, dead_letter, sync |
+| K025 | governance_position, authority_matrix, internal_audit, conflict_of_interest, segregation_of_duties |
+| K026 | rat_meeting, rat_agenda_item, rat_attendance, rat_vote, rat_election, rat_election_candidate |
+| K027 | aml_customer_due_diligence, aml_transaction_monitoring, aml_monitoring_rule, aml_report |
+| K028 | consent_record, data_subject_request, data_breach, data_processing_agreement |
+| K029 | backup_strategy, dr_tier, incident_record, offline_procedure |
+| K030 | membership_lifecycle_event, resignation_clearing, death_settlement, dormant_management |
+| K031 | kpi_definition, kpi_measurement, early_warning_alert, stress_test_scenario, health_score |
+| K032 | biometric_enrollment, biometric_verification_log |
+| K033 | collection_case, collection_activity, collector_performance |
+| K034 | reserve_fund, reserve_fund_transaction |
+| K035 | insurance_product, insurance_policy, insurance_claim |
+| K036 | mobile_app_config, app_variant, offline_queue |
+| K037 | education_course, education_enrollment, education_kpi |
+| K038 | dissolution_process, liquidation_stage |
+| K039 | branch_financial_summary, elimination_rule |
+| K040 | (strategic ADR — no specific data model) |
