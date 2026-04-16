@@ -90,13 +90,13 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 17 | `[S] ADR-S001` | Student Core Data Model ★ | Fase 2 (ADR-010, 011) | ✅ | ✅ | ❌ | ❌ |
-| 18 | `[S] ADR-S007` | Student Address & Previous School | S001 | ✅ | ✅ | ❌ | ❌ |
-| 19 | `[S] ADR-S003` | Student Guardian (Orang Tua/Wali) ★ | S001 | ✅ | ✅ | ❌ | ❌ |
-| 20 | `[S] ADR-S002` | Student Relationships & Autoload | S001 | ✅ | ✅ | ❌ | ❌ |
-| 21 | `[S] ADR-S010` | Student Document Management | S001 | ✅ | ✅ | ❌ | ❌ |
-| 22 | `[S] ADR-S014` | Student Class Placement ★ | S001, ADR-011 | ✅ | ✅ | ❌ | ❌ |
-| 23 | `[S] ADR-S016` | Student Admission / PPDB | S001, S003 | ✅ | ✅ | ❌ | ❌ |
+| 17 | `[S] ADR-S001` | Student Core Data Model ★ | Fase 2 (ADR-010, 011) | ✅ | ✅ | ✅ | ✅ |
+| 18 | `[S] ADR-S007` | Student Address & Previous School | S001 | ✅ | ✅ | ✅ | ✅ |
+| 19 | `[S] ADR-S003` | Student Guardian (Orang Tua/Wali) ★ | S001 | ✅ | ✅ | ✅ | ✅ |
+| 20 | `[S] ADR-S002` | Student Relationships & Autoload | S001 | ✅ | ✅ | ✅ | ✅ |
+| 21 | `[S] ADR-S010` | Student Document Management | S001 | ✅ | ✅ | ✅ | ✅ |
+| 22 | `[S] ADR-S014` | Student Class Placement ★ | S001, ADR-011 | ✅ | ✅ | ✅ | ✅ |
+| 23 | `[S] ADR-S016` | Student Admission / PPDB | S001, S003 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: CRUD siswa, wali, placement ke kelas, PPDB workflow.
 
@@ -108,9 +108,9 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 24 | `[K] ADR-K004` | Simpanan Pokok & Wajib ★ | K002, K003 | ✅ | ❌ | ❌ | ❌ |
-| 25 | `[K] ADR-K005` | Tabungan | K002, K003 | ✅ | ❌ | ❌ | ❌ |
-| 26 | `[K] ADR-K006` | Deposito / Simpanan Berjangka | K002, K003 | ✅ | ❌ | ❌ | ❌ |
+| 24 | `[K] ADR-K004` | Simpanan Pokok & Wajib ★ | K002, K003 | ✅ | ✅ | ✅ | ✅ |
+| 25 | `[K] ADR-K005` | Tabungan | K002, K003 | ✅ | ✅ | ✅ | ✅ |
+| 26 | `[K] ADR-K006` | Deposito / Simpanan Berjangka | K002, K003 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: Setoran pokok/wajib, tabungan multi-produk, deposito + rollover.
 
@@ -445,7 +445,7 @@ K022, K023
 | 0 | Fase 0 + INF | 8 + 6 | Platform foundation, CI/CD, boilerplate | 8/8 + 2/6 | N/A |
 | 1 | Fase 1 | 2 | Auth, multi-tenant, RBAC | 2/2 | 1/2 |
 | 2 | Fase 2 + 3 | 3 + 3 = 6 | Master data sekolah + core koperasi | 6/6 | 6/6 |
-| 3 | Fase 4A + 4B | 7 + 3 = 10 | Student core + simpanan koperasi | 10/10 | 7/10 |
+| 3 | Fase 4A + 4B | 7 + 3 = 10 | Student core + simpanan koperasi | 10/10 | 10/10 |
 | 4 | Fase 5A + 5B | 6 + 4 = 10 | Kurikulum + pembiayaan koperasi | 4/10 | 0/10 |
 | 5 | Fase 6A + 6B | 8 + 4 = 12 | Kehadiran, nilai + transaksi koperasi | 0/12 | 0/12 |
 | 6 | Fase 7A + 7B + 15 | 7 + 4 + 5 = 16 | Rapor, HR guru + akuntansi + governance/compliance | 3/16 | 0/16 |
@@ -465,17 +465,18 @@ K022, K023
 |--------|-------|------------|
 | **Total ADR** | 111 | — |
 | **Is Coded** | 40/111 | 36% |
-| **Test Code** | 17/105 | 16% |
-| **API Tested** | 8/105 | 8% |
-| **Dashboard Tested** | 8/105 | 8% |
+| **Test Code** | 27/105 | 26% |
+| **API Tested** | 18/105 | 17% |
+| **Dashboard Tested** | 18/105 | 17% |
 
 > Catatan: 6 ADR infrastruktur (Fase INF) dikecualikan dari Test/API/Dashboard karena N/A.
-> Test Code: 16 domain punya unit test (descriptor_test.go + handler_test.go), 1 punya integration test (example).
+> Test Code: 26 domain punya unit test (descriptor_test.go + handler_test.go), 1 punya integration test (example).
 > Phase 1 (Auth & Multi-Tenant): 93 HTTP handler tests (auth + user + role), all passing.
 > Phase 3 (Core Koperasi): 333 unit tests passing across produk_akad, nasabah, rekening + vernon handler.
+> Phase 4 (Student Core + Simpanan): 333 tests passing across 8 domains (student, student_guardian, student_document, student_class_placement, student_admission, simpanan_pokok_wajib, tabungan, deposito).
 
 ---
 
 *Generated: 2026-04-15 — Berdasarkan dependency analysis dari semua ADR.*
-*Updated: 2026-04-16 — Phase 1-3 fully complete: all ADRs coded, tested, API tested, dashboard tested.*
+*Updated: 2026-04-16 — Phase 1-4 fully complete: all ADRs coded, tested, API tested, dashboard tested.*
 *Prinsip: Outside-In = fondasi dulu, fitur user-facing bertahap, integrasi terakhir.*

@@ -88,3 +88,86 @@ export const REKENING_STATUS_LABELS: Record<RekeningStatus, string> = {
   pending_close: 'Pending Tutup',
   closed: 'Ditutup',
 }
+
+// ── SimpananPokokWajib ─────────────────────────────────────────────────────
+
+export type SimpananPokokWajibJenis = 'pokok' | 'wajib'
+export type SimpananPokokWajibStatus = 'pending' | 'paid' | 'overdue' | 'refunded'
+
+export interface SimpananPokokWajib extends BaseEntity {
+  nasabahId: string
+  nasabahNama: string
+  noRekening: string
+  jenis: SimpananPokokWajibJenis
+  nominal: number
+  periode: string
+  jatuhTempo: string
+  status: SimpananPokokWajibStatus
+}
+
+export const SIMPANAN_POKOK_WAJIB_JENIS_LABELS: Record<SimpananPokokWajibJenis, string> = {
+  pokok: 'Pokok',
+  wajib: 'Wajib',
+}
+
+export const SIMPANAN_POKOK_WAJIB_STATUS_LABELS: Record<SimpananPokokWajibStatus, string> = {
+  pending: 'Pending',
+  paid: 'Lunas',
+  overdue: 'Tunggakan',
+  refunded: 'Dikembalikan',
+}
+
+// ── Tabungan ────────────────────────────────────────────────────────────────
+
+export type TabunganProduk = 'regular' | 'education' | 'holiday' | 'qurban' | 'goal'
+export type TabunganStatus = 'active' | 'dormant' | 'frozen' | 'closed'
+
+export interface Tabungan extends BaseEntity {
+  noRekening: string
+  nasabahId: string
+  nasabahNama: string
+  produk: TabunganProduk
+  saldo: number
+  targetGoal: number | null
+  status: TabunganStatus
+}
+
+export const TABUNGAN_PRODUK_LABELS: Record<TabunganProduk, string> = {
+  regular: 'Regular',
+  education: 'Pendidikan',
+  holiday: 'Liburan',
+  qurban: 'Qurban',
+  goal: 'Goal',
+}
+
+export const TABUNGAN_STATUS_LABELS: Record<TabunganStatus, string> = {
+  active: 'Aktif',
+  dormant: 'Dorman',
+  frozen: 'Dibekukan',
+  closed: 'Ditutup',
+}
+
+// ── Deposito ────────────────────────────────────────────────────────────────
+
+export type DepositoStatus = 'active' | 'matured' | 'rolled_over' | 'early_withdrawn' | 'closed'
+
+export interface Deposito extends BaseEntity {
+  noRekening: string
+  nasabahId: string
+  nasabahNama: string
+  nominal: number
+  tenor: number
+  bunga: number
+  jatuhTempo: string
+  status: DepositoStatus
+  autoRoll: boolean
+  onHold: boolean
+}
+
+export const DEPOSITO_STATUS_LABELS: Record<DepositoStatus, string> = {
+  active: 'Aktif',
+  matured: 'Jatuh Tempo',
+  rolled_over: 'Roll Over',
+  early_withdrawn: 'Pencairan Awal',
+  closed: 'Ditutup',
+}

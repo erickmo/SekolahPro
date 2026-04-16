@@ -26,6 +26,14 @@ const RekeningPage       = lazy(() => import('@/pages/Koperasi/RekeningPage'))
 const NotFoundPage       = lazy(() => import('@/pages/errors/NotFoundPage'))
 const ForbiddenPage      = lazy(() => import('@/pages/errors/ForbiddenPage'))
 
+// ─── Phase 4 pages ────────────────────────────────────────────────────────────
+const StudentsPage            = lazy(() => import('@/pages/Students/StudentsPage'))
+const StudentAdmissionsPage   = lazy(() => import('@/pages/Students/StudentAdmissionsPage'))
+const StudentClassPlacementsPage = lazy(() => import('@/pages/Students/StudentClassPlacementsPage'))
+const SimpananPokokWajibPage  = lazy(() => import('@/pages/Koperasi/SimpananPokokWajibPage'))
+const TabunganPage            = lazy(() => import('@/pages/Koperasi/TabunganPage'))
+const DepositoPage            = lazy(() => import('@/pages/Koperasi/DepositoPage'))
+
 function S({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<div />}>{children}</Suspense>
 }
@@ -46,6 +54,12 @@ const singleTenantRoutes = [
       { path: 'koperasi/produk-akad', element: <S><ProdukAkadPage /></S> },
       { path: 'koperasi/nasabah', element: <S><NasabahPage /></S> },
       { path: 'koperasi/rekening', element: <S><RekeningPage /></S> },
+      { path: 'koperasi/simpanan-pokok-wajib', element: <S><SimpananPokokWajibPage /></S> },
+      { path: 'koperasi/tabungan', element: <S><TabunganPage /></S> },
+      { path: 'koperasi/deposito', element: <S><DepositoPage /></S> },
+      { path: 'students', element: <S><StudentsPage /></S> },
+      { path: 'students/admissions', element: <S><StudentAdmissionsPage /></S> },
+      { path: 'students/class-placements', element: <S><StudentClassPlacementsPage /></S> },
     ],
   },
 ]
@@ -95,6 +109,12 @@ const multiTenantRoutes = [
       { path: 'koperasi/produk-akad', element: <S><ProdukAkadPage /></S> },
       { path: 'koperasi/nasabah', element: <S><NasabahPage /></S> },
       { path: 'koperasi/rekening', element: <S><RekeningPage /></S> },
+      { path: 'koperasi/simpanan-pokok-wajib', element: <S><SimpananPokokWajibPage /></S> },
+      { path: 'koperasi/tabungan', element: <S><TabunganPage /></S> },
+      { path: 'koperasi/deposito', element: <S><DepositoPage /></S> },
+      { path: 'students', element: <S><StudentsPage /></S> },
+      { path: 'students/admissions', element: <S><StudentAdmissionsPage /></S> },
+      { path: 'students/class-placements', element: <S><StudentClassPlacementsPage /></S> },
     ],
   },
 ]

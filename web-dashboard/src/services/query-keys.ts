@@ -50,6 +50,22 @@ export const QK = {
   nasabahDetail: 'nasabah-detail',
   rekening: 'rekening',
   rekeningDetail: 'rekening-detail',
+
+  // ── Phase 4A: Student Core ──────────────────────────────────────────────────
+  students: 'students',
+  studentDetail: 'student-detail',
+  studentGuardians: 'student-guardians',
+  studentDocuments: 'student-documents',
+  studentClassPlacements: 'student-class-placements',
+  studentAdmissions: 'student-admissions',
+
+  // ── Phase 4B: Simpanan Koperasi ──────────────────────────────────────────────
+  simpananPokokWajib: 'simpanan-pokok-wajib',
+  simpananPokokWajibDetail: 'simpanan-pokok-wajib-detail',
+  tabungan: 'tabungan',
+  tabunganDetail: 'tabungan-detail',
+  deposito: 'deposito',
+  depositoDetail: 'deposito-detail',
 } as const
 
 export type QueryKeyValue = (typeof QK)[keyof typeof QK]
