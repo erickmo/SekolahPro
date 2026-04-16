@@ -25,6 +25,9 @@ func newRouter(
 	jwtSvc *jwtpkg.Service,
 	scopeResolver scope.Resolver,
 	exampleHandler *deliveryhttp.ExampleHandler,
+	authHandler *deliveryhttp.AuthHandler,
+	userHandler *deliveryhttp.UserHandler,
+	roleHandler *deliveryhttp.RoleHandler,
 	vernonRegistry *vernon.Registry,
 ) chi.Router {
 	r := chi.NewRouter()
@@ -62,6 +65,9 @@ func newRouter(
 	// /swagger/ — Swagger UI (hanya aktif jika docs/ sudah digenerate via `make swagger`)
 	r.Handle("/swagger/*", http.StripPrefix("/swagger", http.FileServer(http.Dir("docs"))))
 
+	// ── Public Auth Routes (tidak butuh auth) ─────────────────────────────────
+	authHandler.RegisterRoutes(r)
+
 	// ── Protected Routes (butuh auth + scope organisasi) ──────────────────────
 	// Urutan: RequireAuth → ResolveScope (fail-open) → RequireScope (fail-closed) → handler
 	//
@@ -76,6 +82,8 @@ func newRouter(
 		r.Use(scope.RequireScope(scope.LevelTenant, scope.LevelCompany))
 
 		exampleHandler.RegisterRoutes(r)
+			userHandler.RegisterRoutes(r)
+			roleHandler.RegisterRoutes(r)
 
 			// Vernon domains — setiap domain terdaftar di-mount otomatis.
 			// Route: GET|POST /{domain}/, GET|PUT|PATCH|DELETE /{domain}/{id}

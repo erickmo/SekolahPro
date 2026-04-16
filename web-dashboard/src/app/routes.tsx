@@ -16,6 +16,9 @@ import {
 const LoginPage          = lazy(() => import('@/pages/Login/LoginPage'))
 const DashboardPage      = lazy(() => import('@/pages/Dashboard/DashboardPage'))
 const ChooseCompanyPage  = lazy(() => import('@/pages/ChooseCompany/ChooseCompanyPage'))
+const AcademicYearsPage  = lazy(() => import('@/pages/AcademicYears/AcademicYearsPage'))
+const TeachersPage       = lazy(() => import('@/pages/Teachers/TeachersPage'))
+const ClassRoomsPage     = lazy(() => import('@/pages/ClassRooms/ClassRoomsPage'))
 const NotFoundPage       = lazy(() => import('@/pages/errors/NotFoundPage'))
 const ForbiddenPage      = lazy(() => import('@/pages/errors/ForbiddenPage'))
 
@@ -32,11 +35,9 @@ const singleTenantRoutes = [
     element: <AuthRoute><AppShell /></AuthRoute>,
     children: [
       { path: 'dashboard', element: <S><DashboardPage /></S> },
-      // Add your pages here:
-      // { path: 'users',        element: <S><UsersListPage /></S> },
-      // { path: 'users/:id',    element: <S><UserDetailPage /></S> },
-      // { path: 'users/new',    element: <S><UserFormPage /></S> },
-      // { path: 'settings',     element: <S><SettingsPage /></S> },
+      { path: 'academic-years', element: <S><AcademicYearsPage /></S> },
+      { path: 'teachers', element: <S><TeachersPage /></S> },
+      { path: 'class-rooms', element: <S><ClassRoomsPage /></S> },
     ],
   },
 ]
@@ -78,11 +79,9 @@ const multiTenantRoutes = [
     element: <CompanyRoute><AppShell context="company" /></CompanyRoute>,
     children: [
       { path: 'dashboard', element: <S><DashboardPage /></S> },
-      // { path: 'users',     element: <S><UsersListPage /></S> },
-      // { path: 'settings',  element: <S><SettingsPage /></S> },
-    ],
-  },
-]
+      { path: 'academic-years', element: <S><AcademicYearsPage /></S> },
+      { path: 'teachers', element: <S><TeachersPage /></S> },
+      { path: 'class-rooms', element: <S><ClassRoomsPage /></S> },
 
 // ─── Router ───────────────────────────────────────────────────────────────────
 

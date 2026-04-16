@@ -30,6 +30,14 @@ export const QK = {
 
   // ── Media ────────────────────────────────────────────────────────────────
   mediaFiles: 'media-files',
+
+  // ── Phase 2: Master Data Sekolah ─────────────────────────────────────────
+  academicYears: 'academic-years',
+  academicYearDetail: 'academic-year-detail',
+  teachers: 'teachers',
+  teacherDetail: 'teacher-detail',
+  classRooms: 'class-rooms',
+  classRoomDetail: 'class-room-detail',
 } as const
 
 export type QueryKeyValue = (typeof QK)[keyof typeof QK]

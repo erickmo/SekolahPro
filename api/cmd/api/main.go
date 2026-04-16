@@ -42,6 +42,11 @@ import (
 	createexample "github.com/yourorg/boilerplate/internal/command/create_example"
 	deleteexample "github.com/yourorg/boilerplate/internal/command/delete_example"
 	updateexample "github.com/yourorg/boilerplate/internal/command/update_example"
+	loginhdlr "github.com/yourorg/boilerplate/internal/command/login"
+	createuser "github.com/yourorg/boilerplate/internal/command/register_user"
+	changepwd "github.com/yourorg/boilerplate/internal/command/change_password"
+	createrole "github.com/yourorg/boilerplate/internal/command/create_role"
+	assignrole "github.com/yourorg/boilerplate/internal/command/assign_role"
 	getexamplebyid "github.com/yourorg/boilerplate/internal/query/get_example_by_id"
 	listexamples "github.com/yourorg/boilerplate/internal/query/list_examples"
 
@@ -56,9 +61,47 @@ import (
 
 	"github.com/yourorg/boilerplate/internal/domain/academic_year"
 	"github.com/yourorg/boilerplate/internal/domain/class_room"
+	"github.com/yourorg/boilerplate/internal/domain/nasabah"
 	"github.com/yourorg/boilerplate/internal/domain/product"
 	"github.com/yourorg/boilerplate/internal/domain/product_category"
+	"github.com/yourorg/boilerplate/internal/domain/produk_akad"
+	"github.com/yourorg/boilerplate/internal/domain/rekening"
+	"github.com/yourorg/boilerplate/internal/domain/student"
+	"github.com/yourorg/boilerplate/internal/domain/student_address"
+	"github.com/yourorg/boilerplate/internal/domain/student_admission"
+	"github.com/yourorg/boilerplate/internal/domain/student_class_placement"
+	"github.com/yourorg/boilerplate/internal/domain/student_document"
+	"github.com/yourorg/boilerplate/internal/domain/student_guardian"
+	"github.com/yourorg/boilerplate/internal/domain/simpanan_pokok_wajib"
+	"github.com/yourorg/boilerplate/internal/domain/tabungan"
+	"github.com/yourorg/boilerplate/internal/domain/deposito"
 	"github.com/yourorg/boilerplate/internal/domain/teacher"
+
+	// Sprint 4 — Kurikulum + Pembiayaan
+	"github.com/yourorg/boilerplate/internal/domain/curriculum"
+	"github.com/yourorg/boilerplate/internal/domain/subject"
+	"github.com/yourorg/boilerplate/internal/domain/academic_calendar"
+	"github.com/yourorg/boilerplate/internal/domain/teaching_schedule"
+	"github.com/yourorg/boilerplate/internal/domain/lesson_plan"
+	"github.com/yourorg/boilerplate/internal/domain/teaching_journal"
+	"github.com/yourorg/boilerplate/internal/domain/pinjaman"
+	"github.com/yourorg/boilerplate/internal/domain/angsuran"
+	"github.com/yourorg/boilerplate/internal/domain/denda"
+	"github.com/yourorg/boilerplate/internal/domain/jaminan"
+
+	// Sprint 5 — Kehadiran & Nilai + Transaksi
+	"github.com/yourorg/boilerplate/internal/domain/daily_attendance"
+	"github.com/yourorg/boilerplate/internal/domain/academic_record"
+	"github.com/yourorg/boilerplate/internal/domain/subject_grade"
+	"github.com/yourorg/boilerplate/internal/domain/exam_assessment"
+	"github.com/yourorg/boilerplate/internal/domain/health_record"
+	"github.com/yourorg/boilerplate/internal/domain/discipline"
+	"github.com/yourorg/boilerplate/internal/domain/achievement"
+	"github.com/yourorg/boilerplate/internal/domain/extracurricular"
+	"github.com/yourorg/boilerplate/internal/domain/transaksi"
+	"github.com/yourorg/boilerplate/internal/domain/teller_session"
+	"github.com/yourorg/boilerplate/internal/domain/money_denomination"
+	"github.com/yourorg/boilerplate/internal/domain/kas"
 )
 
 func main() {
@@ -85,6 +128,11 @@ func main() {
 
 			// HTTP Handlers (CQRS pattern)
 			deliveryhttp.NewExampleHandler,
+
+			// Auth & User/Role handlers (Sprint 1)
+			provideAuthHandler,
+			provideUserHandler,
+			provideRoleHandler,
 
 			// Vernon pattern — untuk domain dengan banyak relasi/JOIN
 			provideVernonRegistry,
@@ -275,6 +323,54 @@ func registerVernonDomains(
 	registerVernonDomain(db, registry, eb, logger, &academic_year.Descriptor{})
 	registerVernonDomain(db, registry, eb, logger, &teacher.Descriptor{})
 	registerVernonDomain(db, registry, eb, logger, &class_room.Descriptor{}) // autoloads academic_year + teacher
+
+	// Koperasi core domains (ADR-K003, K001, K002) — Sprint 2
+	registerVernonDomain(db, registry, eb, logger, &nasabah.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &produk_akad.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &rekening.Descriptor{}) // autoloads nasabah + produk_akad
+
+	// Student domains (ADR-S001, S007, S003, S010, S014, S016) — Sprint 3
+	registerVernonDomain(db, registry, eb, logger, &student.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &student_address.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &student_guardian.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &student_document.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &student_class_placement.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &student_admission.Descriptor{})
+
+	// Simpanan domains (ADR-K004, K005, K006) — Sprint 3
+	registerVernonDomain(db, registry, eb, logger, &simpanan_pokok_wajib.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &tabungan.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &deposito.Descriptor{})
+
+	// Kurikulum & Akademik domains (ADR-S019, S020, S023, S021, S024, S025) — Sprint 4
+	registerVernonDomain(db, registry, eb, logger, &curriculum.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &subject.Descriptor{})          // autoloads curriculum
+	registerVernonDomain(db, registry, eb, logger, &academic_calendar.Descriptor{}) // autoloads academic_year
+	registerVernonDomain(db, registry, eb, logger, &teaching_schedule.Descriptor{}) // autoloads subject + teacher + class_room
+	registerVernonDomain(db, registry, eb, logger, &lesson_plan.Descriptor{})       // autoloads subject + teacher
+	registerVernonDomain(db, registry, eb, logger, &teaching_journal.Descriptor{})  // autoloads schedule + teacher
+
+	// Pembiayaan domains (ADR-K007, K008, K009, K010) — Sprint 4
+	registerVernonDomain(db, registry, eb, logger, &pinjaman.Descriptor{})          // autoloads nasabah + rekening + produk_akad
+	registerVernonDomain(db, registry, eb, logger, &angsuran.Descriptor{})          // autoloads pinjaman
+	registerVernonDomain(db, registry, eb, logger, &denda.Descriptor{})             // autoloads pinjaman + angsuran
+	registerVernonDomain(db, registry, eb, logger, &jaminan.Descriptor{})           // autoloads pinjaman
+
+	// Kehadiran & Penilaian domains (ADR-S008, S004, S011, S022, S005, S012, S013, S015) — Sprint 5
+	registerVernonDomain(db, registry, eb, logger, &daily_attendance.Descriptor{})  // autoloads student + class_room
+	registerVernonDomain(db, registry, eb, logger, &academic_record.Descriptor{})   // autoloads student + academic_year
+	registerVernonDomain(db, registry, eb, logger, &subject_grade.Descriptor{})     // autoloads student + subject + teacher
+	registerVernonDomain(db, registry, eb, logger, &exam_assessment.Descriptor{})   // autoloads subject + teacher + class_room
+	registerVernonDomain(db, registry, eb, logger, &health_record.Descriptor{})     // autoloads student
+	registerVernonDomain(db, registry, eb, logger, &discipline.Descriptor{})        // autoloads student + teacher
+	registerVernonDomain(db, registry, eb, logger, &achievement.Descriptor{})       // autoloads student
+	registerVernonDomain(db, registry, eb, logger, &extracurricular.Descriptor{})   // autoloads student + teacher
+
+	// Transaksi & Operasional domains (ADR-K011, K012, K013, K014) — Sprint 5
+	registerVernonDomain(db, registry, eb, logger, &transaksi.Descriptor{})         // autoloads rekening
+	registerVernonDomain(db, registry, eb, logger, &teller_session.Descriptor{})
+	registerVernonDomain(db, registry, eb, logger, &money_denomination.Descriptor{}) // autoloads teller_session
+	registerVernonDomain(db, registry, eb, logger, &kas.Descriptor{})                // autoloads teller_session
 }
 
 // registerVernonDomain adalah helper DRY untuk mendaftarkan satu domain Vernon.
@@ -313,10 +409,23 @@ func registerCommandHandlers(
 	logger zerolog.Logger,
 ) {
 	logger.Info().Msg("registering command handlers")
+
+	// Example domain
 	repo := database.NewExampleRepository(db)
 	commandbus.Register(bus, createexample.NewHandler(repo, eb))
 	commandbus.Register(bus, updateexample.NewHandler(repo, repo, eb))
 	commandbus.Register(bus, deleteexample.NewHandler(repo))
+
+	// Sprint 1: Auth & User domain
+	userWriteRepo := database.NewUserRepository(db)
+	userReadRepo := database.NewUserRepository(db)
+	roleReadRepo := database.NewRoleRepository(db)
+	userRoleWriteRepo := database.NewRoleRepository(db)
+	userRoleReadRepo := database.NewRoleRepository(db)
+
+	commandbus.Register(bus, createuser.NewHandler(userWriteRepo, userReadRepo, eb))
+	commandbus.Register(bus, createrole.NewHandler(database.NewRoleRepository(db), roleReadRepo, eb))
+	commandbus.Register(bus, assignrole.NewHandler(userRoleWriteRepo, userRoleReadRepo, eb))
 }
 
 // registerQueryHandlers mendaftarkan semua query handler ke query bus.
@@ -329,6 +438,39 @@ func registerQueryHandlers(
 	repo := database.NewExampleRepository(db)
 	querybus.Register(bus, getexamplebyid.NewHandler(repo))
 	querybus.Register(bus, listexamples.NewHandler(repo))
+}
+
+// ── Sprint 1 handler providers ───────────────────────────────────────────────
+
+func provideAuthHandler(
+	db *sqlx.DB,
+	jwtSvc *jwtpkg.Service,
+	eb eventbus.EventBus,
+) *deliveryhttp.AuthHandler {
+	userReadRepo := database.NewUserRepository(db)
+	userWriteRepo := database.NewUserRepository(db)
+	loginHdlr := loginhdlr.NewHandler(userReadRepo, userWriteRepo, jwtSvc, eb)
+	changePwdHdlr := changepwd.NewHandler(userReadRepo, userWriteRepo)
+	return deliveryhttp.NewAuthHandler(loginHdlr, changePwdHdlr, userReadRepo, jwtSvc)
+}
+
+func provideUserHandler(
+	cb *commandbus.CommandBus,
+	qb *querybus.QueryBus,
+	db *sqlx.DB,
+) *deliveryhttp.UserHandler {
+	userReadRepo := database.NewUserRepository(db)
+	return deliveryhttp.NewUserHandler(cb, qb, userReadRepo)
+}
+
+func provideRoleHandler(
+	cb *commandbus.CommandBus,
+	qb *querybus.QueryBus,
+	db *sqlx.DB,
+) *deliveryhttp.RoleHandler {
+	roleReadRepo := database.NewRoleRepository(db)
+	userRoleReadRepo := database.NewRoleRepository(db)
+	return deliveryhttp.NewRoleHandler(cb, qb, roleReadRepo, userRoleReadRepo)
 }
 
 // registerEventHandlers mendaftarkan semua event handler dan mengelola lifecycle router.

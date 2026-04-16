@@ -78,8 +78,9 @@ func TestMain(m *testing.M) {
 
 // runMigrations membuat tabel yang dibutuhkan untuk testing.
 func runMigrations(ctx context.Context) error {
-	const createExamplesTable = `
+	const createTables = `
 		CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 		CREATE TABLE IF NOT EXISTS examples (
 			id          UUID         PRIMARY KEY DEFAULT gen_random_uuid(),
 			tenant_id   UUID         NOT NULL,
@@ -94,8 +95,47 @@ func runMigrations(ctx context.Context) error {
 		);
 		CREATE INDEX IF NOT EXISTS idx_examples_tenant_company
 			ON examples(tenant_id, company_id, created_at DESC);
+
+		CREATE TABLE IF NOT EXISTS academic_years (
+			id            UUID         PRIMARY KEY DEFAULT gen_random_uuid(),
+			tenant_id     UUID         NOT NULL,
+			company_id    UUID         NOT NULL,
+			_rels         JSONB        NOT NULL DEFAULT '{}',
+			_data         JSONB        NOT NULL DEFAULT '{}',
+			_sync_status  TEXT         NOT NULL DEFAULT 'synced',
+			_sync_version BIGINT       NOT NULL DEFAULT 0,
+			created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+			updated_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+			deleted_at    TIMESTAMPTZ
+		);
+
+		CREATE TABLE IF NOT EXISTS teachers (
+			id            UUID         PRIMARY KEY DEFAULT gen_random_uuid(),
+			tenant_id     UUID         NOT NULL,
+			company_id    UUID         NOT NULL,
+			_rels         JSONB        NOT NULL DEFAULT '{}',
+			_data         JSONB        NOT NULL DEFAULT '{}',
+			_sync_status  TEXT         NOT NULL DEFAULT 'synced',
+			_sync_version BIGINT       NOT NULL DEFAULT 0,
+			created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+			updated_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+			deleted_at    TIMESTAMPTZ
+		);
+
+		CREATE TABLE IF NOT EXISTS class_rooms (
+			id            UUID         PRIMARY KEY DEFAULT gen_random_uuid(),
+			tenant_id     UUID         NOT NULL,
+			company_id    UUID         NOT NULL,
+			_rels         JSONB        NOT NULL DEFAULT '{}',
+			_data         JSONB        NOT NULL DEFAULT '{}',
+			_sync_status  TEXT         NOT NULL DEFAULT 'synced',
+			_sync_version BIGINT       NOT NULL DEFAULT 0,
+			created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+			updated_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+			deleted_at    TIMESTAMPTZ
+		);
 	`
-	_, err := testDB.ExecContext(ctx, createExamplesTable)
+	_, err := testDB.ExecContext(ctx, createTables)
 	return err
 }
 
