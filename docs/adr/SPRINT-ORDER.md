@@ -122,12 +122,12 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 27 | `[S] ADR-S019` | Curriculum Management ★ | ADR-010 | ✅ | ❌ | ❌ | ❌ |
-| 28 | `[S] ADR-S020` | Subject Management (Mata Pelajaran) ★ | S019 | ✅ | ❌ | ❌ | ❌ |
-| 29 | `[S] ADR-S023` | Academic Calendar | ADR-010 | ✅ | ❌ | ❌ | ❌ |
-| 30 | `[S] ADR-S021` | Teaching Schedule / Timetable ★ | S020, ADR-011, ADR-012 | ✅ | ❌ | ❌ | ❌ |
-| 31 | `[S] ADR-S024` | Lesson Plan / RPP | S020, ADR-012 | ✅ | ❌ | ❌ | ❌ |
-| 32 | `[S] ADR-S025` | Teaching Journal | S021, ADR-012 | ✅ | ❌ | ❌ | ❌ |
+| 27 | `[S] ADR-S019` | Curriculum Management ★ | ADR-010 | ✅ | ✅ | ✅ | ✅ |
+| 28 | `[S] ADR-S020` | Subject Management (Mata Pelajaran) ★ | S019 | ✅ | ✅ | ✅ | ✅ |
+| 29 | `[S] ADR-S023` | Academic Calendar | ADR-010 | ✅ | ✅ | ✅ | ✅ |
+| 30 | `[S] ADR-S021` | Teaching Schedule / Timetable ★ | S020, ADR-011, ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 31 | `[S] ADR-S024` | Lesson Plan / RPP | S020, ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 32 | `[S] ADR-S025` | Teaching Journal | S021, ADR-012 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: Kurikulum, mata pelajaran, jadwal, RPP, jurnal mengajar.
 
@@ -139,10 +139,10 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 33 | `[K] ADR-K007` | Pinjaman / Pembiayaan ★ | K002, K003 | ✅ | ❌ | ❌ | ❌ |
-| 34 | `[K] ADR-K008` | Angsuran & Jadwal | K007 | ✅ | ❌ | ❌ | ❌ |
-| 35 | `[K] ADR-K009` | Denda & Penalti | K007, K008 | ❌ | ❌ | ❌ | ❌ |
-| 36 | `[K] ADR-K010` | Jaminan / Agunan | K007 | ❌ | ❌ | ❌ | ❌ |
+| 33 | `[K] ADR-K007` | Pinjaman / Pembiayaan ★ | K002, K003 | ✅ | ✅ | ✅ | ✅ |
+| 34 | `[K] ADR-K008` | Angsuran & Jadwal | K007 | ✅ | ✅ | ✅ | ✅ |
+| 35 | `[K] ADR-K009` | Denda & Penalti | K007, K008 | ✅ | ✅ | ✅ | ✅ |
+| 36 | `[K] ADR-K010` | Jaminan / Agunan | K007 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: Pengajuan pinjaman, jadwal angsuran, denda, jaminan.
 

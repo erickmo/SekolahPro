@@ -343,12 +343,17 @@ func registerVernonDomains(
 	registerVernonDomain(db, registry, eb, logger, &deposito.Descriptor{})
 
 	// Kurikulum & Akademik domains (ADR-S019, S020, S023, S021, S024, S025) — Sprint 4
-	registerVernonDomain(db, registry, eb, logger, &curriculum.Descriptor{})
-	registerVernonDomain(db, registry, eb, logger, &subject.Descriptor{})          // autoloads curriculum
-	registerVernonDomain(db, registry, eb, logger, &academic_calendar.Descriptor{}) // autoloads academic_year
-	registerVernonDomain(db, registry, eb, logger, &teaching_schedule.Descriptor{}) // autoloads subject + teacher + class_room
-	registerVernonDomain(db, registry, eb, logger, &lesson_plan.Descriptor{})       // autoloads subject + teacher
-	registerVernonDomain(db, registry, eb, logger, &teaching_journal.Descriptor{})  // autoloads schedule + teacher
+	registerVernonDomain(db, registry, eb, logger, &curriculum.CurriculaDescriptor{})
+	registerVernonDomain(db, registry, eb, logger, &curriculum.LearningOutcomesDescriptor{})
+	registerVernonDomain(db, registry, eb, logger, &subject.SubjectsDescriptor{})          // autoloads curriculum
+	registerVernonDomain(db, registry, eb, logger, &subject.SubjectConfigurationsDescriptor{})
+	registerVernonDomain(db, registry, eb, logger, &academic_calendar.AcademicCalendarEventsDescriptor{}) // autoloads academic_year
+	registerVernonDomain(db, registry, eb, logger, &teaching_schedule.TimeSlotDescriptor{})
+	registerVernonDomain(db, registry, eb, logger, &teaching_schedule.ScheduleEntryDescriptor{}) // autoloads subject + teacher + class_room
+	registerVernonDomain(db, registry, eb, logger, &lesson_plan.LessonPlanDescriptor{})       // autoloads subject + teacher
+	registerVernonDomain(db, registry, eb, logger, &lesson_plan.LessonPlanAttachmentDescriptor{})
+	registerVernonDomain(db, registry, eb, logger, &teaching_journal.TeachingJournalDescriptor{})  // autoloads schedule + teacher
+	registerVernonDomain(db, registry, eb, logger, &teaching_journal.JournalSessionAttendanceDescriptor{})
 
 	// Pembiayaan domains (ADR-K007, K008, K009, K010) — Sprint 4
 	registerVernonDomain(db, registry, eb, logger, &pinjaman.Descriptor{})          // autoloads nasabah + rekening + produk_akad
@@ -445,13 +450,14 @@ func registerQueryHandlers(
 func provideAuthHandler(
 	db *sqlx.DB,
 	jwtSvc *jwtpkg.Service,
-	eb eventbus.EventBus,
+	cb *commandbus.CommandBus,
+	qb *querybus.QueryBus,
 ) *deliveryhttp.AuthHandler {
 	userReadRepo := database.NewUserRepository(db)
 	userWriteRepo := database.NewUserRepository(db)
-	loginHdlr := loginhdlr.NewHandler(userReadRepo, userWriteRepo, jwtSvc, eb)
+	loginHdlr := loginhdlr.NewHandler(userReadRepo, userWriteRepo, jwtSvc)
 	changePwdHdlr := changepwd.NewHandler(userReadRepo, userWriteRepo)
-	return deliveryhttp.NewAuthHandler(loginHdlr, changePwdHdlr, userReadRepo, jwtSvc)
+	return deliveryhttp.NewAuthHandler(loginHdlr, changePwdHdlr, userReadRepo, jwtSvc, cb, qb)
 }
 
 func provideUserHandler(
@@ -460,7 +466,8 @@ func provideUserHandler(
 	db *sqlx.DB,
 ) *deliveryhttp.UserHandler {
 	userReadRepo := database.NewUserRepository(db)
-	return deliveryhttp.NewUserHandler(cb, qb, userReadRepo)
+	userWriteRepo := database.NewUserRepository(db)
+	return deliveryhttp.NewUserHandler(userReadRepo, userWriteRepo, cb, qb)
 }
 
 func provideRoleHandler(
@@ -470,7 +477,7 @@ func provideRoleHandler(
 ) *deliveryhttp.RoleHandler {
 	roleReadRepo := database.NewRoleRepository(db)
 	userRoleReadRepo := database.NewRoleRepository(db)
-	return deliveryhttp.NewRoleHandler(cb, qb, roleReadRepo, userRoleReadRepo)
+	return deliveryhttp.NewRoleHandler(roleReadRepo, userRoleReadRepo, cb, qb)
 }
 
 // registerEventHandlers mendaftarkan semua event handler dan mengelola lifecycle router.

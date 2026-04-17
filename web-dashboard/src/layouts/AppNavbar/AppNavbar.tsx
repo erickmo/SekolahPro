@@ -21,6 +21,7 @@ const NAV_ITEMS_DEFAULT = [
   { key: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: 'dashboard' },
   { key: 'users', label: 'Pengguna', icon: Users, path: 'users' },
   { key: 'students', label: 'Siswa', icon: GraduationCap, path: 'students' },
+  { key: 'akademik', label: 'Akademik', icon: BookOpen, path: 'akademik/curriculum' },
   { key: 'koperasi', label: 'Koperasi', icon: Wallet, path: 'koperasi/rekening' },
   { key: 'settings', label: 'Pengaturan', icon: Settings, path: 'settings' },
 ]
@@ -42,6 +43,7 @@ const NAV_ITEMS_COMPANY = [
   { key: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: 'dashboard' },
   { key: 'users', label: 'Pengguna', icon: Users, path: 'users' },
   { key: 'students', label: 'Siswa', icon: GraduationCap, path: 'students' },
+  { key: 'akademik', label: 'Akademik', icon: BookOpen, path: 'akademik/curriculum' },
   { key: 'koperasi', label: 'Koperasi', icon: Wallet, path: 'koperasi/rekening' },
   { key: 'settings', label: 'Pengaturan', icon: Settings, path: 'settings' },
 ]

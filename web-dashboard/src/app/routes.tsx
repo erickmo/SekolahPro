@@ -33,6 +33,16 @@ const StudentClassPlacementsPage = lazy(() => import('@/pages/Students/StudentCl
 const SimpananPokokWajibPage  = lazy(() => import('@/pages/Koperasi/SimpananPokokWajibPage'))
 const TabunganPage            = lazy(() => import('@/pages/Koperasi/TabunganPage'))
 const DepositoPage            = lazy(() => import('@/pages/Koperasi/DepositoPage'))
+const DendaPage               = lazy(() => import('@/pages/Koperasi/DendaPage'))
+const JaminanPage             = lazy(() => import('@/pages/Koperasi/JaminanPage'))
+
+// ─── Phase 5 pages ────────────────────────────────────────────────────────────
+const CurriculumPage          = lazy(() => import('@/pages/Academic/CurriculumPage'))
+const SubjectPage             = lazy(() => import('@/pages/Academic/SubjectPage'))
+const AcademicCalendarPage    = lazy(() => import('@/pages/Academic/AcademicCalendarPage'))
+const TeachingSchedulePage    = lazy(() => import('@/pages/Academic/TeachingSchedulePage'))
+const LessonPlanPage          = lazy(() => import('@/pages/Academic/LessonPlanPage'))
+const TeachingJournalPage     = lazy(() => import('@/pages/Academic/TeachingJournalPage'))
 
 function S({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<div />}>{children}</Suspense>
@@ -57,6 +67,14 @@ const singleTenantRoutes = [
       { path: 'koperasi/simpanan-pokok-wajib', element: <S><SimpananPokokWajibPage /></S> },
       { path: 'koperasi/tabungan', element: <S><TabunganPage /></S> },
       { path: 'koperasi/deposito', element: <S><DepositoPage /></S> },
+      { path: 'koperasi/denda', element: <S><DendaPage /></S> },
+      { path: 'koperasi/jaminan', element: <S><JaminanPage /></S> },
+      { path: 'akademik/curriculum', element: <S><CurriculumPage /></S> },
+      { path: 'akademik/subjects', element: <S><SubjectPage /></S> },
+      { path: 'akademik/academic-calendar', element: <S><AcademicCalendarPage /></S> },
+      { path: 'akademik/teaching-schedule', element: <S><TeachingSchedulePage /></S> },
+      { path: 'akademik/lesson-plan', element: <S><LessonPlanPage /></S> },
+      { path: 'akademik/teaching-journal', element: <S><TeachingJournalPage /></S> },
       { path: 'students', element: <S><StudentsPage /></S> },
       { path: 'students/admissions', element: <S><StudentAdmissionsPage /></S> },
       { path: 'students/class-placements', element: <S><StudentClassPlacementsPage /></S> },
@@ -112,6 +130,14 @@ const multiTenantRoutes = [
       { path: 'koperasi/simpanan-pokok-wajib', element: <S><SimpananPokokWajibPage /></S> },
       { path: 'koperasi/tabungan', element: <S><TabunganPage /></S> },
       { path: 'koperasi/deposito', element: <S><DepositoPage /></S> },
+      { path: 'koperasi/denda', element: <S><DendaPage /></S> },
+      { path: 'koperasi/jaminan', element: <S><JaminanPage /></S> },
+      { path: 'akademik/curriculum', element: <S><CurriculumPage /></S> },
+      { path: 'akademik/subjects', element: <S><SubjectPage /></S> },
+      { path: 'akademik/academic-calendar', element: <S><AcademicCalendarPage /></S> },
+      { path: 'akademik/teaching-schedule', element: <S><TeachingSchedulePage /></S> },
+      { path: 'akademik/lesson-plan', element: <S><LessonPlanPage /></S> },
+      { path: 'akademik/teaching-journal', element: <S><TeachingJournalPage /></S> },
       { path: 'students', element: <S><StudentsPage /></S> },
       { path: 'students/admissions', element: <S><StudentAdmissionsPage /></S> },
       { path: 'students/class-placements', element: <S><StudentClassPlacementsPage /></S> },

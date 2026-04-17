@@ -206,7 +206,8 @@ func (r *MobileConfigRepository) selectMobileConfigs(ctx context.Context, s scop
 		        force_update, maintenance_mode, feature_flags, api_base_url,
 		        theme_config, offline_config, is_active, created_at, updated_at, deleted_at
 		 FROM mobile_app_configs
-		 WHERE tenant_id = $1 AND company_id = $2 AND deleted_at IS NULL`, col, dir,
+		 WHERE tenant_id = $1 AND company_id = $2 AND deleted_at IS NULL
+			 ORDER BY %s %s`, col, dir,
 	)
 	args := []any{s.TenantID, s.CompanyID}
 	argIdx := 3
