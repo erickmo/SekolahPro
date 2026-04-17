@@ -188,13 +188,13 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 49 | `[S] ADR-S018` | Rapor Generation ★ | S004, S008, S011, S012, S014, S015 | ❌ | ❌ | ❌ | ❌ |
-| 50 | `[S] ADR-S009` | Student Finance / SPP | S001, ADR-010 | ❌ | ❌ | ❌ | ❌ |
-| 51 | `[S] ADR-S026` | Teacher Attendance | ADR-012 | ❌ | ❌ | ❌ | ❌ |
-| 52 | `[S] ADR-S027` | Teacher Workload | S021, ADR-012 | ❌ | ❌ | ❌ | ❌ |
-| 53 | `[S] ADR-S030` | Leave Management (Cuti Guru/Staff) | ADR-012 | ❌ | ❌ | ❌ | ❌ |
-| 54 | `[S] ADR-S032` | Teacher Substitution (Piket) | S021, ADR-012 | ❌ | ❌ | ❌ | ❌ |
-| 55 | `[S] ADR-S017` | Student Counseling / BK | S001, S012, ADR-012 | ❌ | ❌ | ❌ | ❌ |
+| 49 | `[S] ADR-S018` | Rapor Generation ★ | S004, S008, S011, S012, S014, S015 | ✅ | ✅ | ✅ | ✅ |
+| 50 | `[S] ADR-S009` | Student Finance / SPP | S001, ADR-010 | ✅ | ✅ | ✅ | ✅ |
+| 51 | `[S] ADR-S026` | Teacher Attendance | ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 52 | `[S] ADR-S027` | Teacher Workload | S021, ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 53 | `[S] ADR-S030` | Leave Management (Cuti Guru/Staff) | ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 54 | `[S] ADR-S032` | Teacher Substitution (Piket) | S021, ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 55 | `[S] ADR-S017` | Student Counseling / BK | S001, S012, ADR-012 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: Cetak rapor, SPP, absensi guru, beban mengajar, cuti, piket, BK.
 
@@ -206,10 +206,10 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 56 | `[K] ADR-K015` | Jurnal & Akuntansi (COA) ★ | K011 | ❌ | ❌ | ❌ | ❌ |
-| 57 | `[K] ADR-K016` | SHU (Sisa Hasil Usaha) | K015 | ❌ | ❌ | ❌ | ❌ |
-| 58 | `[K] ADR-K017` | Laporan Regulasi (OJK, Dinas) | K015, K016 | ❌ | ❌ | ❌ | ❌ |
-| 59 | `[K] ADR-K018` | Zakat & Infaq (BMT mode) | K015, ADR-009 | ❌ | ❌ | ❌ | ❌ |
+| 56 | `[K] ADR-K015` | Jurnal & Akuntansi (COA) ★ | K011 | ✅ | ✅ | ✅ | ✅ |
+| 57 | `[K] ADR-K016` | SHU (Sisa Hasil Usaha) | K015 | ✅ | ✅ | ✅ | ✅ |
+| 58 | `[K] ADR-K017` | Laporan Regulasi (OJK, Dinas) | K015, K016 | ✅ | ✅ | ✅ | ✅ |
+| 59 | `[K] ADR-K018` | Zakat & Infaq (BMT mode) | K015, ADR-009 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: COA, jurnal otomatis, SHU, laporan OJK/Dinas, zakat.
 
@@ -448,7 +448,7 @@ K022, K023
 | 3 | Fase 4A + 4B | 7 + 3 = 10 | Student core + simpanan koperasi | 10/10 | 10/10 |
 | 4 | Fase 5A + 5B | 6 + 4 = 10 | Kurikulum + pembiayaan koperasi | 4/10 | 0/10 |
 | 5 | Fase 6A + 6B | 8 + 4 = 12 | Kehadiran, nilai + transaksi koperasi | 12/12 | 12/12 |
-| 6 | Fase 7A + 7B + 15 | 7 + 4 + 5 = 16 | Rapor, HR guru + akuntansi + governance/compliance | 3/16 | 0/16 |
+| 6 | Fase 7A + 7B + 15 | 7 + 4 + 5 = 16 | Rapor, HR guru + akuntansi + governance/compliance | 14/16 | 11/16 |
 | 7 | Fase 8 + 15 cont. | 7 | Fasilitas, sarana, PKG, payroll | 0/7 | 0/7 |
 | 8 | Fase 9 + 10 + 16 | 5 + 3 + 5 = 13 | Asrama, kantin + ext. koperasi + operational excellence | 2/13 | 0/13 |
 | 9 | Fase 11 + 16 cont. | 7 | Portal, notifikasi, dashboard | 0/7 | 0/7 |
@@ -464,10 +464,10 @@ K022, K023
 | Metric | Count | Percentage |
 |--------|-------|------------|
 | **Total ADR** | 111 | — |
-| **Is Coded** | 52/111 | 47% |
-| **Test Code** | 39/105 | 37% |
-| **API Tested** | 30/105 | 29% |
-| **Dashboard Tested** | 30/105 | 29% |
+| **Is Coded** | 63/111 | 57% |
+| **Test Code** | 50/105 | 48% |
+| **API Tested** | 41/105 | 39% |
+| **Dashboard Tested** | 41/105 | 39% |
 
 > Catatan: 6 ADR infrastruktur (Fase INF) dikecualikan dari Test/API/Dashboard karena N/A.
 > Test Code: 26 domain punya unit test (descriptor_test.go + handler_test.go), 1 punya integration test (example).
@@ -479,6 +479,6 @@ K022, K023
 ---
 
 *Generated: 2026-04-15 — Berdasarkan dependency analysis dari semua ADR.*
-*Updated: 2026-04-16 — Phase 1-4 fully complete: all ADRs coded, tested, API tested, dashboard tested.*
 *Updated: 2026-04-17 — Sprint 5 (Fase 6A + 6B) fully complete: 12 ADRs coded, tested, API tested, dashboard tested. 331 new backend tests + 20 frontend pages.*
+*Updated: 2026-04-18 — Sprint 6 (Fase 7A + 7B) complete: 11 ADRs coded, tested, API tested, dashboard tested. 1643 backend tests total + 30 new Vernon descriptors + 22 frontend pages.*
 *Prinsip: Outside-In = fondasi dulu, fitur user-facing bertahap, integrasi terakhir.*

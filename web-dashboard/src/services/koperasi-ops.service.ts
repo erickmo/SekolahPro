@@ -4,6 +4,12 @@ import type {
   TellerSession,
   MoneyDenomination,
   Kas,
+  COA,
+  Jurnal,
+  AccountingPeriod,
+  JournalMapping,
+  SHUPeriode,
+  SHUAnggota,
 } from '@/types/koperasi-ops.types'
 
 // ── Transaksi ─────────────────────────────────────────────────────────────────
@@ -103,4 +109,158 @@ function transformKas(raw: Record<string, unknown>): Kas {
 export const kasService = createVernonService<Kas, Record<string, unknown>>(
   '/kas',
   transformKas,
+)
+
+// ── COA (ADR-K015) ────────────────────────────────────────────────────────────
+
+function transformCOA(raw: Record<string, unknown>): COA {
+  return {
+    id: raw.id as string,
+    accountCode: (raw.account_code ?? '') as string,
+    accountName: (raw.account_name ?? '') as string,
+    parentId: (raw.parent_id ?? '') as string,
+    level: (raw.level ?? 1) as number,
+    accountType: (raw.account_type ?? 'asset') as COA['accountType'],
+    normalBalance: (raw.normal_balance ?? 'debit') as COA['normalBalance'],
+    description: (raw.description ?? '') as string,
+    isSystem: (raw.is_system ?? false) as boolean,
+    isActive: (raw.is_active ?? true) as boolean,
+    coopTypeRequired: (raw.coop_type_required ?? 'both') as COA['coopTypeRequired'],
+    createdAt: raw.created_at as string,
+    updatedAt: raw.updated_at as string,
+  }
+}
+
+export const coaService = createVernonService<COA, Record<string, unknown>>(
+  '/coa',
+  transformCOA,
+)
+
+// ── Jurnal (ADR-K015) ─────────────────────────────────────────────────────────
+
+function transformJurnal(raw: Record<string, unknown>): Jurnal {
+  const data = (raw._data ?? {}) as Record<string, unknown>
+  const branch = (data.branch ?? {}) as Record<string, unknown>
+  const period = (data.period ?? {}) as Record<string, unknown>
+  return {
+    id: raw.id as string,
+    journalNumber: (raw.journal_number ?? '') as string,
+    journalDate: (raw.journal_date ?? '') as string,
+    description: (raw.description ?? '') as string,
+    sourceType: (raw.source_type ?? 'manual') as Jurnal['sourceType'],
+    sourceId: (raw.source_id ?? '') as string,
+    reference: (raw.reference ?? '') as string,
+    periodId: (raw.period_id ?? '') as string,
+    branchId: (raw.branch_id ?? '') as string,
+    branchName: (branch.name ?? '') as string,
+    periodName: (period.period_name ?? '') as string,
+    totalDebit: (raw.total_debit ?? 0) as number,
+    totalCredit: (raw.total_credit ?? 0) as number,
+    status: (raw.status ?? 'unposted') as Jurnal['status'],
+    isAutoPost: (raw.is_auto_post ?? false) as boolean,
+    createdAt: raw.created_at as string,
+    updatedAt: raw.updated_at as string,
+  }
+}
+
+export const jurnalService = createVernonService<Jurnal, Record<string, unknown>>(
+  '/jurnal',
+  transformJurnal,
+)
+
+// ── Accounting Period (ADR-K015) ──────────────────────────────────────────────
+
+function transformAccountingPeriod(raw: Record<string, unknown>): AccountingPeriod {
+  return {
+    id: raw.id as string,
+    periodType: (raw.period_type ?? 'monthly') as AccountingPeriod['periodType'],
+    year: (raw.year ?? 2026) as number,
+    month: (raw.month ?? null) as number | null,
+    periodName: (raw.period_name ?? '') as string,
+    startDate: (raw.start_date ?? '') as string,
+    endDate: (raw.end_date ?? '') as string,
+    status: (raw.status ?? 'open') as AccountingPeriod['status'],
+    createdAt: raw.created_at as string,
+    updatedAt: raw.updated_at as string,
+  }
+}
+
+export const accountingPeriodService = createVernonService<AccountingPeriod, Record<string, unknown>>(
+  '/accounting_period',
+  transformAccountingPeriod,
+)
+
+// ── Journal Mapping (ADR-K015) ────────────────────────────────────────────────
+
+function transformJournalMapping(raw: Record<string, unknown>): JournalMapping {
+  return {
+    id: raw.id as string,
+    transactionType: (raw.transaction_type ?? '') as string,
+    coopType: (raw.coop_type ?? 'both') as JournalMapping['coopType'],
+    rules: (raw.rules ?? []) as Record<string, unknown>[],
+    description: (raw.description ?? '') as string,
+    isActive: (raw.is_active ?? true) as boolean,
+    createdAt: raw.created_at as string,
+    updatedAt: raw.updated_at as string,
+  }
+}
+
+export const journalMappingService = createVernonService<JournalMapping, Record<string, unknown>>(
+  '/journal_mapping',
+  transformJournalMapping,
+)
+
+// ── SHU Periode (ADR-K016) ────────────────────────────────────────────────────
+
+function transformSHUPeriode(raw: Record<string, unknown>): SHUPeriode {
+  return {
+    id: raw.id as string,
+    tahunBuku: (raw.tahun_buku ?? 0) as number,
+    periodStart: (raw.period_start ?? '') as string,
+    periodEnd: (raw.period_end ?? '') as string,
+    totalPendapatan: (raw.total_pendapatan ?? 0) as number,
+    totalBeban: (raw.total_beban ?? 0) as number,
+    shuBruto: (raw.shu_bruto ?? 0) as number,
+    shuNeto: (raw.shu_neto ?? 0) as number,
+    distributionConfig: (raw.distribution_config ?? {}) as Record<string, unknown>,
+    status: (raw.status ?? 'calculated') as SHUPeriode['status'],
+    createdAt: raw.created_at as string,
+    updatedAt: raw.updated_at as string,
+  }
+}
+
+export const shuPeriodeService = createVernonService<SHUPeriode, Record<string, unknown>>(
+  '/shu_periode',
+  transformSHUPeriode,
+)
+
+// ── SHU Anggota (ADR-K016) ────────────────────────────────────────────────────
+
+function transformSHUAnggota(raw: Record<string, unknown>): SHUAnggota {
+  const data = (raw._data ?? {}) as Record<string, unknown>
+  const nasabah = (data.nasabah ?? {}) as Record<string, unknown>
+  const rekening = (data.target_rekening ?? {}) as Record<string, unknown>
+  return {
+    id: raw.id as string,
+    shuPeriodeId: (raw.shu_periode_id ?? '') as string,
+    nasabahId: (raw.nasabah_id ?? '') as string,
+    nasabahNama: (nasabah.nama_lengkap ?? '') as string,
+    nasabahNo: (nasabah.no_nasabah ?? '') as string,
+    avgSimpanan: (raw.avg_simpanan ?? 0) as number,
+    totalTransaksi: (raw.total_transaksi ?? 0) as number,
+    activeDays: (raw.active_days ?? 0) as number,
+    jasaModal: (raw.jasa_modal ?? 0) as number,
+    jasaUsaha: (raw.jasa_usaha ?? 0) as number,
+    totalSHU: (raw.total_shu ?? 0) as number,
+    distributionMethod: (raw.distribution_method ?? 'pending') as SHUAnggota['distributionMethod'],
+    targetRekeningId: (raw.target_rekening_id ?? '') as string,
+    targetRekeningNo: (rekening.no_rekening ?? '') as string,
+    createdAt: raw.created_at as string,
+    updatedAt: raw.updated_at as string,
+  }
+}
+
+export const shuAnggotaService = createVernonService<SHUAnggota, Record<string, unknown>>(
+  '/shu_anggota',
+  transformSHUAnggota,
 )

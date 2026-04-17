@@ -102,6 +102,19 @@ import (
 	"github.com/yourorg/boilerplate/internal/domain/teller_session"
 	"github.com/yourorg/boilerplate/internal/domain/money_denomination"
 	"github.com/yourorg/boilerplate/internal/domain/kas"
+
+	// Sprint 6 — Rapor & HR Guru + Akuntansi Koperasi
+	"github.com/yourorg/boilerplate/internal/domain/student_counseling"
+	"github.com/yourorg/boilerplate/internal/domain/teacher_attendance"
+	"github.com/yourorg/boilerplate/internal/domain/teacher_workload"
+	"github.com/yourorg/boilerplate/internal/domain/student_finance_spp"
+	"github.com/yourorg/boilerplate/internal/domain/rapor_generation"
+	"github.com/yourorg/boilerplate/internal/domain/leave_management"
+	"github.com/yourorg/boilerplate/internal/domain/teacher_substitution"
+	"github.com/yourorg/boilerplate/internal/domain/jurnal_coa"
+	"github.com/yourorg/boilerplate/internal/domain/shu"
+	"github.com/yourorg/boilerplate/internal/domain/laporan_regulasi"
+	"github.com/yourorg/boilerplate/internal/domain/zakat_infaq"
 )
 
 func main() {
@@ -376,7 +389,43 @@ func registerVernonDomains(
 	registerVernonDomain(db, registry, eb, logger, &teller_session.Descriptor{})
 	registerVernonDomain(db, registry, eb, logger, &money_denomination.Descriptor{}) // autoloads teller_session
 	registerVernonDomain(db, registry, eb, logger, &kas.Descriptor{})                // autoloads teller_session
-}
+
+		// Sprint 6 — Rapor & HR Guru (Fase 7A)
+		registerVernonDomain(db, registry, eb, logger, &student_counseling.CaseDescriptor{})    // autoloads student + academic_year
+		registerVernonDomain(db, registry, eb, logger, &student_counseling.SessionDescriptor{}) // autoloads case + student
+		registerVernonDomain(db, registry, eb, logger, &teacher_attendance.Descriptor{})        // autoloads teacher + academic_year
+		registerVernonDomain(db, registry, eb, logger, &teacher_attendance.ConfigDescriptor{})
+		registerVernonDomain(db, registry, eb, logger, &teacher_workload.Descriptor{})          // autoloads teacher + academic_year
+		registerVernonDomain(db, registry, eb, logger, &teacher_workload.ItemDescriptor{})      // autoloads workload + teacher
+		registerVernonDomain(db, registry, eb, logger, &student_finance_spp.FeeTypeDescriptor{})
+		registerVernonDomain(db, registry, eb, logger, &student_finance_spp.InvoiceDescriptor{})  // autoloads student + academic_year + fee_type
+		registerVernonDomain(db, registry, eb, logger, &student_finance_spp.PaymentDescriptor{})  // autoloads invoice + student
+		registerVernonDomain(db, registry, eb, logger, &rapor_generation.TemplateDescriptor{})
+		registerVernonDomain(db, registry, eb, logger, &rapor_generation.RecordDescriptor{})     // autoloads student + academic_year + class_room + template
+		registerVernonDomain(db, registry, eb, logger, &leave_management.LeaveTypeDescriptor{})
+		registerVernonDomain(db, registry, eb, logger, &leave_management.LeaveBalanceDescriptor{})     // autoloads teacher + leave_type + academic_year
+		registerVernonDomain(db, registry, eb, logger, &leave_management.LeaveRequestDescriptor{})     // autoloads teacher + leave_type + leave_balance + academic_year
+		registerVernonDomain(db, registry, eb, logger, &leave_management.LeaveApprovalLogDescriptor{}) // autoloads leave_request
+		registerVernonDomain(db, registry, eb, logger, &teacher_substitution.DutyScheduleDescriptor{})        // autoloads teacher + academic_year
+		registerVernonDomain(db, registry, eb, logger, &teacher_substitution.TeacherSubstitutionDescriptor{}) // autoloads original_teacher + substitute_teacher + academic_year + class_room
+		registerVernonDomain(db, registry, eb, logger, &teacher_substitution.SubstitutionLogDescriptor{})     // autoloads substitution
+
+		// Sprint 6 — Akuntansi Koperasi (Fase 7B)
+		registerVernonDomain(db, registry, eb, logger, &jurnal_coa.COADescriptor{})
+		registerVernonDomain(db, registry, eb, logger, &jurnal_coa.AccountingPeriodDescriptor{})
+		registerVernonDomain(db, registry, eb, logger, &jurnal_coa.JurnalDescriptor{})             // autoloads branch + accounting_period
+		registerVernonDomain(db, registry, eb, logger, &jurnal_coa.JournalMappingDescriptor{})
+		registerVernonDomain(db, registry, eb, logger, &shu.SHUPeriodeDescriptor{})
+		registerVernonDomain(db, registry, eb, logger, &shu.SHUAnggotaDescriptor{})                // autoloads shu_periode + nasabah + rekening
+		registerVernonDomain(db, registry, eb, logger, &laporan_regulasi.ConfigDescriptor{})
+		registerVernonDomain(db, registry, eb, logger, &laporan_regulasi.LaporanDescriptor{})      // autoloads branch + laporan_config
+		registerVernonDomain(db, registry, eb, logger, &laporan_regulasi.VersiDescriptor{})        // autoloads laporan
+		registerVernonDomain(db, registry, eb, logger, &zakat_infaq.ZakatCollectionDescriptor{})    // autoloads nasabah + branch
+		registerVernonDomain(db, registry, eb, logger, &zakat_infaq.ZakatDistributionDescriptor{})  // autoloads mustahik + branch
+		registerVernonDomain(db, registry, eb, logger, &zakat_infaq.InfaqDescriptor{})              // autoloads nasabah + branch
+		registerVernonDomain(db, registry, eb, logger, &zakat_infaq.MustahikDescriptor{})           // autoloads branch
+		registerVernonDomain(db, registry, eb, logger, &zakat_infaq.TazirFundDescriptor{})          // autoloads denda + pinjaman + nasabah
+	}
 
 // registerVernonDomain adalah helper DRY untuk mendaftarkan satu domain Vernon.
 func registerVernonDomain(
