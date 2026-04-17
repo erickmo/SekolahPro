@@ -84,6 +84,34 @@ export const QK = {
   dendaDetail: 'denda-detail',
   jaminan: 'jaminan',
   jaminanDetail: 'jaminan-detail',
+
+  // ── Phase 5B: Koperasi Operations ──────────────────────────────────────────────
+  transaksi: 'transaksi',
+  transaksiDetail: 'transaksi-detail',
+  tellerSession: 'teller-session',
+  tellerSessionDetail: 'teller-session-detail',
+  moneyDenomination: 'money-denomination',
+  moneyDenominationDetail: 'money-denomination-detail',
+  kas: 'kas',
+  kasDetail: 'kas-detail',
+
+  // ── Sprint 5: Student Academic & Activity ──────────────────────────────────────
+  dailyAttendance: 'daily-attendance',
+  dailyAttendanceDetail: 'daily-attendance-detail',
+  academicRecord: 'academic-record',
+  academicRecordDetail: 'academic-record-detail',
+  subjectGrade: 'subject-grade',
+  subjectGradeDetail: 'subject-grade-detail',
+  examAssessment: 'exam-assessment',
+  examAssessmentDetail: 'exam-assessment-detail',
+  healthRecord: 'health-record',
+  healthRecordDetail: 'health-record-detail',
+  discipline: 'discipline',
+  disciplineDetail: 'discipline-detail',
+  achievement: 'achievement',
+  achievementDetail: 'achievement-detail',
+  extracurricular: 'extracurricular',
+  extracurricularDetail: 'extracurricular-detail',
 } as const
 
 export type QueryKeyValue = (typeof QK)[keyof typeof QK]

@@ -154,14 +154,14 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 37 | `[S] ADR-S008` | Daily Attendance (Absensi Harian) ★ | S001, S014, ADR-011 | ❌ | ❌ | ❌ | ❌ |
-| 38 | `[S] ADR-S004` | Student Academic Record ★ | S001 | ❌ | ❌ | ❌ | ❌ |
-| 39 | `[S] ADR-S011` | Subject Grade Detail ★ | S001, S020, ADR-012 | ❌ | ❌ | ❌ | ❌ |
-| 40 | `[S] ADR-S022` | Exam & Assessment Management | S011, S020, ADR-012 | ❌ | ❌ | ❌ | ❌ |
-| 41 | `[S] ADR-S005` | Student Health Record | S001 | ❌ | ❌ | ❌ | ❌ |
-| 42 | `[S] ADR-S012` | Student Discipline | S001, ADR-012 | ❌ | ❌ | ❌ | ❌ |
-| 43 | `[S] ADR-S013` | Student Achievement | S001 | ❌ | ❌ | ❌ | ❌ |
-| 44 | `[S] ADR-S015` | Student Extracurricular | S001, ADR-012 | ❌ | ❌ | ❌ | ❌ |
+| 37 | `[S] ADR-S008` | Daily Attendance (Absensi Harian) ★ | S001, S014, ADR-011 | ✅ | ✅ | ✅ | ✅ |
+| 38 | `[S] ADR-S004` | Student Academic Record ★ | S001 | ✅ | ✅ | ✅ | ✅ |
+| 39 | `[S] ADR-S011` | Subject Grade Detail ★ | S001, S020, ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 40 | `[S] ADR-S022` | Exam & Assessment Management | S011, S020, ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 41 | `[S] ADR-S005` | Student Health Record | S001 | ✅ | ✅ | ✅ | ✅ |
+| 42 | `[S] ADR-S012` | Student Discipline | S001, ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 43 | `[S] ADR-S013` | Student Achievement | S001 | ✅ | ✅ | ✅ | ✅ |
+| 44 | `[S] ADR-S015` | Student Extracurricular | S001, ADR-012 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: Absensi harian, input nilai, ujian, catatan akademik, kesehatan, disiplin, ekskul.
 
@@ -173,10 +173,10 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 45 | `[K] ADR-K011` | Transaksi Rekening & Non-Rekening ★ | K002, K007 | ❌ | ❌ | ❌ | ❌ |
-| 46 | `[K] ADR-K012` | Teller Session | K011 | ❌ | ❌ | ❌ | ❌ |
-| 47 | `[K] ADR-K013` | Money Denomination | K012 | ❌ | ❌ | ❌ | ❌ |
-| 48 | `[K] ADR-K014` | Kas & Cash Flow | K011, K012 | ❌ | ❌ | ❌ | ❌ |
+| 45 | `[K] ADR-K011` | Transaksi Rekening & Non-Rekening ★ | K002, K007 | ✅ | ✅ | ✅ | ✅ |
+| 46 | `[K] ADR-K012` | Teller Session | K011 | ✅ | ✅ | ✅ | ✅ |
+| 47 | `[K] ADR-K013` | Money Denomination | K012 | ✅ | ✅ | ✅ | ✅ |
+| 48 | `[K] ADR-K014` | Kas & Cash Flow | K011, K012 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: Transaction engine, teller workflow, kas harian, denominasi.
 
@@ -447,7 +447,7 @@ K022, K023
 | 2 | Fase 2 + 3 | 3 + 3 = 6 | Master data sekolah + core koperasi | 6/6 | 6/6 |
 | 3 | Fase 4A + 4B | 7 + 3 = 10 | Student core + simpanan koperasi | 10/10 | 10/10 |
 | 4 | Fase 5A + 5B | 6 + 4 = 10 | Kurikulum + pembiayaan koperasi | 4/10 | 0/10 |
-| 5 | Fase 6A + 6B | 8 + 4 = 12 | Kehadiran, nilai + transaksi koperasi | 0/12 | 0/12 |
+| 5 | Fase 6A + 6B | 8 + 4 = 12 | Kehadiran, nilai + transaksi koperasi | 12/12 | 12/12 |
 | 6 | Fase 7A + 7B + 15 | 7 + 4 + 5 = 16 | Rapor, HR guru + akuntansi + governance/compliance | 3/16 | 0/16 |
 | 7 | Fase 8 + 15 cont. | 7 | Fasilitas, sarana, PKG, payroll | 0/7 | 0/7 |
 | 8 | Fase 9 + 10 + 16 | 5 + 3 + 5 = 13 | Asrama, kantin + ext. koperasi + operational excellence | 2/13 | 0/13 |
@@ -464,19 +464,21 @@ K022, K023
 | Metric | Count | Percentage |
 |--------|-------|------------|
 | **Total ADR** | 111 | — |
-| **Is Coded** | 40/111 | 36% |
-| **Test Code** | 27/105 | 26% |
-| **API Tested** | 18/105 | 17% |
-| **Dashboard Tested** | 18/105 | 17% |
+| **Is Coded** | 52/111 | 47% |
+| **Test Code** | 39/105 | 37% |
+| **API Tested** | 30/105 | 29% |
+| **Dashboard Tested** | 30/105 | 29% |
 
 > Catatan: 6 ADR infrastruktur (Fase INF) dikecualikan dari Test/API/Dashboard karena N/A.
 > Test Code: 26 domain punya unit test (descriptor_test.go + handler_test.go), 1 punya integration test (example).
 > Phase 1 (Auth & Multi-Tenant): 93 HTTP handler tests (auth + user + role), all passing.
 > Phase 3 (Core Koperasi): 333 unit tests passing across produk_akad, nasabah, rekening + vernon handler.
 > Phase 4 (Student Core + Simpanan): 333 tests passing across 8 domains (student, student_guardian, student_document, student_class_placement, student_admission, simpanan_pokok_wajib, tabungan, deposito).
+> Sprint 5 (Fase 6A + 6B): 331 tests passing across 12 domains (daily_attendance, academic_record, subject_grade, exam_assessment, health_record, discipline, achievement, extracurricular, transaksi, teller_session, money_denomination, kas).
 
 ---
 
 *Generated: 2026-04-15 — Berdasarkan dependency analysis dari semua ADR.*
 *Updated: 2026-04-16 — Phase 1-4 fully complete: all ADRs coded, tested, API tested, dashboard tested.*
+*Updated: 2026-04-17 — Sprint 5 (Fase 6A + 6B) fully complete: 12 ADRs coded, tested, API tested, dashboard tested. 331 new backend tests + 20 frontend pages.*
 *Prinsip: Outside-In = fondasi dulu, fitur user-facing bertahap, integrasi terakhir.*

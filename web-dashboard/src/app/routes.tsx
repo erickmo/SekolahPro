@@ -35,6 +35,10 @@ const TabunganPage            = lazy(() => import('@/pages/Koperasi/TabunganPage
 const DepositoPage            = lazy(() => import('@/pages/Koperasi/DepositoPage'))
 const DendaPage               = lazy(() => import('@/pages/Koperasi/DendaPage'))
 const JaminanPage             = lazy(() => import('@/pages/Koperasi/JaminanPage'))
+const TransaksiPage           = lazy(() => import('@/pages/Koperasi/TransaksiPage'))
+const TellerSessionPage       = lazy(() => import('@/pages/Koperasi/TellerSessionPage'))
+const MoneyDenominationPage   = lazy(() => import('@/pages/Koperasi/MoneyDenominationPage'))
+const KasPage                 = lazy(() => import('@/pages/Koperasi/KasPage'))
 
 // ─── Phase 5 pages ────────────────────────────────────────────────────────────
 const CurriculumPage          = lazy(() => import('@/pages/Academic/CurriculumPage'))
@@ -43,6 +47,16 @@ const AcademicCalendarPage    = lazy(() => import('@/pages/Academic/AcademicCale
 const TeachingSchedulePage    = lazy(() => import('@/pages/Academic/TeachingSchedulePage'))
 const LessonPlanPage          = lazy(() => import('@/pages/Academic/LessonPlanPage'))
 const TeachingJournalPage     = lazy(() => import('@/pages/Academic/TeachingJournalPage'))
+
+// ─── Sprint 5 pages ───────────────────────────────────────────────────────────
+const DailyAttendancePage     = lazy(() => import('@/pages/Academic/DailyAttendancePage'))
+const AcademicRecordPage      = lazy(() => import('@/pages/Academic/AcademicRecordPage'))
+const SubjectGradePage        = lazy(() => import('@/pages/Academic/SubjectGradePage'))
+const ExamAssessmentPage      = lazy(() => import('@/pages/Academic/ExamAssessmentPage'))
+const ExtracurricularPage     = lazy(() => import('@/pages/Academic/ExtracurricularPage'))
+const HealthRecordPage        = lazy(() => import('@/pages/Students/HealthRecordPage'))
+const DisciplinePage          = lazy(() => import('@/pages/Students/DisciplinePage'))
+const AchievementPage         = lazy(() => import('@/pages/Students/AchievementPage'))
 
 function S({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<div />}>{children}</Suspense>
@@ -69,15 +83,27 @@ const singleTenantRoutes = [
       { path: 'koperasi/deposito', element: <S><DepositoPage /></S> },
       { path: 'koperasi/denda', element: <S><DendaPage /></S> },
       { path: 'koperasi/jaminan', element: <S><JaminanPage /></S> },
+      { path: 'koperasi/transaksi', element: <S><TransaksiPage /></S> },
+      { path: 'koperasi/teller-session', element: <S><TellerSessionPage /></S> },
+      { path: 'koperasi/money-denomination', element: <S><MoneyDenominationPage /></S> },
+      { path: 'koperasi/kas', element: <S><KasPage /></S> },
       { path: 'akademik/curriculum', element: <S><CurriculumPage /></S> },
       { path: 'akademik/subjects', element: <S><SubjectPage /></S> },
       { path: 'akademik/academic-calendar', element: <S><AcademicCalendarPage /></S> },
       { path: 'akademik/teaching-schedule', element: <S><TeachingSchedulePage /></S> },
       { path: 'akademik/lesson-plan', element: <S><LessonPlanPage /></S> },
       { path: 'akademik/teaching-journal', element: <S><TeachingJournalPage /></S> },
+      { path: 'akademik/daily-attendance', element: <S><DailyAttendancePage /></S> },
+      { path: 'akademik/academic-record', element: <S><AcademicRecordPage /></S> },
+      { path: 'akademik/subject-grade', element: <S><SubjectGradePage /></S> },
+      { path: 'akademik/exam-assessment', element: <S><ExamAssessmentPage /></S> },
+      { path: 'akademik/extracurricular', element: <S><ExtracurricularPage /></S> },
       { path: 'students', element: <S><StudentsPage /></S> },
       { path: 'students/admissions', element: <S><StudentAdmissionsPage /></S> },
       { path: 'students/class-placements', element: <S><StudentClassPlacementsPage /></S> },
+      { path: 'students/health-record', element: <S><HealthRecordPage /></S> },
+      { path: 'students/discipline', element: <S><DisciplinePage /></S> },
+      { path: 'students/achievement', element: <S><AchievementPage /></S> },
     ],
   },
 ]
@@ -132,15 +158,27 @@ const multiTenantRoutes = [
       { path: 'koperasi/deposito', element: <S><DepositoPage /></S> },
       { path: 'koperasi/denda', element: <S><DendaPage /></S> },
       { path: 'koperasi/jaminan', element: <S><JaminanPage /></S> },
+      { path: 'koperasi/transaksi', element: <S><TransaksiPage /></S> },
+      { path: 'koperasi/teller-session', element: <S><TellerSessionPage /></S> },
+      { path: 'koperasi/money-denomination', element: <S><MoneyDenominationPage /></S> },
+      { path: 'koperasi/kas', element: <S><KasPage /></S> },
       { path: 'akademik/curriculum', element: <S><CurriculumPage /></S> },
       { path: 'akademik/subjects', element: <S><SubjectPage /></S> },
       { path: 'akademik/academic-calendar', element: <S><AcademicCalendarPage /></S> },
       { path: 'akademik/teaching-schedule', element: <S><TeachingSchedulePage /></S> },
       { path: 'akademik/lesson-plan', element: <S><LessonPlanPage /></S> },
       { path: 'akademik/teaching-journal', element: <S><TeachingJournalPage /></S> },
+      { path: 'akademik/daily-attendance', element: <S><DailyAttendancePage /></S> },
+      { path: 'akademik/academic-record', element: <S><AcademicRecordPage /></S> },
+      { path: 'akademik/subject-grade', element: <S><SubjectGradePage /></S> },
+      { path: 'akademik/exam-assessment', element: <S><ExamAssessmentPage /></S> },
+      { path: 'akademik/extracurricular', element: <S><ExtracurricularPage /></S> },
       { path: 'students', element: <S><StudentsPage /></S> },
       { path: 'students/admissions', element: <S><StudentAdmissionsPage /></S> },
       { path: 'students/class-placements', element: <S><StudentClassPlacementsPage /></S> },
+      { path: 'students/health-record', element: <S><HealthRecordPage /></S> },
+      { path: 'students/discipline', element: <S><DisciplinePage /></S> },
+      { path: 'students/achievement', element: <S><AchievementPage /></S> },
     ],
   },
 ]
