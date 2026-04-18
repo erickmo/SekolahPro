@@ -58,6 +58,15 @@ const HealthRecordPage        = lazy(() => import('@/pages/Students/HealthRecord
 const DisciplinePage          = lazy(() => import('@/pages/Students/DisciplinePage'))
 const AchievementPage         = lazy(() => import('@/pages/Students/AchievementPage'))
 
+// ─── Sprint 7 pages ────────────────────────────────────────────────────
+const LibraryPage              = lazy(() => import('@/pages/Sekolah/LibraryPage'))
+const LaboratoryPage           = lazy(() => import('@/pages/Sekolah/LaboratoryPage'))
+const AssetManagementPage      = lazy(() => import('@/pages/Sekolah/AssetManagementPage'))
+const FacilityBookingPage      = lazy(() => import('@/pages/Sekolah/FacilityBookingPage'))
+const TeacherEvaluationPage    = lazy(() => import('@/pages/Sekolah/TeacherEvaluationPage'))
+const TeacherDevelopmentPage   = lazy(() => import('@/pages/Sekolah/TeacherDevelopmentPage'))
+const PayrollPage              = lazy(() => import('@/pages/Sekolah/PayrollPage'))
+
 function S({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<div />}>{children}</Suspense>
 }
@@ -104,6 +113,13 @@ const singleTenantRoutes = [
       { path: 'students/health-record', element: <S><HealthRecordPage /></S> },
       { path: 'students/discipline', element: <S><DisciplinePage /></S> },
       { path: 'students/achievement', element: <S><AchievementPage /></S> },
+      { path: 'fasilitas/library', element: <S><LibraryPage /></S> },
+      { path: 'fasilitas/laboratory', element: <S><LaboratoryPage /></S> },
+      { path: 'fasilitas/aset', element: <S><AssetManagementPage /></S> },
+      { path: 'fasilitas/booking', element: <S><FacilityBookingPage /></S> },
+      { path: 'guru/evaluasi', element: <S><TeacherEvaluationPage /></S> },
+      { path: 'guru/pengembangan', element: <S><TeacherDevelopmentPage /></S> },
+      { path: 'guru/payroll', element: <S><PayrollPage /></S> },
     ],
   },
 ]
@@ -179,6 +195,13 @@ const multiTenantRoutes = [
       { path: 'students/health-record', element: <S><HealthRecordPage /></S> },
       { path: 'students/discipline', element: <S><DisciplinePage /></S> },
       { path: 'students/achievement', element: <S><AchievementPage /></S> },
+      { path: 'fasilitas/library', element: <S><LibraryPage /></S> },
+      { path: 'fasilitas/laboratory', element: <S><LaboratoryPage /></S> },
+      { path: 'fasilitas/aset', element: <S><AssetManagementPage /></S> },
+      { path: 'fasilitas/booking', element: <S><FacilityBookingPage /></S> },
+      { path: 'guru/evaluasi', element: <S><TeacherEvaluationPage /></S> },
+      { path: 'guru/pengembangan', element: <S><TeacherDevelopmentPage /></S> },
+      { path: 'guru/payroll', element: <S><PayrollPage /></S> },
     ],
   },
 ]

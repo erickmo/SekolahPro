@@ -115,6 +115,15 @@ import (
 	"github.com/yourorg/boilerplate/internal/domain/shu"
 	"github.com/yourorg/boilerplate/internal/domain/laporan_regulasi"
 	"github.com/yourorg/boilerplate/internal/domain/zakat_infaq"
+
+	// Sprint 7 — Fasilitas & Sarana (Phase 8)
+	"github.com/yourorg/boilerplate/internal/domain/library"
+	"github.com/yourorg/boilerplate/internal/domain/laboratory"
+	"github.com/yourorg/boilerplate/internal/domain/asset"
+	"github.com/yourorg/boilerplate/internal/domain/facility_booking"
+	"github.com/yourorg/boilerplate/internal/domain/teacher_evaluation"
+	"github.com/yourorg/boilerplate/internal/domain/teacher_development"
+	"github.com/yourorg/boilerplate/internal/domain/payroll"
 )
 
 func main() {
@@ -425,6 +434,42 @@ func registerVernonDomains(
 		registerVernonDomain(db, registry, eb, logger, &zakat_infaq.InfaqDescriptor{})              // autoloads nasabah + branch
 		registerVernonDomain(db, registry, eb, logger, &zakat_infaq.MustahikDescriptor{})           // autoloads branch
 		registerVernonDomain(db, registry, eb, logger, &zakat_infaq.TazirFundDescriptor{})          // autoloads denda + pinjaman + nasabah
+
+			// Sprint 7 — Fasilitas & Sarana (Phase 8)
+
+			// ADR-S038: Library
+			registerVernonDomain(db, registry, eb, logger, &library.BookDescriptor{})
+			registerVernonDomain(db, registry, eb, logger, &library.CopyDescriptor{})    // autoloads book
+			registerVernonDomain(db, registry, eb, logger, &library.BorrowDescriptor{})  // autoloads copy + book + academic_year
+
+			// ADR-S039: Laboratory
+			registerVernonDomain(db, registry, eb, logger, &laboratory.LabDescriptor{})
+			registerVernonDomain(db, registry, eb, logger, &laboratory.EquipmentDescriptor{})  // autoloads lab
+			registerVernonDomain(db, registry, eb, logger, &laboratory.UsageLogDescriptor{})   // autoloads lab + teacher + class_room + academic_year
+
+			// ADR-S040: Asset & Inventory
+			registerVernonDomain(db, registry, eb, logger, &asset.AssetDescriptor{})           // autoloads room (optional)
+			registerVernonDomain(db, registry, eb, logger, &asset.MaintenanceDescriptor{})     // autoloads asset
+
+			// ADR-S041: Facility Booking
+			registerVernonDomain(db, registry, eb, logger, &facility_booking.FacilityDescriptor{})
+			registerVernonDomain(db, registry, eb, logger, &facility_booking.BookingDescriptor{})  // autoloads facility + academic_year
+
+			// ADR-S028: Teacher Evaluation (PKG)
+			registerVernonDomain(db, registry, eb, logger, &teacher_evaluation.CompetencyDescriptor{})
+			registerVernonDomain(db, registry, eb, logger, &teacher_evaluation.EvaluationDescriptor{})  // autoloads teacher + academic_year
+			registerVernonDomain(db, registry, eb, logger, &teacher_evaluation.ScoreDescriptor{})       // autoloads evaluation + competency
+
+			// ADR-S029: Professional Development (PKB)
+			registerVernonDomain(db, registry, eb, logger, &teacher_development.CertificationDescriptor{})  // autoloads teacher
+			registerVernonDomain(db, registry, eb, logger, &teacher_development.ActivityDescriptor{})       // autoloads teacher
+			registerVernonDomain(db, registry, eb, logger, &teacher_development.CreditSummaryDescriptor{})  // autoloads teacher
+
+			// ADR-S031: Payroll
+			registerVernonDomain(db, registry, eb, logger, &payroll.ConfigDescriptor{})    // autoloads teacher
+			registerVernonDomain(db, registry, eb, logger, &payroll.PeriodDescriptor{})    // autoloads academic_year
+			registerVernonDomain(db, registry, eb, logger, &payroll.EntryDescriptor{})     // autoloads period + teacher
+			registerVernonDomain(db, registry, eb, logger, &payroll.ComponentDescriptor{}) // autoloads entry
 	}
 
 // registerVernonDomain adalah helper DRY untuk mendaftarkan satu domain Vernon.

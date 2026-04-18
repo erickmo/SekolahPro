@@ -194,6 +194,60 @@ export const QK = {
   mustahikDetail: 'mustahik-detail',
   tazirFund: 'tazir-fund',
   tazirFundDetail: 'tazir-fund-detail',
+
+  // ── Sprint 7: Library (ADR-S038) ──────────────────────────────────────────────
+  libraryBooks: 'library-books',
+  libraryBookDetail: 'library-book-detail',
+  libraryCopies: 'library-copies',
+  libraryCopyDetail: 'library-copy-detail',
+  libraryBorrows: 'library-borrows',
+  libraryBorrowDetail: 'library-borrow-detail',
+
+  // ── Sprint 7: Laboratory (ADR-S039) ───────────────────────────────────────────
+  laboratories: 'laboratories',
+  laboratoryDetail: 'laboratory-detail',
+  labEquipment: 'lab-equipment',
+  labEquipmentDetail: 'lab-equipment-detail',
+  labUsageLogs: 'lab-usage-logs',
+  labUsageLogDetail: 'lab-usage-log-detail',
+
+  // ── Sprint 7: Asset (ADR-S040) ────────────────────────────────────────────────
+  assets: 'assets',
+  assetDetail: 'asset-detail',
+  assetMaintenances: 'asset-maintenances',
+  assetMaintenanceDetail: 'asset-maintenance-detail',
+
+  // ── Sprint 7: Facility Booking (ADR-S041) ─────────────────────────────────────
+  facilities: 'facilities',
+  facilityDetail: 'facility-detail',
+  facilityBookings: 'facility-bookings',
+  facilityBookingDetail: 'facility-booking-detail',
+
+  // ── Sprint 7: Teacher Evaluation (ADR-S028) ───────────────────────────────────
+  evaluationCompetencies: 'evaluation-competencies',
+  evaluationCompetencyDetail: 'evaluation-competency-detail',
+  teacherEvaluations: 'teacher-evaluations',
+  teacherEvaluationDetail: 'teacher-evaluation-detail',
+  evaluationScores: 'evaluation-scores',
+  evaluationScoreDetail: 'evaluation-score-detail',
+
+  // ── Sprint 7: Teacher Development (ADR-S029) ──────────────────────────────────
+  teacherCertifications: 'teacher-certifications',
+  teacherCertificationDetail: 'teacher-certification-detail',
+  developmentActivities: 'development-activities',
+  developmentActivityDetail: 'development-activity-detail',
+  creditSummaries: 'credit-summaries',
+  creditSummaryDetail: 'credit-summary-detail',
+
+  // ── Sprint 7: Payroll (ADR-S031) ──────────────────────────────────────────────
+  payrollConfigs: 'payroll-configs',
+  payrollConfigDetail: 'payroll-config-detail',
+  payrollPeriods: 'payroll-periods',
+  payrollPeriodDetail: 'payroll-period-detail',
+  payrollEntries: 'payroll-entries',
+  payrollEntryDetail: 'payroll-entry-detail',
+  payrollComponents: 'payroll-components',
+  payrollComponentDetail: 'payroll-component-detail',
 } as const
 
 export type QueryKeyValue = (typeof QK)[keyof typeof QK]

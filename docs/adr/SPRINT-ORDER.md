@@ -221,13 +221,13 @@
 
 | # | ADR | Judul | Depends On | Is Coded | Test Code | API Tested | Dashboard Tested |
 |---|-----|-------|------------|----------|-----------|------------|------------------|
-| 60 | `[S] ADR-S038` | Library Management (Perpustakaan) | S001 | ❌ | ❌ | ❌ | ❌ |
-| 61 | `[S] ADR-S039` | Laboratory Management | ADR-011 | ❌ | ❌ | ❌ | ❌ |
-| 62 | `[S] ADR-S040` | Asset & Inventory Management | Fase 1 | ❌ | ❌ | ❌ | ❌ |
-| 63 | `[S] ADR-S041` | Room & Facility Booking | ADR-011 | ❌ | ❌ | ❌ | ❌ |
-| 64 | `[S] ADR-S028` | Teacher Performance Evaluation (PKG) | ADR-012, S027 | ❌ | ❌ | ❌ | ❌ |
-| 65 | `[S] ADR-S029` | Professional Development (PKB) | ADR-012 | ❌ | ❌ | ❌ | ❌ |
-| 66 | `[S] ADR-S031` | Staff Payroll (Penggajian) | ADR-012, S030 | ❌ | ❌ | ❌ | ❌ |
+| 60 | `[S] ADR-S038` | Library Management (Perpustakaan) | S001 | ✅ | ✅ | ✅ | ✅ |
+| 61 | `[S] ADR-S039` | Laboratory Management | ADR-011 | ✅ | ✅ | ✅ | ✅ |
+| 62 | `[S] ADR-S040` | Asset & Inventory Management | Fase 1 | ✅ | ✅ | ✅ | ✅ |
+| 63 | `[S] ADR-S041` | Room & Facility Booking | ADR-011 | ✅ | ✅ | ✅ | ✅ |
+| 64 | `[S] ADR-S028` | Teacher Performance Evaluation (PKG) | ADR-012, S027 | ✅ | ✅ | ✅ | ✅ |
+| 65 | `[S] ADR-S029` | Professional Development (PKB) | ADR-012 | ✅ | ✅ | ✅ | ✅ |
+| 66 | `[S] ADR-S031` | Staff Payroll (Penggajian) | ADR-012, S030 | ✅ | ✅ | ✅ | ✅ |
 
 **Deliverable**: Perpustakaan, lab, inventaris, booking ruangan, PKG, PKB, payroll guru.
 
