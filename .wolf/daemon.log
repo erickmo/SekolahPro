@@ -1,0 +1,34 @@
+[2026-04-24T09:09:04.685Z] [INFO] Scheduled task: Full anatomy rescan (0 */6 * * *)
+[2026-04-24T09:09:04.686Z] [INFO] Scheduled task: Consolidate old memory (0 2 * * *)
+[2026-04-24T09:09:04.686Z] [INFO] Scheduled task: Token audit report (0 0 * * 1)
+[2026-04-24T09:09:04.686Z] [INFO] Scheduled task: Cerebrum reflection (0 3 * * 0)
+[2026-04-24T09:09:04.686Z] [INFO] Scheduled task: AI suggestions (0 4 * * 1)
+[2026-04-24T09:09:04.687Z] [INFO] File watcher started on .wolf/
+[2026-04-24T09:09:04.688Z] [INFO] OpenWolf daemon started
+[2026-04-24T09:09:04.688Z] [INFO] Dashboard server listening on port 18791
+[2026-04-24T09:09:24.270Z] [INFO] Config changed — hot-reload not fully implemented yet
+[2026-04-24T09:09:28.984Z] [INFO] Config changed — hot-reload not fully implemented yet
+[2026-04-24T11:00:00.576Z] [INFO] Executing task: Full anatomy rescan
+[2026-04-24T11:00:00.847Z] [INFO] Task Full anatomy rescan completed in 271ms
+[2026-04-24T17:00:00.888Z] [INFO] Executing task: Full anatomy rescan
+[2026-04-24T17:00:01.170Z] [INFO] Task Full anatomy rescan completed in 282ms
+[2026-04-24T19:00:00.124Z] [INFO] Executing task: Consolidate old memory
+[2026-04-24T19:00:00.149Z] [INFO] Task Consolidate old memory completed in 24ms
+[2026-04-24T23:00:00.974Z] [INFO] Executing task: Full anatomy rescan
+[2026-04-24T23:00:01.165Z] [INFO] Task Full anatomy rescan completed in 190ms
+[2026-04-25T05:00:00.702Z] [INFO] Executing task: Full anatomy rescan
+[2026-04-25T05:00:00.935Z] [INFO] Task Full anatomy rescan completed in 233ms
+[2026-04-25T11:00:00.911Z] [INFO] Executing task: Full anatomy rescan
+[2026-04-25T11:00:01.104Z] [INFO] Task Full anatomy rescan completed in 192ms
+[2026-04-25T17:00:00.931Z] [INFO] Executing task: Full anatomy rescan
+[2026-04-25T17:00:01.133Z] [INFO] Task Full anatomy rescan completed in 201ms
+[2026-04-25T19:00:00.209Z] [INFO] Executing task: Consolidate old memory
+[2026-04-25T19:00:00.223Z] [INFO] Task Consolidate old memory completed in 13ms
+[2026-04-25T20:00:00.768Z] [INFO] Executing task: Cerebrum reflection
+[2026-04-25T20:00:23.229Z] [INFO] Task Cerebrum reflection completed in 22460ms
+[2026-04-25T23:00:00.991Z] [INFO] Executing task: Full anatomy rescan
+[2026-04-25T23:00:01.184Z] [INFO] Task Full anatomy rescan completed in 193ms
+[2026-04-26T05:00:00.385Z] [INFO] Executing task: Full anatomy rescan
+[2026-04-26T05:00:00.578Z] [INFO] Task Full anatomy rescan completed in 193ms
+[2026-04-26T11:00:00.448Z] [INFO] Executing task: Full anatomy rescan
+[2026-04-26T11:00:00.666Z] [INFO] Task Full anatomy rescan completed in 217ms
